@@ -1,0 +1,65 @@
+.main-sidebar .sidebar-menu li ul.dropdown-menu li a.active{
+    color: #0015b5;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+form label {
+    font-size: 14px !important;
+    font-weight: bold !important;
+}
+input.form-control{
+    padding: 20px 15px !important;
+}
+.dropdown a.active{
+    color: blue !important;
+    background: rgba(0,0,0,0.08);
+}
+.user-thumb-40{
+    width: 40px !important;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50% !important;
+}
+
+.user-thumb-100{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50% !important;
+}
+.dot-danger{
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: red;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
+    text-align: center;
+    padding-bottom: 5px;
+}
+.icon-40{
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+.rating-thumb{
+    text-align: center;
+}
+
+.rating-thumb span{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #7583ec;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    margin: 0 auto;
+}

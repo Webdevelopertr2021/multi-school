@@ -1,0 +1,76 @@
+<template>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <h4>Make new leave request</h4>
+                <router-link :to="{name: 'teacher.leave-list'}" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Go back</router-link>
+            </div>
+            <div class="card-body">
+                <form @submit.prevent="submitForm" class="row">
+                    <div class="col-md-6 mb-4">
+                        <label for="">Leave from</label>
+                        <input type="date" class="form-control" :class="{'is-invalid':form.errors.has('fromDate')}" v-model="form.fromDate">
+                        <HasError :form="form" field="fromDate" />
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <label for="">To</label>
+                        <input type="date" class="form-control" :class="{'is-invalid':form.errors.has('toDate')}" v-model="form.toDate">
+                        <HasError :form="form" field="toDate" />
+                    </div>
+                    <div class="col-md-12 mb-4">
+                        <label for="">Leave from</label>
+                        <input type="text" class="form-control" :class="{'is-invalid':form.errors.has('subject')}" placeholder="Subject" v-model="form.subject">
+                        <HasError :form="form" field="subject" />
+                    </div>
+                    <div class="col-md-12 mb-4">
+                        <label for="">Description</label>
+                        <textarea class="form-control" :class="{'is-invalid':form.errors.has('desc')}" placeholder="Write your description..." v-model="form.desc"></textarea>
+                        <HasError :form="form" field="desc" />
+                    </div>
+                    <div class="col-md-12 mb-4">
+                        <Button :form="form" class="btn btn-success">Submit</Button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            form: new Form({
+                fromDate: "",
+                toDate: "",
+                subject: "",
+                desc: "",
+            }),
+        }
+    },
+    methods: {
+        submitForm() {
+            this.form.post("/teacher/api/submit-leave-request").then(resp=>{
+                return resp.data;
+            }).then(data=>{
+                console.log(data);
+                if(data.status == "ok") {
+                    swal.fire("Request submitted",data.msg,"success").then(()=>{
+                        this.$router.push({
+                            name: 'teacher.leave-list'
+                        })
+                    });
+                }
+            }).catch(err=>{
+                console.error(err.response.data);
+            })
+        }
+    }
+}
+</script>
+
+<style>
+
+</style>
