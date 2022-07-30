@@ -15,6 +15,9 @@ import NotificationList from "../components/NotifcationList.vue";
 import CreateClass from "../components/SuperAdmin/class/CreateClass.vue";
 import CreateSection from "../components/SuperAdmin/class/CreateSection.vue";
 import EditSection from "../components/SuperAdmin/class/EditSection.vue";
+import CreateStudent from "../components/SuperAdmin/student/Create.vue";
+import Edittudent from "../components/SuperAdmin/student/Edit.vue";
+import Listtudent from "../components/SuperAdmin/student/List.vue";
 // End
 const prefix = "/admin/"
 const routes = new VueRouter({
@@ -115,6 +118,14 @@ const routes = new VueRouter({
             component: EditSection,
             meta : {
                 title: "Edit section"
+            }
+        },
+        {
+            path: prefix + "add-students",
+            name: "admin.add-student",
+            component:CreateStudent,
+            meta: {
+                title: "Add Student"
             }
         }
     ],

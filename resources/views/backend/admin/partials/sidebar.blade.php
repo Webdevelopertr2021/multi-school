@@ -32,6 +32,15 @@
           </ul>
         </li>
 
+        <li class="dropdown">
+          <a href="#" class="menu-toggle nav-link has-dropdown"><i
+              data-feather="align-justify"></i><span>Students</span></a>
+          <ul class="dropdown-menu">
+            <li><router-link :to="{name: 'admin.add-student'}" class="nav-link">Add Students</router-link></li>
+            <li><router-link :to="{name : 'admin.create-section'}" class="nav-link">All Students</router-link></li>
+          </ul>
+        </li>
+
       </ul>
     </aside>
   </div>
