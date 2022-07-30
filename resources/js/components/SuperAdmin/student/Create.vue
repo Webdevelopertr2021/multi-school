@@ -7,25 +7,25 @@
                 <button class="btn btn-primary btn-sm"><i class="fas fa-download"></i> Import</button>
             </div>
             <div class="card-body">
-                <form class="row">
+                <form class="row" @submit.prevent="addStudent">
                   <div class="col-md-4 mb-4">
                       <label for="">Select School</label>
                       <multiselect :class="{'is-invalid': form.errors.has('schoolId')}" v-model="selectedSchool" :options="schools" 
-                        :preserve-search="true" placeholder="Select section" label="name" track-by="id"></multiselect>
+                       @input="getClassList" :preserve-search="true" placeholder="Select section" label="name" track-by="id"></multiselect>
                       <HasError  :form="form" field="sectionId"/>
                   </div>
 
                   <div class="col-md-4 mb-4">
                       <label for="">Select Class</label>
                       <multiselect :class="{'is-invalid': form.errors.has('classId')}" v-model="selectedClass" :options="classes" 
-                        :preserve-search="true" placeholder="Select section" label="name" track-by="id"></multiselect>
+                       @input="getSectionList" :preserve-search="true" placeholder="Select section" label="name" track-by="id" :loading="isLoadingClass"></multiselect>
                       <HasError  :form="form" field="classId"/>
                   </div>
 
                   <div class="col-md-4 mb-4">
                       <label for="">Select Section</label>
                       <multiselect :class="{'is-invalid': form.errors.has('sectionId')}" v-model="selectedSection" :options="sections" 
-                        :preserve-search="true" placeholder="Select section" label="name" track-by="id"></multiselect>
+                        :preserve-search="true" placeholder="Select section" label="name" track-by="id" :loading="isLoadingSection"></multiselect>
                       <HasError  :form="form" field="sectionId"/>
                   </div>
 
@@ -57,7 +57,7 @@
                   </div>
                   <div class="col-md-7 mb-4">
                     <label for="">Student photo</label>
-                    <input type="file" class="form-control-file" @change="fileChange">
+                    <input type="file" class="form-control-file" @change="fileChange" accept="image/*" id="stdFile">
                   </div>
                   <div class="col-md-12 mb-4">
                     <Button :form="form" class="btn btn-success">Submit</Button>
@@ -83,11 +83,20 @@ export default {
       selectedClass: null,
       selectedSection: null,
       form: new Form({
+        name: "",
+        stdEmail: "",
+        phone: "",
+        schoolId: "",
+        classId: "",
+        sectionId: "",
+        photo: null,
 
       }),
       schools: [],
       classes: [],
       sections: [],
+      isLoadingClass: false,
+      isLoadingSection: false,
     }
   },
   methods :{
@@ -101,7 +110,63 @@ export default {
         });
     },
     fileChange(e) {
-      
+      let file = e.target.files[0];
+      if(file) {
+        this.form.photo = file;
+      }
+      else {
+        this.form.photo = null;
+      }
+    },
+
+    getClassList() {
+      this.isLoadingClass = true;
+      this.classes = [];
+      this.sections = [];
+      this.selectedSection = null;
+      this.selectedClass = null;
+
+      axios.get("/admin/api/get-class-list?schoolId="+this.selectedSchool.id).then(resp=>{
+          return resp.data;
+      }).then(data=>{
+          this.classes = data;
+          this.isLoadingClass = false;
+      }).catch(err=>{
+          console.error(err.response.data);
+      });
+
+    },
+    getSectionList() {
+      this.isLoadingSection = true;
+      this.sections = [];
+      this.selectedSection = null;
+      axios.get("/admin/api/get-section-list?classId="+this.selectedClass.id).then(resp=>{
+          return resp.data;
+      }).then(data=>{
+          this.sections = data;
+          this.isLoadingSection = false;
+      }).catch(err=>{
+          console.error(err.response.data);
+      })
+    },
+    async addStudent() {
+      this.form.schoolId = this.selectedSchool.id;
+      this.form.classId = this.selectedClass.id;
+      this.form.sectionId = this.selectedSection.id;
+      await this.form.post('/admin/api/create-new-student').then(resp=>{
+        return resp.data;
+      }).then(data=>{
+        if(data.status == "ok") {
+          swal.fire("Added",data.msg,"success");
+          this.form.reset();
+          this.selectedClass = null;
+          this.selectedSection = null;
+          this.selectedSchool = null;
+          $("#stdFile").val("");
+        }
+      }).catch(err=>{
+        console.error(err.response.data);
+      })
     }
   },
   mounted() {

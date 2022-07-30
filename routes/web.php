@@ -28,6 +28,7 @@ Route::post("/user-logout","Auth\LoginController@logout")->name("user-logout");
 // Storage resources
 Route::group(["prefix" => "storage"],function(){
     Route::get("/user/photos/{filename}","Storage\StorageController@getUserPhoto")->name("user-photo");
+    Route::get('/student/photo/{filename}',"StorageController@getStudentPhoto")->name("student-photo");
 });
 // end
 
@@ -86,6 +87,12 @@ Route::group(["prefix"=>"admin","middleware"=>"auth"],function(){
         Route::get("/get-section-data","Admin\SectionController@getData");
 
         Route::post("/update-section","Admin\SectionController@update");
+        // End
+
+        // Students
+
+        Route::post("/create-new-student","Admin\StudentController@store");
+
         // End
 
 
