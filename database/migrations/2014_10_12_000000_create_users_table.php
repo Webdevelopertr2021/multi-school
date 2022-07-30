@@ -26,6 +26,8 @@ return new class extends Migration
             $table->string("photo")->nullable();
             $table->string("photo_url")->nullable();
             $table->integer("teacher_application_permission")->nullable();
+            $table->integer("class_id")->nullable();
+            $table->integer("section_id")->nullable();
             $table->timestamps();
         });
     }

@@ -3731,10 +3731,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    "mulitselect": (vue_multiselect__WEBPACK_IMPORTED_MODULE_0___default())
+    "multiselect": (vue_multiselect__WEBPACK_IMPORTED_MODULE_0___default())
   },
   data: function data() {
     return {
@@ -3745,10 +3746,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         email: '',
         password: 'school2022',
         pp: null,
-        superVisors: []
+        selectedSuperVisors: [],
+        superVisors: null,
+        classId: null,
+        sectionId: null
       }),
       schools: [],
-      supervisor: []
+      supervisor: [],
+      classes: [],
+      selectedClass: null,
+      selectedSection: null,
+      isLoadingSec: false,
+      sections: []
     };
   },
   methods: {
@@ -3786,8 +3795,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this3.form.superVisors = JSON.stringify(_this3.form.superVisors);
-                _context.next = 3;
+                if (_this3.selectedClass != null) {
+                  _this3.form.classId = _this3.selectedClass.id;
+                }
+
+                if (_this3.selectedSection != null) {
+                  _this3.form.sectionId = _this3.selectedSection.id;
+                }
+
+                if (_this3.form.selectedSuperVisors.length > 0) {
+                  _this3.form.superVisors = JSON.stringify(_this3.form.selectedSuperVisors);
+                }
+
+                _context.next = 5;
                 return _this3.form.post("/admin/api/add-teacher").then(function (resp) {
                   return resp.data;
                 }).then(function (data) {
@@ -3808,7 +3828,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   console.error(err.response.data);
                 });
 
-              case 3:
+              case 5:
               case "end":
                 return _context.stop();
             }
@@ -3824,10 +3844,37 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       } else {
         this.form.pp = null;
       }
+    },
+    getClassList: function getClassList() {
+      var _this4 = this;
+
+      axios.get("/admin/api/get-class-list?schoolId=" + this.$route.params.schoolId).then(function (resp) {
+        return resp.data;
+      }).then(function (data) {
+        _this4.classes = data;
+      })["catch"](function (err) {
+        console.error(err.response.data);
+      });
+    },
+    getSectionList: function getSectionList() {
+      var _this5 = this;
+
+      this.sections = [];
+      this.isLoadingSec = true;
+      axios.get("/admin/api/get-section-list?classId=" + this.selectedClass.id).then(function (resp) {
+        return resp.data;
+      }).then(function (data) {
+        console.log(data);
+        _this5.sections = data;
+        _this5.isLoadingSec = false;
+      })["catch"](function (err) {
+        console.error(err.response.data);
+      });
     }
   },
   mounted: function mounted() {
     this.getSchools();
+    this.getClassList();
     this.getSuperVisors();
   }
 });
@@ -52042,7 +52089,7 @@ var render = function () {
                     _vm._v("Select Supervisors"),
                   ]),
                   _vm._v(" "),
-                  _c("mulitselect", {
+                  _c("multiselect", {
                     class: { "is-invalid": _vm.form.errors.has("superVisors") },
                     attrs: {
                       options: _vm.supervisor,
@@ -52054,11 +52101,11 @@ var render = function () {
                       closeOnSelect: false,
                     },
                     model: {
-                      value: _vm.form.superVisors,
+                      value: _vm.form.selectedSuperVisors,
                       callback: function ($$v) {
-                        _vm.$set(_vm.form, "superVisors", $$v)
+                        _vm.$set(_vm.form, "selectedSuperVisors", $$v)
                       },
-                      expression: "form.superVisors",
+                      expression: "form.selectedSuperVisors",
                     },
                   }),
                   _vm._v(" "),
@@ -52236,26 +52283,26 @@ var render = function () {
                   _c("label", { attrs: { for: "" } }, [_vm._v("Select Class")]),
                   _vm._v(" "),
                   _c("multiselect", {
-                    class: { "is-invalid": _vm.addForm.errors.has("schoolId") },
+                    class: { "is-invalid": _vm.form.errors.has("classId") },
                     attrs: {
-                      options: _vm.schools,
+                      options: _vm.classes,
                       "preserve-search": true,
-                      placeholder: "Select school",
+                      placeholder: "Select class",
                       label: "name",
                       "track-by": "id",
                     },
-                    on: { input: _vm.getClassList },
+                    on: { input: _vm.getSectionList },
                     model: {
-                      value: _vm.addForm.school,
+                      value: _vm.selectedClass,
                       callback: function ($$v) {
-                        _vm.$set(_vm.addForm, "school", $$v)
+                        _vm.selectedClass = $$v
                       },
-                      expression: "addForm.school",
+                      expression: "selectedClass",
                     },
                   }),
                   _vm._v(" "),
                   _c("HasError", {
-                    attrs: { form: _vm.addForm, field: "schoolId" },
+                    attrs: { form: _vm.form, field: "classId" },
                   }),
                 ],
                 1
@@ -52263,32 +52310,33 @@ var render = function () {
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "col-md-7 mb-4" },
+                { staticClass: "col-md-4 mb-4" },
                 [
                   _c("label", { attrs: { for: "" } }, [
-                    _vm._v("Select Section"),
+                    _vm._v("Select section"),
                   ]),
                   _vm._v(" "),
                   _c("multiselect", {
-                    class: { "is-invalid": _vm.addForm.errors.has("schoolId") },
+                    class: { "is-invalid": _vm.form.errors.has("sectionId") },
                     attrs: {
-                      options: _vm.schools,
+                      options: _vm.sections,
                       "preserve-search": true,
-                      placeholder: "Select school",
+                      placeholder: "Select section",
                       label: "name",
                       "track-by": "id",
+                      loading: _vm.isLoadingSec,
                     },
                     model: {
-                      value: _vm.addForm.school,
+                      value: _vm.selectedSection,
                       callback: function ($$v) {
-                        _vm.$set(_vm.addForm, "school", $$v)
+                        _vm.selectedSection = $$v
                       },
-                      expression: "addForm.school",
+                      expression: "selectedSection",
                     },
                   }),
                   _vm._v(" "),
                   _c("HasError", {
-                    attrs: { form: _vm.addForm, field: "schoolId" },
+                    attrs: { form: _vm.form, field: "sectionId" },
                   }),
                 ],
                 1

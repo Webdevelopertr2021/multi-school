@@ -18,9 +18,9 @@
                     </div>
                     <div class="col-md-4 mb-4">
                       <label for="">Select Supervisors</label>
-                      <mulitselect :class="{'is-invalid': form.errors.has('superVisors')}" v-model="form.superVisors" :options="supervisor"
+                      <multiselect :class="{'is-invalid': form.errors.has('superVisors')}" v-model="form.selectedSuperVisors" :options="supervisor"
                        :multiple="true" :preserve-search="true" placeholder="Select supervisors"
-                       label="name" track-by="name" :closeOnSelect="false"></mulitselect>
+                       label="name" track-by="name" :closeOnSelect="false"></multiselect>
                        <HasError :form="form" field="superVisors" />
                     </div>
                     <div class="col-md-4 mb-4">
@@ -56,17 +56,18 @@
 
                     <div class="col-md-4 mb-4">
                         <label for="">Select Class</label>
-                        <multiselect @input="getClassList" :class="{'is-invalid': addForm.errors.has('schoolId')}" v-model="addForm.school" :options="schools" 
-                        :preserve-search="true" placeholder="Select school" label="name" track-by="id"></multiselect>
-                        <HasError  :form="addForm" field="schoolId"/>
+                        <multiselect @input="getSectionList" :class="{'is-invalid': form.errors.has('classId')}" v-model="selectedClass" :options="classes" 
+                        :preserve-search="true" placeholder="Select class" label="name" track-by="id"></multiselect>
+                        <HasError  :form="form" field="classId"/>
                     </div>
 
-                    <div class="col-md-7 mb-4">
-                        <label for="">Select Section</label>
-                        <multiselect :class="{'is-invalid': addForm.errors.has('schoolId')}" v-model="addForm.school" :options="schools" 
-                        :preserve-search="true" placeholder="Select school" label="name" track-by="id"></multiselect>
-                        <HasError  :form="addForm" field="schoolId"/>
+                    <div class="col-md-4 mb-4">
+                        <label for="">Select section</label>
+                        <multiselect :class="{'is-invalid': form.errors.has('sectionId')}" v-model="selectedSection" :options="sections" 
+                        :preserve-search="true" placeholder="Select section" label="name" track-by="id" :loading="isLoadingSec"></multiselect>
+                        <HasError  :form="form" field="sectionId"/>
                     </div>
+
 
                     <div class="col-12 mb-4">
                         <Button class="btn btn-success" :form="form">Add Teacher</Button>
@@ -85,7 +86,7 @@ import Multiselect from "vue-multiselect";
 
 export default {
   components: {
-    "mulitselect" : Multiselect,
+    "multiselect" : Multiselect,
   },
   data() {
         return {
@@ -96,10 +97,19 @@ export default {
                 email: '',
                 password: 'school2022',
                 pp: null,
-                superVisors: [],
+                selectedSuperVisors: [],
+                superVisors: null,
+                classId : null,
+                sectionId: null,
             }),
             schools: [],
             supervisor: [],
+            classes: [],
+            selectedClass: null,
+            selectedSection: null,
+            isLoadingSec: false,
+            sections: [],
+
         }
     },
     methods: {
@@ -128,7 +138,20 @@ export default {
           })
         },
         async addTeacher() {
-            this.form.superVisors = JSON.stringify(this.form.superVisors);
+
+            if(this.selectedClass != null) 
+            {
+                this.form.classId = this.selectedClass.id;
+            }
+            if(this.selectedSection != null)
+            {
+                this.form.sectionId = this.selectedSection.id;
+            }
+            if(this.form.selectedSuperVisors.length > 0)
+            {
+                this.form.superVisors = JSON.stringify(this.form.selectedSuperVisors);
+            }
+            
             await this.form.post("/admin/api/add-teacher").then(resp=>{
                 return resp.data;
             }).then(data=>{
@@ -156,10 +179,33 @@ export default {
             else {
                 this.form.pp = null;
             }
-        }
+        },
+        getClassList() {
+            axios.get("/admin/api/get-class-list?schoolId="+this.$route.params.schoolId).then(resp=>{
+                return resp.data;
+            }).then(data=>{
+                this.classes = data;
+            }).catch(err=>{
+                console.error(err.response.data);
+            });
+        },
+        getSectionList() {
+            this.sections = [];
+            this.isLoadingSec = true;
+            axios.get("/admin/api/get-section-list?classId="+this.selectedClass.id).then(resp=>{
+                return resp.data;
+            }).then(data=>{
+                console.log(data);
+                this.sections = data;
+                this.isLoadingSec = false;
+            }).catch(err=>{
+                console.error(err.response.data);
+            })
+        },
     },
     mounted() {
         this.getSchools();
+        this.getClassList();
         this.getSuperVisors();
     }
 }

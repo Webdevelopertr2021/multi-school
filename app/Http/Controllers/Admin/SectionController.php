@@ -45,7 +45,7 @@ class SectionController extends Controller
         }
         else
         {
-            
+            $sections = Section::where("class_id",$req->classId)->get(["id","name"]);
         }
 
         return response()->json($sections);

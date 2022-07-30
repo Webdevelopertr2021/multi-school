@@ -170,7 +170,9 @@ class SuperVisorController extends Controller
             "phone" => "required|unique:users,phone",
             "password" => "required|min:8",
             "pp" => "nullable|mimes:jpg,jpeg,png,JPG,JPEG,PNG",
-            "superVisors" => "required"
+            "superVisors" => "required",
+            "classId" => "required|exists:classes,id",
+            "sectionId" => "required|exists:sections,id"
         ]);
 
         $user = new User();
@@ -180,6 +182,8 @@ class SuperVisorController extends Controller
         $user->role = "teacher";
         $user->school_id = $req->school;
         $user->password = bcrypt($req->password);
+        $user->class_id = $req->classId;
+        $user->section_id = $req->sectionId;
         if($req->hasFile("pp"))
         {
             $userPhoto = $req->file("pp");
