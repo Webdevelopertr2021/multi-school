@@ -4341,7 +4341,7 @@ __webpack_require__.r(__webpack_exports__);
             console.error(err.response.data);
           });
         }
-      });
+      }); //
     }
   },
   mounted: function mounted() {
@@ -4629,7 +4629,131 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {};
+  },
+  mounted: function mounted() {
+    var _self = this;
+
+    $('#datatable').DataTable({
+      processing: true,
+      serverside: true,
+      ajax: '/admin/api/get-student-list',
+      lengthChange: true,
+      columns: [{
+        data: "id"
+      }, {
+        data: "name"
+      }, {
+        data: "phone"
+      }, {
+        data: "email"
+      }, {
+        data: "address"
+      }, {
+        data: "school"
+      }, {
+        data: "class"
+      }, {
+        data: "section"
+      }, {
+        data: 'action',
+        name: 'action',
+        orderable: false,
+        searchable: false
+      }],
+      dom: 'Bfrtip',
+      buttons: [{
+        extend: 'copyHtml5',
+        exportOptions: {
+          columns: [0, ':visible']
+        }
+      }, {
+        extend: 'excelHtml5',
+        exportOptions: {
+          columns: ':visible'
+        }
+      }, {
+        extend: 'pdfHtml5',
+        exportOptions: {
+          columns: ':visible'
+        }
+      }, {
+        extend: 'colvis',
+        text: '<i class="fas fa-eye"></i> Columns'
+      }],
+      createdRow: function createdRow(row, data, dataIndex) {
+        // Set the data-status attribute, and add a class
+        $(row).addClass("text-center");
+      }
+    });
+    $('#datatable').removeClass("dataTable");
+    $('#datatable').css("width", "100%");
+    $(document).on("click", "button[data-student-delete]", function () {
+      var studentId = $(this).data("student-delete");
+      swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          axios.post("/admin/api/delete-student", {
+            studentId: studentId
+          }).then(function (resp) {
+            return resp.data;
+          }).then(function (data) {
+            if (data.status == "ok") {
+              swal.fire("Student deleted", data.msg, "success").then(function () {
+                window.location.reload();
+              });
+            }
+          })["catch"](function (err) {
+            toastr.error("Failed to delete", "Internal Server error");
+            console.error(err.response.data);
+          });
+        }
+      });
+    });
+    $(document).on("click", "button[data-student-edit]", function () {
+      var studentId = $(this).data('student-edit');
+
+      _self.$router.push({
+        name: 'admin.edit-student',
+        params: {
+          studentId: studentId
+        }
+      });
+    });
+  }
+});
 
 /***/ }),
 
@@ -6424,6 +6548,20 @@ var routes = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     component: _components_SuperAdmin_student_Create_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
     meta: {
       title: "Add Student"
+    }
+  }, {
+    path: prefix + "student-list",
+    name: "admin.student-list",
+    component: _components_SuperAdmin_student_List_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
+    meta: {
+      title: "Student List"
+    }
+  }, {
+    path: prefix + "edit-student/:studentId",
+    name: "admin.edit-student",
+    component: _components_SuperAdmin_student_Edit_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
+    meta: {
+      title: "Edit student list"
     }
   }],
   scrollBehavior: function scrollBehavior(to, from, savedPos) {
@@ -54355,7 +54493,7 @@ var staticRenderFns = [
           _c(
             "div",
             { staticClass: "card-header d-flex justify-content-between" },
-            [_c("h4")]
+            [_c("h4", [_vm._v("Edit Student record")])]
           ),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }),
@@ -54402,7 +54540,46 @@ var staticRenderFns = [
             [_c("h4")]
           ),
           _vm._v(" "),
-          _c("div", { staticClass: "card-body" }),
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-12" }, [
+                _c("div", { staticClass: "table-responsive" }, [
+                  _c(
+                    "table",
+                    {
+                      staticClass: "table table-striped table-bordered",
+                      attrs: { id: "datatable" },
+                    },
+                    [
+                      _c("thead", [
+                        _c("tr", { staticClass: "text-center" }, [
+                          _c("th", [_vm._v("ID")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Student name")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Phone")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Email")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Address")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("School")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Class")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Section")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Action")]),
+                        ]),
+                      ]),
+                      _vm._v(" "),
+                      _c("tbody"),
+                    ]
+                  ),
+                ]),
+              ]),
+            ]),
+          ]),
         ]),
       ]),
     ])

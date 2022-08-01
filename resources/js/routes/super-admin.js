@@ -16,7 +16,7 @@ import CreateClass from "../components/SuperAdmin/class/CreateClass.vue";
 import CreateSection from "../components/SuperAdmin/class/CreateSection.vue";
 import EditSection from "../components/SuperAdmin/class/EditSection.vue";
 import CreateStudent from "../components/SuperAdmin/student/Create.vue";
-import Edittudent from "../components/SuperAdmin/student/Edit.vue";
+import EditStudent from "../components/SuperAdmin/student/Edit.vue";
 import Listtudent from "../components/SuperAdmin/student/List.vue";
 // End
 const prefix = "/admin/"
@@ -126,6 +126,22 @@ const routes = new VueRouter({
             component:CreateStudent,
             meta: {
                 title: "Add Student"
+            }
+        },
+        {
+            path: prefix + "student-list",
+            name: "admin.student-list",
+            component: Listtudent,
+            meta: {
+                title : "Student List"
+            }
+        },
+        {
+            path: prefix + "edit-student/:studentId",
+            name: "admin.edit-student",
+            component: EditStudent,
+            meta : {
+                title : "Edit student list"
             }
         }
     ],

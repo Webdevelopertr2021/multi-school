@@ -93,6 +93,9 @@ Route::group(["prefix"=>"admin","middleware"=>"auth"],function(){
 
         Route::post("/create-new-student","Admin\StudentController@store");
 
+        Route::get("/get-student-list","Admin\StudentController@getStudentList");
+
+        Route::post("/delete-student","Admin\StudentController@delete");
         // End
 
 
