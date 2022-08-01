@@ -13,6 +13,11 @@
         <li class="dropdown">
           <router-link :to="{name: 'teacher.leave'}" class="nav-link"><i data-feather="minus-square"></i><span>Leave Request</span></router-link>
         </li>
+
+        <li class="dropdown">
+          <router-link :to="{name: 'teacher.my-students'}" class="nav-link"><i data-feather="users"></i><span>My Students</span></router-link>
+        </li>
+
         <li class="dropdown">
           <a href="#" class="menu-toggle nav-link has-dropdown"><i
               data-feather="briefcase"></i><span>Widgets</span></a>

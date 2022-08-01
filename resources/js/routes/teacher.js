@@ -8,6 +8,7 @@ import LeaveContainer from "../components/Teacher/LeaveRequest/Container.vue";
 import LeaveList from "../components/Teacher/LeaveRequest/List.vue";
 import MakeRequest from "../components/Teacher/LeaveRequest/MakeRequest.vue";
 import NotificationList from "../components/NotifcationList.vue";
+import MyStudent from "../components/Teacher/Students/List.vue";
 // End
 
 const prefix = "/teacher/"
@@ -38,6 +39,14 @@ const routes = new VueRouter({
                     component: MakeRequest,
                     meta: {
                         title: "Create leave request"
+                    }
+                },
+                {
+                    path: prefix+ "my-students",
+                    name: "teacher.my-students",
+                    component: MyStudent,
+                    meta : {
+                        title: "My students"
                     }
                 }
             ]

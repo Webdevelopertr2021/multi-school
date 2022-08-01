@@ -10,11 +10,31 @@ use Illuminate\Support\Facades\Storage;
 class StorageController extends Controller
 {
     
-    public function getUserPhoto($fileName)
+    public function getUserPhoto($filename)
     {
         if(Auth::check() || Auth::guard("supervisor")->check() || Auth::guard("teacher")->check())
         {
-            $path = "user/photos/$fileName";
+            $path = "user/photos/$filename";
+            if(Storage::exists($path))
+            {
+                return Storage::response($path);
+            }
+            else
+            {
+                return response("File not found",404);
+            }
+        }
+        else
+        {
+            return response("File not found",404);
+        }
+    }
+
+    public function getStudentPhoto($filename)
+    {
+        if(Auth::check() || Auth::guard("supervisor")->check() || Auth::guard("teacher")->check())
+        {
+            $path = "student/photos/$filename";
             if(Storage::exists($path))
             {
                 return Storage::response($path);
