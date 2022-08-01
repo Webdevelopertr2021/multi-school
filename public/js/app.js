@@ -6555,59 +6555,70 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {};
   },
-  mounted: function mounted() {// var _self = this;
-    // $('#datatable').DataTable({
-    //   processing: true,
-    //   serverside:true,
-    //   ajax: '/admin/api/get-student-list',
-    //   lengthChange : true,
-    //   columns: [
-    //     {data: "id"},
-    //     { data: "name" },
-    //     { data: "phone" },
-    //     { data: "email" },
-    //     { data: "address" },
-    //     { data: "school" },
-    //     { data: "class" },
-    //     { data: "section" },
-    //     { data: 'action', name: 'action', orderable: false, searchable: false  }
-    //   ],
-    //   dom: 'Bfrtip',
-    //   buttons: [
-    //       {
-    //           extend: 'copyHtml5',
-    //           exportOptions: {
-    //               columns: [ 0, ':visible' ]
-    //           }
-    //       },
-    //       {
-    //           extend: 'excelHtml5',
-    //           exportOptions: {
-    //               columns: ':visible'
-    //           }
-    //       },
-    //       {
-    //           extend: 'pdfHtml5',
-    //           exportOptions: {
-    //               columns: ':visible'
-    //           }
-    //       },
-    //       {
-    //         extend: 'colvis',
-    //         text: '<i class="fas fa-eye"></i> Columns'
-    //       }
-    //   ],
-    //   createdRow: function( row, data, dataIndex ) {
-    //       // Set the data-status attribute, and add a class
-    //       $( row ).addClass("text-center");
-    //   }
-    // })
-    // $('#datatable').removeClass("dataTable");
-    // $('#datatable').css("width" , "100%");
+  mounted: function mounted() {
+    var _self = this;
+
+    $('#datatable').DataTable({
+      processing: true,
+      serverside: true,
+      ajax: '/teacher/api/get-my-students',
+      lengthChange: true,
+      columns: [{
+        data: "id"
+      }, {
+        data: "name"
+      }, {
+        data: "phone"
+      }, {
+        data: "email"
+      }, {
+        data: "address"
+      }, {
+        data: "school"
+      }, {
+        data: "class"
+      }, {
+        data: "section"
+      }, {
+        data: 'ratings'
+      }, {
+        data: 'action',
+        name: 'action',
+        orderable: false,
+        searchable: false
+      }],
+      dom: 'Bfrtip',
+      buttons: [{
+        extend: 'copyHtml5',
+        exportOptions: {
+          columns: [0, ':visible']
+        }
+      }, {
+        extend: 'excelHtml5',
+        exportOptions: {
+          columns: ':visible'
+        }
+      }, {
+        extend: 'pdfHtml5',
+        exportOptions: {
+          columns: ':visible'
+        }
+      }, {
+        extend: 'colvis',
+        text: '<i class="fas fa-eye"></i> Columns'
+      }],
+      createdRow: function createdRow(row, data, dataIndex) {
+        // Set the data-status attribute, and add a class
+        $(row).addClass("text-center");
+      }
+    });
+    $('#datatable').removeClass("dataTable");
+    $('#datatable').css("width", "100%");
   }
 });
 
@@ -59468,6 +59479,8 @@ var staticRenderFns = [
                           _c("th", [_vm._v("Class")]),
                           _vm._v(" "),
                           _c("th", [_vm._v("Section")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Rating Points")]),
                           _vm._v(" "),
                           _c("th", [_vm._v("Action")]),
                         ]),
