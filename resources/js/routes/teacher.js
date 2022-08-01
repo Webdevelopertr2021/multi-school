@@ -9,6 +9,8 @@ import LeaveList from "../components/Teacher/LeaveRequest/List.vue";
 import MakeRequest from "../components/Teacher/LeaveRequest/MakeRequest.vue";
 import NotificationList from "../components/NotifcationList.vue";
 import MyStudent from "../components/Teacher/Students/List.vue";
+import StudentRatings from "../components/Teacher/Students/StudentRatings.vue";
+import StudentSubmitReview from "../components/Teacher/Students/SubmitReview.vue";
 // End
 
 const prefix = "/teacher/"
@@ -47,6 +49,22 @@ const routes = new VueRouter({
                     component: MyStudent,
                     meta : {
                         title: "My students"
+                    }
+                },
+                {
+                    path : prefix + "student-ratings/:studentId",
+                    name: "teacher.student-ratings",
+                    component: StudentRatings,
+                    meta: {
+                        title: "Student Ratings"
+                    }
+                },
+                {
+                    path: prefix + "submit-review/student/:studentId",
+                    name: "teacher.submit-review",
+                    component: StudentSubmitReview,
+                    meta : {
+                        title: "Submit Review"
                     }
                 }
             ]

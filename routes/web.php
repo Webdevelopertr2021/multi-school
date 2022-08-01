@@ -144,6 +144,11 @@ Route::group(["prefix" => "teacher", "middleware" => "auth:teacher"], function()
 
         Route::get('/get-my-students',"Teacher\StudentController@getStudents");
 
+        Route::get("/check-student-review","Teacher\StudentController@checkStudent");
+
+        Route::post("/submit-review","Teacher\StudentController@submitReview");
+
+        Route::get("/get-student-ratings","Teacher\StudentController@getRatings");
     });
 });
 // End

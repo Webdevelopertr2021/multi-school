@@ -2,6 +2,9 @@
   <div class="row justify-content-center">
     <div class="col-md-7">
         <div class="card">
+            <div class="card-header">
+                <router-link :to="{name: 'teacher.submit-review', params: {studentId : $route.params.studentId}}" class="btn btn-sm btn-primary"><i class="fas fa-star"></i> Submit Review</router-link>
+            </div>
             <div class="card-body">
                 <div class="row" v-if="isLoading">
                   <div class="col-12">
@@ -49,14 +52,15 @@
           </div>
           <div class="row" v-else>
             <div class="col-md-12 border-top pt-3" v-for="(rate,i) in rates" :key="i">
+            <p class="text-muted text-right m-0"><vue-moments-ago class="time" prefix="" suffix="ago" :date="rate.created_at" lang="en"></vue-moments-ago></p>
               <div class="d-flex">
                 <div class="text-center">
-                  <img src="/image/portrait-placeholder.png" class="user-thumb-40" alt="">
+                  <img v-if="rate.rater.photo == null" src="/image/portrait-placeholder.png" class="user-thumb-40 border" alt="">
+                  <img v-else :src="rate.rater.photo_url" class="user-thumb-40 border" alt="">
                 </div>
                 <div class="ml-3">
                   <div class="d-flex justify-content-between">
                     <h6>{{ rate.rater.name }}</h6>
-                    <p class="text-muted m-0"><vue-moments-ago class="time" prefix="" suffix="ago" :date="rate.created_at" lang="en"></vue-moments-ago></p>
                   </div>
                   <p class="m-0">{{ rate.feedback }}</p>
                 </div>
@@ -97,7 +101,7 @@
               </div>
             </div>
             <div class="col-md-12 d-flex justify-content-center mt-2">
-              <pagination :data="ratingData" @pagination-change-page="getTeacherRating"></pagination>
+              <pagination :data="ratingData" @pagination-change-page="getStudentRating"></pagination>
             </div>
           </div>
         </div>
@@ -107,23 +111,27 @@
 </template>
 
 <script>
+import VueMomentsAgo from 'vue-moments-ago'
 export default {
+    components: {
+        VueMomentsAgo,    
+    },
   data() {
     return {
       isLoading: true,
       totalPoint: 0,
       isRatingLoading: true,
-      teacherData: null,
+      studentData: null,
       ratingData: {},
       rates : [],
     }
   },
   methods: {
-    getTeacherRating(page = 1) {
-      axios.get("/supervisor/api/get-teacher-ratings",{
+    getStudentRating(page = 1) {
+      axios.get("/teacher/api/get-student-ratings",{
         params: {
           page: page,
-          userId : this.$route.params.userId
+          studentId : this.$route.params.studentId
         }
       }).then(resp=>{
         return resp.data;
@@ -140,7 +148,7 @@ export default {
         }
         else {
           this.$router.push({
-            name: 'superv.teacher-list'
+            name: 'teacher.student-list'
           });
         }
       }).catch(err=>{
@@ -149,7 +157,7 @@ export default {
     },
   },
   mounted() {
-    this.getTeacherRating();
+    this.getStudentRating();
   }
 }
 </script>

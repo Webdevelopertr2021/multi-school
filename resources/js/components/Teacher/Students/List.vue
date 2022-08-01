@@ -97,6 +97,17 @@ export default {
     $('#datatable').removeClass("dataTable");
     $('#datatable').css("width" , "100%");
 
+    $(document).on("click","button[data-ratings]",function(){
+      let studentId = $(this).data("ratings");
+      _self.$router.push({
+        name: 'teacher.student-ratings',
+        params: {
+          studentId : studentId
+        }
+      })
+
+    });
+
   }
 }
 </script>

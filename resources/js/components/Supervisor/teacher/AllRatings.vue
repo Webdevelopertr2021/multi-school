@@ -49,9 +49,11 @@
           </div>
           <div class="row" v-else>
             <div class="col-md-12 border-top pt-3" v-for="(rate,i) in rates" :key="i">
+            <p class="text-muted text-right m-0"><vue-moments-ago class="time" prefix="" suffix="ago" :date="rate.created_at" lang="en"></vue-moments-ago></p>
               <div class="d-flex">
                 <div class="text-center">
-                  <img src="/image/portrait-placeholder.png" class="user-thumb-40" alt="">
+                  <img v-if="rate.photo == null" src="/image/portrait-placeholder.png" class="user-thumb-40" alt="">
+                  <img v-else :src="rate.photo_url" class="user-thumb-40" alt="">
                 </div>
                 <div class="ml-3">
                   <div class="d-flex justify-content-between">
