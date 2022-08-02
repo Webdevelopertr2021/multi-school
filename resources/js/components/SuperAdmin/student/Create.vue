@@ -4,7 +4,7 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between">
                 <h4>Add student</h4>
-                <button class="btn btn-primary btn-sm"><i class="fas fa-download"></i> Import</button>
+                <router-link :to="{name: 'admin.import-student'}" class="btn btn-primary btn-sm"><i class="fas fa-download"></i> Import</router-link>
             </div>
             <div class="card-body">
                 <form class="row" @submit.prevent="addStudent">

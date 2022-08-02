@@ -31,6 +31,7 @@
                     <table class="table table-bordered table-striped">
                       <thead>
                         <tr class="text-center">
+                          <th>School ID</th>
                           <th>School Name</th>
                           <th>Address</th>
                           <th>School Code</th>
@@ -45,6 +46,7 @@
                         </template>
                         <template v-else>
                           <tr class="text-center" v-for="(school,i) in schools.data" :key="i">
+                            <td>{{ school.id }}</td>
                             <td>{{ school.name }}</td>
                             <td>{{ school.address }}</td>
                             <td>{{ school.code }}</td>

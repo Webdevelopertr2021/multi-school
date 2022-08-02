@@ -100,6 +100,8 @@ Route::group(["prefix"=>"admin","middleware"=>"auth"],function(){
         Route::get("/get-student-data","Admin\StudentController@getData");
 
         Route::post("/update-student","Admin\StudentController@update");
+
+        Route::post("/import-student","Admin\StudentController@importStudent");
         // End
 
 

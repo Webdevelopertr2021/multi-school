@@ -9,6 +9,9 @@ use App\Models\Student;
 use Illuminate\Http\Request;
 use DataTables;
 use Illuminate\Support\Facades\Storage;
+use App\Imports\StudentImport;
+use Exception;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StudentController extends Controller
 {
@@ -168,5 +171,34 @@ class StudentController extends Controller
             "status" => "ok",
             "msg" => "Student was added successfully"
         ];
+    }
+
+    public function importStudent(Request $req)
+    {
+        $this->validate($req,[
+            "excel" => "required"
+        ]);
+
+        $studentImport = new StudentImport;
+        try
+        {
+            Excel::import($studentImport, $req->file("excel"));
+
+            return [
+                "status" => "ok",
+                "success" => $studentImport->success,
+                "errors" => $studentImport->errors,
+                "errorLog" => $studentImport->errorLog,
+                "msg" => "Student data was imported successfully. See the log to know result"
+            ];
+        }
+        catch(Exception $e)
+        {
+            return [
+                "status" => "fail",
+                "msg" => "Failed to import from the file",
+            ];
+        }
+        
     }
 }
