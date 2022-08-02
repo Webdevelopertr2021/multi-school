@@ -4163,6 +4163,48 @@ __webpack_require__.r(__webpack_exports__);
 
         console.log(err.response.data);
       });
+    },
+    deleteSuperv: function deleteSuperv(id, index) {
+      var _this2 = this;
+
+      swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          axios.post("/admin/api/delete-supervisor", {
+            userId: id
+          }).then(function (resp) {
+            return resp.data;
+          }).then(function (data) {
+            if (data.status == "ok") {
+              swal.fire("Deleted", data.msg, "success");
+
+              _this2.supervisors.data.splice(index, 1);
+            }
+          })["catch"](function (err) {
+            console.error(err.response.data);
+          });
+        }
+      });
+    },
+    calculateRating: function calculateRating(ratings) {
+      var totalRates = 0;
+      var totalPoints = 0;
+      ratings.forEach(function (item, i) {
+        totalRates += 5;
+        totalPoints += item.rate1;
+        totalPoints += item.rate2;
+        totalPoints += item.rate3;
+        totalPoints += item.rate4;
+        totalPoints += item.rate5;
+      });
+      return totalPoints / totalRates;
     }
   },
   mounted: function mounted() {
@@ -54989,7 +55031,51 @@ var render = function () {
                                     _vm._v(" "),
                                     _c("td", [_vm._v(_vm._s(user.email))]),
                                     _vm._v(" "),
-                                    _vm._m(4, true),
+                                    _c(
+                                      "td",
+                                      [
+                                        _c(
+                                          "router-link",
+                                          {
+                                            staticClass:
+                                              "btn btn-sm btn-warning",
+                                            attrs: {
+                                              to: {
+                                                name: "admin.edit-superv",
+                                                params: { userId: user.id },
+                                              },
+                                            },
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass: "fas fa-edit",
+                                            }),
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "button",
+                                          {
+                                            staticClass:
+                                              "btn btn-sm btn-danger",
+                                            on: {
+                                              click: function ($event) {
+                                                return _vm.deleteSuperv(
+                                                  user.id,
+                                                  i
+                                                )
+                                              },
+                                            },
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass: "fas fa-trash",
+                                            }),
+                                          ]
+                                        ),
+                                      ],
+                                      1
+                                    ),
                                   ]
                                 )
                               }),
@@ -55009,7 +55095,7 @@ var render = function () {
             "div",
             { staticClass: "card-header d-flex justify-content-between" },
             [
-              _vm._m(5),
+              _vm._m(4),
               _vm._v(" "),
               _c(
                 "router-link",
@@ -55058,13 +55144,13 @@ var render = function () {
                         "table table-bordered table-hover table-striped",
                     },
                     [
-                      _vm._m(6),
+                      _vm._m(5),
                       _vm._v(" "),
                       _c(
                         "tbody",
                         [
                           _vm.teachers.length <= 0
-                            ? [_vm._m(7)]
+                            ? [_vm._m(6)]
                             : _vm._l(_vm.teachers, function (teacher, i) {
                                 return _c(
                                   "tr",
@@ -55076,9 +55162,9 @@ var render = function () {
                                     _vm._v(" "),
                                     _c("td", [_vm._v(_vm._s(teacher.email))]),
                                     _vm._v(" "),
-                                    _vm._m(8, true),
+                                    _vm._m(7, true),
                                     _vm._v(" "),
-                                    _vm._m(9, true),
+                                    _vm._m(8, true),
                                   ]
                                 )
                               }),
@@ -55137,20 +55223,6 @@ var staticRenderFns = [
     return _c("tr", { staticClass: "text-center" }, [
       _c("td", { staticClass: "text-danger", attrs: { colspan: "4" } }, [
         _c("span", [_vm._v("No records found")]),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("button", { staticClass: "btn btn-sm btn-warning" }, [
-        _c("i", { staticClass: "fas fa-edit" }),
-      ]),
-      _vm._v(" "),
-      _c("button", { staticClass: "btn btn-sm btn-danger" }, [
-        _c("i", { staticClass: "fas fa-trash" }),
       ]),
     ])
   },

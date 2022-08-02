@@ -67,8 +67,8 @@
                       <td>{{ user.phone }}</td>
                       <td>{{ user.email }}</td>
                       <td>
-                        <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
-                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                        <router-link :to="{name: 'admin.edit-superv', params: {userId : user.id}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></router-link>
+                        <button @click="deleteSuperv(user.id,i)" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
                       </td>
                     </tr>
                   </template>
@@ -168,7 +168,51 @@ export default {
         })
         console.log(err.response.data);
       })
-    }
+    },
+    deleteSuperv(id,index){
+        swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.post("/admin/api/delete-supervisor",{
+                    userId: id
+                }).then(resp=>{
+                    return resp.data;
+                }).then(data=>{
+                    if(data.status == "ok") {
+                        swal.fire("Deleted",data.msg,"success");
+                        this.supervisors.data.splice(index,1);
+                    }
+                }).catch(err=>{
+                    console.error(err.response.data);
+                })
+            }
+        })
+        
+    },
+
+    calculateRating(ratings) {
+        let totalRates = 0;
+        let totalPoints = 0;
+        ratings.forEach((item,i)=>{
+            totalRates+=5;
+            totalPoints += item.rate1;
+            totalPoints += item.rate2;
+            totalPoints += item.rate3;
+            totalPoints += item.rate4;
+            totalPoints += item.rate5;
+        });
+
+        return totalPoints/totalRates;
+    },
+    
+
   },
   mounted() {
     this.getSchoolData();
