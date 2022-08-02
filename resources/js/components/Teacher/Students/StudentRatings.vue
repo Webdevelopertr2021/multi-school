@@ -42,7 +42,7 @@
     <div class="col-md-7">
       <div class="card">
         <div class="card-header">
-          <h4 class="text-muted">Teacher ratings</h4>
+          <h4 class="text-muted">Student ratings</h4>
         </div>
         <div class="card-body">
           <div class="row" v-if="isRatingLoading">

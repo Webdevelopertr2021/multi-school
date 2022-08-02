@@ -24,4 +24,8 @@ class Student extends Model
         return $this->belongsTo(Section::class,"section_id");
     }
 
+    public function rating()
+    {
+        return $this->hasMany(StudentReview::class,"student_id","id");
+    }
 }
