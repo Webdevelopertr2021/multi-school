@@ -19,6 +19,7 @@ import CreateStudent from "../components/SuperAdmin/student/Create.vue";
 import EditStudent from "../components/SuperAdmin/student/Edit.vue";
 import Listtudent from "../components/SuperAdmin/student/List.vue";
 import ImportStudent from "../components/SuperAdmin/student/Import.vue";
+import StudentRatings from "../components/SuperAdmin/student/StudentRatings.vue";
 // End
 const prefix = "/admin/"
 const routes = new VueRouter({
@@ -151,6 +152,14 @@ const routes = new VueRouter({
             component: ImportStudent,
             meta: {
                 title: "Import students"
+            }
+        },
+        {
+            path: prefix + "student-ratings/:studentId",
+            name: "admin.student-rating",
+            component: StudentRatings,
+            meta: {
+                title: "Student ratings"
             }
         }
     ],

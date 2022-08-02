@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use DataTables;
 use Illuminate\Support\Facades\Storage;
 use App\Imports\StudentImport;
+use App\Models\StudentReview;
 use Exception;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -100,6 +101,7 @@ class StudentController extends Controller
             ->addColumn("action",function($row){
                 $html = "<button data-student-edit='$row->id' class='ml-2 mb-2 btn btn-sm btn-warning'><i class='fas fa-edit'></i></button>";
                 $html .= "<button data-student-delete='$row->id' class='ml-2 mb-2 btn btn-sm btn-danger'><i class='fas fa-trash'></i></button>";
+                $html .= "<button title='See ratings' data-ratings='$row->id' class='ml-2 mb-2 btn btn-sm btn-primary'><i class='fas fa-star'></i></button>";
                 return $html;
             })
             ->rawColumns(["action","ratings"])
@@ -225,5 +227,45 @@ class StudentController extends Controller
             ];
         }
         
+    }
+
+    public function getRatings(Request $req)
+    {
+        if($student = Student::with("school:id,name")->find($req->studentId,["id","name","school_id","photo","photo_url","class_id","section_id"]))
+        {
+            $ratings = StudentReview::where("student_id",$student->id)->with("rater:id,name,photo,photo_url")->paginate(6);
+
+            $totalPoints = 0;
+            $totalRates = 0;
+            foreach($ratings as $rate)
+            {
+                $totalRates += 5;
+                $totalPoints += $rate->rate1;
+                $totalPoints += $rate->rate2;
+                $totalPoints += $rate->rate3;
+                $totalPoints += $rate->rate4;
+                $totalPoints += $rate->rate5;
+            }
+
+            $final = 0;
+            if($totalPoints > 0)
+            {
+                $final = $totalPoints/$totalRates;
+            }
+
+            return [
+                "status" => "ok",
+                "ratings" => $ratings,
+                "teacherData" => $student,
+                "totalPoint" => $final,
+                "student" => $student
+            ];
+        }
+        else
+        {
+            return [
+                "status" => "fail"
+            ];
+        }
     }
 }

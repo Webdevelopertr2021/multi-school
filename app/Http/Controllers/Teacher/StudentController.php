@@ -159,11 +159,17 @@ class StudentController extends Controller
                 $totalPoints += $rate->rate5;
             }
 
+            $final = 0;
+            if($totalPoints > 0)
+            {
+                $final = $totalPoints/$totalRates;
+            }
+
             return [
                 "status" => "ok",
                 "ratings" => $ratings,
                 "teacherData" => $student,
-                "totalPoint" => $totalPoints/$totalRates,
+                "totalPoint" => $final,
             ];
         }
         else

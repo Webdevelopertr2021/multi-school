@@ -136,7 +136,16 @@ export default {
           studentId : studentId,
         }
       });
+    });
 
+    $(document).on("click","button[data-ratings]",function() {
+      let studentId = $(this).data("ratings");
+      _self.$router.push({
+        name: 'admin.student-rating',
+        params: {
+          studentId: studentId
+        }
+      })
     });
   }
 }
