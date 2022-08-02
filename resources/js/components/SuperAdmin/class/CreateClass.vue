@@ -92,6 +92,7 @@
                         <table class="table table-borderd">
                             <thead>
                                 <tr class="text-center">
+                                    <th>Class ID</th>
                                     <th>Class name</th>
                                     <th>School name</th>
                                     <th>Action</th>
@@ -99,6 +100,7 @@
                             </thead>
                             <tbody>
                                 <tr class="text-center" v-for="(Class,i) in classes" :key="i">
+                                    <td>{{ Class.id }}</td>
                                     <td>{{ Class.name }}</td>
                                     <td>{{ Class.school.name }}</td>
                                     <td>

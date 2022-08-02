@@ -2851,6 +2851,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2989,6 +2991,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-multiselect */ "./node_modules/vue-multiselect/dist/vue-multiselect.min.js");
 /* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
 //
 //
 //
@@ -5017,6 +5021,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {};
@@ -5045,6 +5050,8 @@ __webpack_require__.r(__webpack_exports__);
         data: "class"
       }, {
         data: "section"
+      }, {
+        data: 'ratings'
       }, {
         data: 'action',
         name: 'action',
@@ -52921,6 +52928,8 @@ var render = function () {
                               "tr",
                               { key: i, staticClass: "text-center" },
                               [
+                                _c("td", [_vm._v(_vm._s(Class.id))]),
+                                _vm._v(" "),
                                 _c("td", [_vm._v(_vm._s(Class.name))]),
                                 _vm._v(" "),
                                 _c("td", [_vm._v(_vm._s(Class.school.name))]),
@@ -53031,6 +53040,8 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", { staticClass: "text-center" }, [
+        _c("th", [_vm._v("Class ID")]),
+        _vm._v(" "),
         _c("th", [_vm._v("Class name")]),
         _vm._v(" "),
         _c("th", [_vm._v("School name")]),
@@ -53284,6 +53295,8 @@ var render = function () {
                               "tr",
                               { key: i, staticClass: "text-center" },
                               [
+                                _c("td", [_vm._v(_vm._s(section.id))]),
+                                _vm._v(" "),
                                 _c("td", [_vm._v(_vm._s(section.name))]),
                                 _vm._v(" "),
                                 _c("td", [
@@ -53388,6 +53401,8 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", { staticClass: "text-center" }, [
+        _c("th", [_vm._v("Section ID")]),
+        _vm._v(" "),
         _c("th", [_vm._v("Section name")]),
         _vm._v(" "),
         _c("th", [_vm._v("Class")]),
@@ -55362,7 +55377,26 @@ var render = function () {
                                     [
                                       _c("td", [_vm._v(_vm._s(school.id))]),
                                       _vm._v(" "),
-                                      _c("td", [_vm._v(_vm._s(school.name))]),
+                                      _c(
+                                        "td",
+                                        [
+                                          _c(
+                                            "router-link",
+                                            {
+                                              attrs: {
+                                                to: {
+                                                  name: "admin.school-details",
+                                                  params: {
+                                                    schoolId: school.id,
+                                                  },
+                                                },
+                                              },
+                                            },
+                                            [_vm._v(_vm._s(school.name))]
+                                          ),
+                                        ],
+                                        1
+                                      ),
                                       _vm._v(" "),
                                       _c("td", [
                                         _vm._v(_vm._s(school.address)),
@@ -56549,6 +56583,8 @@ var staticRenderFns = [
                           _c("th", [_vm._v("Class")]),
                           _vm._v(" "),
                           _c("th", [_vm._v("Section")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Ratings")]),
                           _vm._v(" "),
                           _c("th", [_vm._v("Action")]),
                         ]),

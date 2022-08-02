@@ -72,12 +72,37 @@ class StudentController extends Controller
             ->addColumn("section",function($row){
                 return $row->section->name;
             })
+            ->addColumn("ratings",function($row){
+                $ratings = $row->rating;
+
+                $totalRating = 0;
+                if(count($ratings) > 0)
+                {
+                    $total = 0;
+                    $totalPoint = 0;
+                    foreach($ratings as $rating)
+                    {
+                        $total += 5;
+                        $totalPoint += $rating->rate1;
+                        $totalPoint += $rating->rate2;
+                        $totalPoint += $rating->rate3;
+                        $totalPoint += $rating->rate4;
+                        $totalPoint += $rating->rate5;
+                    }
+                    $totalRating = $totalPoint/$total;
+                }
+                else
+                {
+                    $totalRating = 0;
+                }
+                return $totalRating . "&nbsp; <i class='fas fa-star text-warning'></i>";
+            })
             ->addColumn("action",function($row){
                 $html = "<button data-student-edit='$row->id' class='ml-2 mb-2 btn btn-sm btn-warning'><i class='fas fa-edit'></i></button>";
                 $html .= "<button data-student-delete='$row->id' class='ml-2 mb-2 btn btn-sm btn-danger'><i class='fas fa-trash'></i></button>";
                 return $html;
             })
-            ->rawColumns(["action"])
+            ->rawColumns(["action","ratings"])
             ->make(true);
     }
 

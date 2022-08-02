@@ -66,6 +66,7 @@
                         <table class="table table-borderd">
                             <thead>
                                 <tr class="text-center">
+                                    <th>Section ID</th>
                                     <th>Section name</th>
                                     <th>Class</th>
                                     <th>School</th>
@@ -74,6 +75,7 @@
                             </thead>
                             <tbody>
                                 <tr class="text-center" v-for="(section,i) in sections" :key="i">
+                                    <td>{{ section.id }}</td>
                                     <td>{{ section.name }}</td>
                                     <td>{{ section.classes.name }}</td>
                                     <td>{{ section.school.name }}</td>

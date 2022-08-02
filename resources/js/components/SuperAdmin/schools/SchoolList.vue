@@ -47,7 +47,7 @@
                         <template v-else>
                           <tr class="text-center" v-for="(school,i) in schools.data" :key="i">
                             <td>{{ school.id }}</td>
-                            <td>{{ school.name }}</td>
+                            <td><router-link :to="{name: 'admin.school-details', params: {schoolId: school.id}}">{{ school.name }}</router-link></td>
                             <td>{{ school.address }}</td>
                             <td>{{ school.code }}</td>
                             <td>
