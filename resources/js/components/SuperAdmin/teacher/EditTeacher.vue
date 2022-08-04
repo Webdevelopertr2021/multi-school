@@ -3,18 +3,23 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header d-flex justify-content-between">
-                <h4>Add teacher</h4>
+                <h4>Edit teacher</h4>
                 <router-link class="btn btn-sm btn-primary" 
-                :to="{name: 'admin.school-details', params: {schoolId: form.school}}"><i class="fas fa-arrow-left"></i> Go back to school</router-link>
+                :to="{name: 'admin.all-teacher'}"><i class="fas fa-arrow-left"></i> Go back</router-link>
             </div>
             <div class="card-body">
-                <form @submit.prevent="addTeacher" class="row">
+                <div class="row mb-4">
+                    <div class="col-md-12 text-center">
+                      <img v-if="teacherPhotoUrl == null" class="user-thumb-100" src="/image/portrait-placeholder.png" alt="">
+                      <img v-else class="user-thumb-100" :src="teacherPhotoUrl" alt="">
+                    </div>
+                </div>
+                <form @submit.prevent="updateTeacher" class="row">
                     <div class="col-md-4 mb-4">
                         <label for="">Select School</label>
-                        <select class="form-control" v-model="form.school" disabled>
-                            <option value="" selected hidden>Select School</option>
-                            <option v-for="(school,i) in schools" :key="i" :value="school.id">{{ school.name }}</option>
-                        </select>
+                        <multiselect :class="{'is-invalid': form.errors.has('schoolId')}" v-model="selectedSchool" :options="schools" 
+                        @input="getClassList();getSuperVisors()" :preserve-search="true" placeholder="Select section" label="name" track-by="id"></multiselect>
+                        <HasError  :form="form" field="schoolId"/>
                     </div>
 
                     <div class="col-md-4 mb-4">
@@ -30,7 +35,7 @@
                         :preserve-search="true" placeholder="Select section" label="name" track-by="id" :loading="isLoadingSec"></multiselect>
                         <HasError  :form="form" field="sectionId"/>
                     </div>
-                    
+
                     <div class="col-md-4 mb-4">
                       <label for="">Select Supervisors</label>
                       <multiselect :class="{'is-invalid': form.errors.has('superVisors')}" v-model="form.selectedSuperVisors" :options="supervisor"
@@ -56,24 +61,22 @@
                     </div>
 
                     <div class="col-md-4 mb-4">
-                        <label for="">Password</label>
+                        <label for="">Change Password</label>
                         <input type="text" class="form-control" :class="{'is-invalid' : form.errors.has('password')}" 
                         v-model="form.password" placeholder="Set password...">
                         <HasError :form="form" field="password" />
                     </div>
 
                     <div class="col-md-4 mb-4">
-                        <label for="">Set profile picture <small>(optional)</small></label>
+                        <label for="">Change profile picture <small>(optional)</small></label>
                         <input type="file" class="form-control-file" 
                         :class="{'is-invalid' : form.errors.has('pp')}" @change="fileChange" accept="image/*">
                         <HasError :form="form" field="pp" />
                     </div>
 
-                    
-
 
                     <div class="col-12 mb-4">
-                        <Button class="btn btn-success" :form="form">Add Teacher</Button>
+                        <Button class="btn btn-success" :form="form">Update Teacher</Button>
                     </div>
                     
                 </form>
@@ -94,11 +97,12 @@ export default {
   data() {
         return {
             form : new Form({
-                school: this.$route.params.schoolId,
+                teacherId: this.$route.params.teacherId,
+                schoolId: null,
                 name: '',
                 phone: '',
                 email: '',
-                password: 'school2022',
+                password: '',
                 pp: null,
                 selectedSuperVisors: [],
                 superVisors: null,
@@ -108,14 +112,60 @@ export default {
             schools: [],
             supervisor: [],
             classes: [],
+            selectedSchool: null,
             selectedClass: null,
             selectedSection: null,
             isLoadingSec: false,
             sections: [],
+            teacherPhotoUrl: null,
 
         }
     },
     methods: {
+        getTeacherInfo() {
+            axios.get("/admin/api/get-edit-teacher-data",{
+                params: {
+                    teacherId : this.$route.params.teacherId
+                }
+            }).then(resp=>{
+                return resp.data;
+            }).then(data=>{
+                if(data.status == "ok") {
+                    this.selectedSchool = data.selectedSchool;
+
+                    this.classes = data.classes;
+                    this.selectedClass = data.selectedClass;
+
+                    this.sections = data.sections;
+                    this.selectedSection = data.selectedSection;
+
+                    this.supervisor = data.supervisors;
+                    this.form.selectedSuperVisors = data.selectedSupervisors;
+
+                    this.form.name = data.teacher.name;
+                    this.form.phone = data.teacher.phone;
+                    this.form.email = data.teacher.email;
+                    this.form.schoolId = data.teacher.school_id;
+                    this.form.classId = data.teacher.class_id;
+                    this.form.sectionId = data.teacher.section_id;
+
+                    if(data.teacher.photo_url != null)
+                    {
+                        this.teacherPhotoUrl = data.teacher.photo_url;
+                    }
+                }
+                else {
+                    this.$router.push({
+                        name: 'admin.all-teacher'
+                    });
+                }
+            }).catch(err=>{
+                this.$router.push({
+                    name: 'admin.all-teacher'
+                });
+                console.error(err.response.data);
+            })
+        },
         getSchools() {
             axios.get("/admin/api/get-all-schools").then(resp=>{
                 return resp.data;
@@ -128,7 +178,7 @@ export default {
         getSuperVisors() {
           axios.get("/admin/api/get-supervisors",{
             params: {
-              schoolId: this.$route.params.schoolId,
+              schoolId: this.selectedSchool.id,
             }
           }).then(resp=>{
             return resp.data;
@@ -140,8 +190,12 @@ export default {
             console.error(err.response.data);
           })
         },
-        async addTeacher() {
+        async updateTeacher() {
 
+            if(this.selectedSchool != null)
+            {
+                this.form.schoolId = this.selectedSchool.id;
+            }
             if(this.selectedClass != null) 
             {
                 this.form.classId = this.selectedClass.id;
@@ -155,14 +209,14 @@ export default {
                 this.form.superVisors = JSON.stringify(this.form.selectedSuperVisors);
             }
             
-            await this.form.post("/admin/api/add-teacher").then(resp=>{
+            await this.form.post("/admin/api/update-teacher").then(resp=>{
                 return resp.data;
             }).then(data=>{
               console.log(data);
                 if(data.status == "ok") {
                     swal.fire("Teacher added",data.msg,"success").then(()=>{
                         this.$router.push({
-                            name: 'admin.school-details',
+                            name: 'admin.all-teacher',
                             params: {
                                 schoolId: this.$route.params.schoolId
                             }
@@ -184,7 +238,8 @@ export default {
             }
         },
         getClassList() {
-            axios.get("/admin/api/get-class-list?schoolId="+this.$route.params.schoolId).then(resp=>{
+            
+            axios.get("/admin/api/get-class-list?schoolId="+this.selectedSchool.id).then(resp=>{
                 return resp.data;
             }).then(data=>{
                 this.classes = data;
@@ -194,6 +249,7 @@ export default {
         },
         getSectionList() {
             this.sections = [];
+            this.selectedSection = null;
             this.isLoadingSec = true;
             axios.get("/admin/api/get-section-list?classId="+this.selectedClass.id).then(resp=>{
                 return resp.data;
@@ -207,9 +263,8 @@ export default {
         },
     },
     mounted() {
+        this.getTeacherInfo();
         this.getSchools();
-        this.getClassList();
-        this.getSuperVisors();
     }
 }
 </script>

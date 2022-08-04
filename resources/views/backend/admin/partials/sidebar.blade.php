@@ -40,6 +40,10 @@
             <li><router-link :to="{name : 'admin.student-list'}" class="nav-link">All Students</router-link></li>
           </ul>
         </li>
+        <li class="dropdown">
+          <router-link :to="{name: 'admin.all-teacher'}" class="nav-link"><i data-feather="users"></i><span>All Teachers</span></router-link>
+        </li>
+        
 
       </ul>
     </aside>

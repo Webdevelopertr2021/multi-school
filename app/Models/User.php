@@ -61,4 +61,14 @@ class User extends Authenticatable
     {
         return User::find($id)->name;
     }
+
+    public function classes()
+    {
+        return $this->belongsTo(Classes::class,"class_id","id");
+    }
+
+    public function section()
+    {
+        return $this->belongsTo(Section::class,"section_id","id");
+    }
 }

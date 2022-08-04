@@ -72,12 +72,18 @@ class RatingController extends Controller
                 $totalPoints += $rate->rate4;
                 $totalPoints += $rate->rate5;
             }
+            
+            $final = 0;
+            if($totalPoints > 0)
+            {
+                $final = $totalPoints/$totalRates;
+            }
 
             return [
                 "status" => "ok",
                 "ratings" => $ratings,
                 "teacherData" => $teacher,
-                "totalPoint" => $totalPoints/$totalRates,
+                "totalPoint" => $final,
             ];
         }
         else

@@ -107,7 +107,7 @@ class SchoolController extends Controller
             if($data = School::find($req->schoolId))
             {
                 $superVisors = User::where("role","supervisor")->where("school_id",$req->schoolId)->get();
-                $teachers = User::where("role","teacher")->where("school_id",$req->schoolId)->get();
+                $teachers = User::where("role","teacher")->with("rating")->where("school_id",$req->schoolId)->get();
                 return [
                     "status" => "ok",
                     "schoolData" => $data,

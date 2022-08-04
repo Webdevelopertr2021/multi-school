@@ -44,8 +44,7 @@ class ClassController extends Controller
         else
         {
             $classes = Classes::orderBy("id","desc")
-            ->where("school_id",$req->schoolId)
-            ->with("school:id,name")->get(["id","name"]);
+            ->where("school_id",$req->schoolId)->get(["id","name"]);
         }
         
         return response()->json($classes);

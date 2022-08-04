@@ -106,6 +106,16 @@ Route::group(["prefix"=>"admin","middleware"=>"auth"],function(){
         Route::get("/get-student-ratings","Admin\StudentController@getRatings");
         // End
 
+        // Teacher
+        Route::get("/get-teacher-list","Admin\TeacherController@list");
+
+        Route::post("/delete-teacher","Admin\TeacherController@delete");
+
+        Route::get('/get-edit-teacher-data',"Admin\TeacherController@getTeacherInfo");
+
+        Route::post("/update-teacher","Admin\SuperVisorController@updateTeacher");
+        // End
+
 
     });
 });

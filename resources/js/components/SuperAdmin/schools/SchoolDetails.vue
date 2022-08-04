@@ -112,10 +112,10 @@
                       <td>{{ teacher.name }}</td>
                       <td>{{ teacher.phone }}</td>
                       <td>{{ teacher.email }}</td>
-                      <td>5 <i class="fas fa-star text-warning"></i></td>
+                      <td>{{  calculateRating(teacher.rating) }} <i class="fas fa-star text-warning"></i></td>
                       <td>
-                        <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
-                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                        <router-link :to="{name: 'admin.teacher-edit', params: {teacherId: teacher.id}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></router-link>
+                        <button class="btn btn-sm btn-danger" @click="deleteTeacher(teacher.id,i)"><i class="fas fa-trash"></i></button>
                       </td>
                     </tr>
                   </template>
@@ -196,7 +196,6 @@ export default {
         })
         
     },
-
     calculateRating(ratings) {
         let totalRates = 0;
         let totalPoints = 0;
@@ -211,6 +210,34 @@ export default {
 
         return totalPoints/totalRates;
     },
+    deleteTeacher(id,index) {
+      swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+          if (result.isConfirmed) {
+          axios.post("/admin/api/delete-teacher",{
+              teacherId: id,
+          }).then(resp=>{
+              return resp.data;
+          }).then(data=>{
+              if(data.status == "ok")
+              {
+                swal.fire("Techer deleted",data.msg,"success");
+                this.teachers.splice(index,1);
+              }
+          }).catch(err=>{
+              toastr.error("Failed to delete","Internal Server error");
+              console.error(err.response.data);
+          })
+          }
+      });//
+    }
     
 
   },
