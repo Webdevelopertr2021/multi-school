@@ -36,7 +36,7 @@
           <a href="profile.html" class="dropdown-item has-icon"> <i class="far
                                     fa-user"></i>My Profile
           </a> <a href="timeline.html" class="dropdown-item has-icon"> <i class="fas fa-bolt"></i>
-            Activities
+            Admins
           </a>
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item has-icon text-danger" onclick="event.preventDefault();
