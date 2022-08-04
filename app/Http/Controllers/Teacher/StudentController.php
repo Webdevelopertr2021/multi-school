@@ -116,7 +116,7 @@ class StudentController extends Controller
     public function submitReview(Request $req)
     {
         $this->validate($req,[
-            "studentId" => "required|numeric|exists:users,id",
+            "studentId" => "required|numeric|exists:students,id",
             "rate1" => "required|min:1|max:10",
             "rate2" => "required|min:1|max:10",
             "rate3" => "required|min:1|max:10",
