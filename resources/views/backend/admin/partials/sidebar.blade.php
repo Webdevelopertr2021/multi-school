@@ -1,14 +1,14 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
       <div class="sidebar-brand">
-        <a href="index.html"> <img alt="image" src="{{ asset("backend/img/logo.png") }}" class="header-logo" /> <span
+        <router-link :to="{name: 'admin.dashboard'}" href="index.html"> <img alt="image" src="{{ asset("backend/img/logo.png") }}" class="header-logo" /> <span
             class="logo-name">{{ auth()->user()->role }} {{ auth()->user()->role=='super'?'ADMIN':'' }}</span>
-        </a>
+        </router-link>
       </div>
       <ul class="sidebar-menu">
         <li class="menu-header">Main</li>
         <li class="dropdown">
-          <a href="index.html" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
+          <router-link :to="{name: 'admin.dashboard'}" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></router-link>
         </li>
         <li class="dropdown">
           <a href="#" class="menu-toggle nav-link has-dropdown"><i

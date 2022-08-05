@@ -22,19 +22,24 @@ import ImportStudent from "../components/SuperAdmin/student/Import.vue";
 import StudentRatings from "../components/SuperAdmin/student/StudentRatings.vue";
 import AllTeacherList from "../components/SuperAdmin/teacher/TeacherList.vue";
 import EditTeacher from "../components/SuperAdmin/teacher/EditTeacher.vue";
+import AllAdmin from "../components/SuperAdmin/admins/List.vue";
+import AdminDashboard from "../components/SuperAdmin/home/Dashboard.vue";
 // End
+
 const prefix = "/admin/"
 const routes = new VueRouter({
     mode: "history",
     linkExactActiveClass: "active",
     linkActiveClass: "active",
     routes: [
-        // {
-        //     path: "/dashboard",
-        //     component: ()=>import(""),
-        //     name: 'admin.dashboard'
-        // },
-        
+        {
+            path: prefix + "dashboard",
+            component: AdminDashboard,
+            name: 'admin.dashboard',
+            meta: {
+                title: "Admin Dashboard"
+            }
+        },
         // School
         {
             path: prefix + "add-school",
@@ -178,6 +183,14 @@ const routes = new VueRouter({
             component: EditTeacher,
             meta : {
                 title: "Teacher Edit"
+            }
+        },
+        {
+            path: prefix + "super-admin-list",
+            name: "admin.admin-list",
+            component: AllAdmin,
+            meta: {
+                title : "Admin List"
             }
         }
     ],

@@ -116,6 +116,14 @@ Route::group(["prefix"=>"admin","middleware"=>"auth"],function(){
         Route::post("/update-teacher","Admin\SuperVisorController@updateTeacher");
         // End
 
+        // Dashboard
+        
+        Route::get("/get-dashboard-data","Admin\AdminPagesController@getDashboardData");
+
+        Route::get("/get-admin-list","Admin\AdminPagesController@adminList");
+
+        // End
+
 
     });
 });
