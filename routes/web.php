@@ -122,6 +122,14 @@ Route::group(["prefix"=>"admin","middleware"=>"auth"],function(){
 
         Route::get("/get-admin-list","Admin\AdminPagesController@adminList");
 
+        Route::post('/create-admin',"Admin\AdminPagesController@createAdmin");
+
+        Route::post("/delete-admin","Admin\AdminPagesController@deleteAdmin");
+
+        Route::get("/get-admin-data","Admin\AdminPagesController@getAdminData");
+
+        Route::post("/update-admin","Admin\AdminPagesController@updateAdmin");
+
         // End
 
 

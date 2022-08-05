@@ -4,7 +4,7 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between">
                 <h4>All Admin List</h4>
-                <router-link to="" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i> Add admin</router-link>
+                <router-link :to="{name: 'admin.create'}" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i> Add admin</router-link>
             </div>
             <div class="card-body">
                 <div class="row" v-if="isLoading">
@@ -35,8 +35,8 @@
                           <td>{{ admin.email }}</td>
                           <td>{{ admin.phone }}</td>
                           <td>
-                            <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
-                            <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                            <router-link :to="{name: 'admin.edit', params: {adminId : admin.id}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></router-link>
+                            <button @click="deleteAdmin(admin.id,i)" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
                           </td>
                         </tr>
                       </tbody>
@@ -67,6 +67,30 @@ export default {
       }).catch(err=>{
         console.error(err.response.data);
       })
+    },
+    deleteAdmin(id,index) {
+      swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+          if (result.isConfirmed) {
+            axios.post("/admin/api/delete-admin",{
+              adminId : id
+            }).then(resp=>{
+              return resp.data;
+            }).then(data=>{
+              if(data.status == "ok"){
+                swal.fire("Success",data.msg,"success");
+                this.admins.splice(index,1);
+              }
+            })
+          }
+      }); // swal
     }
   },
   mounted() {
