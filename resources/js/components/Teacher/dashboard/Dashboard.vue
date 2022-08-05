@@ -7,9 +7,9 @@
             <div class="row ">
               <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
                 <div class="card-content">
-                  <h5 class="font-15">Total Teachers</h5>
+                  <h5 class="font-15">Total Students</h5>
                   <skeleton class="d-block" v-if="isLoading" width="50px" height="25px" />
-                  <h2 v-else class="mb-3 font-18">{{ dashboardData.totalTeacher }}</h2>
+                  <h2 v-else class="mb-3 font-18">{{ dashboardData.student }}</h2>
                 </div>
               </div>
               <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
@@ -46,6 +46,8 @@
                 <li class="list-group-item"><b>Phone : {{ dashboardData.user.phone }}</b></li>
                 <li class="list-group-item"><b>Email : {{ dashboardData.user.email }}</b></li>
                 <li class="list-group-item"><b>School : {{ dashboardData.school.name }}</b> </li>
+                <li class="list-group-item"><b>Class : {{ dashboardData.user.classes.name }}</b> </li>
+                <li class="list-group-item"><b>Section : {{ dashboardData.user.section.name }}</b> </li>
               </ul>
               <button class="btn btn-sm btn-warning text-white">Edit profile</button>
             </div>
@@ -76,7 +78,7 @@ export default {
   },
   methods : {
     getData() {
-      axios.get("/supervisor/api/get-dashboard-data").then(resp=>{
+      axios.get("/teacher/api/get-dashboard-data").then(resp=>{
         return resp.data;
       }).then(data=>{
         console.log(data);

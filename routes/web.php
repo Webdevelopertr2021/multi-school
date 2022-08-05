@@ -144,17 +144,19 @@ Route::group(["prefix" => "supervisor", "middleware" => "auth:supervisor"],funct
 
     Route::group(["prefix" => "api"],function() {
 
-        Route::get("/get-teacher-list","SuperVisor\SuperVisorController@getTeacher");
+        Route::get("/get-teacher-list","Supervisor\SuperVisorController@getTeacher");
 
-        Route::get("/check-user-review","SuperVisor\SuperVisorController@checkUser");
+        Route::get("/check-user-review","Supervisor\SuperVisorController@checkUser");
 
-        Route::post("/submit-review","SuperVisor\RatingController@submit");
+        Route::post("/submit-review","Supervisor\RatingController@submit");
 
-        Route::get("/get-leave-request","SuperVisor\LeaveRequestController@getList");
+        Route::get("/get-leave-request","Supervisor\LeaveRequestController@getList");
 
-        Route::post("/update-application-status","SuperVisor\LeaveRequestController@updateStatus");
+        Route::post("/update-application-status","Supervisor\LeaveRequestController@updateStatus");
 
-        Route::get("/get-teacher-ratings","SuperVisor\RatingController@getTeacherRating");
+        Route::get("/get-teacher-ratings","Supervisor\RatingController@getTeacherRating");
+
+        Route::get("/get-dashboard-data","Supervisor\DashboardController@getDashboardData");
 
     });
 
@@ -179,6 +181,8 @@ Route::group(["prefix" => "teacher", "middleware" => "auth:teacher"], function()
         Route::post("/submit-review","Teacher\StudentController@submitReview");
 
         Route::get("/get-student-ratings","Teacher\StudentController@getRatings");
+
+        Route::get("/get-dashboard-data","Teacher\DashboardController@getDashboardData");
     });
 });
 // End

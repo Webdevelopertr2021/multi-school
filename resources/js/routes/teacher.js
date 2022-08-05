@@ -11,6 +11,7 @@ import NotificationList from "../components/NotifcationList.vue";
 import MyStudent from "../components/Teacher/Students/List.vue";
 import StudentRatings from "../components/Teacher/Students/StudentRatings.vue";
 import StudentSubmitReview from "../components/Teacher/Students/SubmitReview.vue";
+import Dashboard from "../components/Teacher/dashboard/Dashboard.vue";
 // End
 
 const prefix = "/teacher/"
@@ -19,6 +20,14 @@ const routes = new VueRouter({
     linkExactActiveClass: "active",
     linkActiveClass: "active",
     routes: [
+        {
+            path: prefix + "dashboard",
+            name: "teacher.home",
+            component: Dashboard,
+            meta: {
+                title: "Teacher dashboard"
+            }
+        },
         {
             path: prefix + "leave-request",
             name: "teacher.leave",
