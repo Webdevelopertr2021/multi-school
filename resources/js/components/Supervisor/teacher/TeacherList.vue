@@ -53,8 +53,6 @@
                                                     Action
                                                     </button>
                                                     <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="#"><i class="fas fa-edit"></i> Edit</a>
-                                                        <a class="dropdown-item" href="#"><i class="fas fa-eye"></i> View</a>
                                                         <router-link class="dropdown-item" :to="{name: 'superv.teacher-ratings', params: {userId: teacher.id}}"><i class="fas fa-star"></i> See ratings</router-link>
                                                         <router-link :to="{name: 'superv.add-rating', params: {userId: teacher.id}}" class="dropdown-item"><i class="fas fa-star"></i> Add / Edit Review</router-link>
                                                     </div>

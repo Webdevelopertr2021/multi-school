@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AssignedSupervisor;
 use App\Models\TeacherRating;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class SupervisorController extends Controller
@@ -41,16 +42,33 @@ class SupervisorController extends Controller
             {
                 $rv = null;
                 $reviewFound = false;
-                if($review = TeacherRating::where("teacher_id",$user->id)->where("supervisor_id",auth("supervisor")->user()->id)->first())
+                if($review = TeacherRating::where("teacher_id",$user->id)->where("supervisor_id",auth("supervisor")->user()->id)
+                ->whereMonth("created_at","=",Carbon::now())
+                ->get())
                 {
                     $rv = $review;
-                    $reviewFound = true;
+                    if(count($review) >= 4)
+                    {
+                        $reviewFound = true;
+                    }
                 }
+
+                $i = 0;
+                $monthlyPoint = 0;
+                foreach($rv as $rev)
+                {
+                    $i++;
+                    $monthlyPoint += $rev->total;
+                }
+
+                $monthlyPoint = round($monthlyPoint/$i,1);
+
                 return [
                     "status" => "ok",
                     "user" => $user,
                     "review" => $rv,
                     "reviewFound" => $reviewFound,
+                    "monthlyPoint" => $monthlyPoint,
                 ];
             }
             else

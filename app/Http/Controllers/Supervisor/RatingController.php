@@ -26,24 +26,17 @@ class RatingController extends Controller
         ]);
 
         $rating = null;
-        if(TeacherRating::where("supervisor_id",auth("supervisor")->user()->id)->first())
-        {
-            $rating = TeacherRating::where("supervisor_id",auth("supervisor")->user()->id)->first();
-            $msg = "Rating updated";
-        }
-        else
-        {
-            $rating = new TeacherRating();
-            $rating->teacher_id = $req->teacherId;
-            $rating->supervisor_id = auth("supervisor")->user()->id;
-            $msg = "Review submitted";
-        }
-
+        
+        $msg = "Review submitted";
+        $rating = new TeacherRating();
+        $rating->teacher_id = $req->teacherId;
+        $rating->supervisor_id = auth("supervisor")->user()->id;
         $rating->rate1 = $req->rate1;
         $rating->rate2 = $req->rate2;
         $rating->rate3 = $req->rate3;
         $rating->rate4 = $req->rate4;
         $rating->rate5 = $req->rate5;
+        $rating->total = ($req->rate1 + $req->rate2 + $req->rate3 + $req->rate4 + $req->rate5) / 5;
         $rating->feedback = $req->feedback;
         $rating->save();
 

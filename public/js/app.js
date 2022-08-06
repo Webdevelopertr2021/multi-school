@@ -7873,6 +7873,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -7887,7 +7892,10 @@ __webpack_require__.r(__webpack_exports__);
         rate5: 1,
         teacherId: this.$route.params.userId,
         feedback: ""
-      })
+      }),
+      reviews: [],
+      moment: moment,
+      monthlyPoint: 0
     };
   },
   methods: {
@@ -7905,16 +7913,8 @@ __webpack_require__.r(__webpack_exports__);
           _this.userData = data.user;
           _this.reviewData = data.review;
           _this.reviewFound = data.reviewFound;
-
-          if (data.reviewFound) {
-            _this.form.rate1 = data.review.rate1;
-            _this.form.rate2 = data.review.rate2;
-            _this.form.rate3 = data.review.rate3;
-            _this.form.rate4 = data.review.rate4;
-            _this.form.rate5 = data.review.rate5;
-            _this.form.feedback = data.review.feedback;
-          }
-
+          _this.reviews = data.review;
+          _this.monthlyPoint = data.monthlyPoint;
           _this.isLoading = false;
         } else {
           _this.$router.push({
@@ -7934,7 +7934,9 @@ __webpack_require__.r(__webpack_exports__);
         return resp.data;
       }).then(function (data) {
         if (data.status == "ok") {
-          swal.fire("Success", data.msg, "success");
+          swal.fire("Success", data.msg, "success").then(function () {
+            window.location.reload();
+          });
         }
       })["catch"](function (err) {
         console.error(err.response.data);
@@ -7959,6 +7961,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var vue_moments_ago__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-moments-ago */ "./node_modules/vue-moments-ago/src/main.js");
 //
 //
 //
@@ -8069,7 +8072,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    VueMomentsAgo: vue_moments_ago__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   data: function data() {
     return {
       isLoading: true,
@@ -8128,8 +8137,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
-//
 //
 //
 //
@@ -63677,75 +63684,24 @@ var render = function () {
         ),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
-          _vm.reviewFound
-            ? _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-12 border-top pt-3" }, [
-                  _c("div", { staticClass: "mb-4 text-center" }, [
-                    _vm._m(0),
-                    _vm._v(" "),
-                    _c("p", [_vm._v(_vm._s(_vm.form.feedback))]),
-                  ]),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "mb-3 text-center" }),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "row mb-5 mb-4 justify-content-center" },
-                    [
-                      _c("div", { staticClass: "col-md-2" }, [
-                        _c("div", { staticClass: "rating-thumb" }, [
-                          _c("span", [_vm._v(_vm._s(_vm.form.rate1))]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "text-muted" }, [
-                            _vm._v("Performance"),
-                          ]),
-                        ]),
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-2" }, [
-                        _c("div", { staticClass: "rating-thumb" }, [
-                          _c("span", [_vm._v(_vm._s(_vm.form.rate2))]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "text-muted" }, [
-                            _vm._v("Behaviour"),
-                          ]),
-                        ]),
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-2" }, [
-                        _c("div", { staticClass: "rating-thumb" }, [
-                          _c("span", [_vm._v(_vm._s(_vm.form.rate3))]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "text-muted" }, [
-                            _vm._v("Subject knowledge"),
-                          ]),
-                        ]),
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-2" }, [
-                        _c("div", { staticClass: "rating-thumb" }, [
-                          _c("span", [_vm._v(_vm._s(_vm.form.rate4))]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "text-muted" }, [
-                            _vm._v("Attitude"),
-                          ]),
-                        ]),
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-2" }, [
-                        _c("div", { staticClass: "rating-thumb" }, [
-                          _c("span", [_vm._v(_vm._s(_vm.form.rate5))]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "text-muted" }, [
-                            _vm._v("Personality"),
-                          ]),
-                        ]),
-                      ]),
-                    ]
-                  ),
-                ]),
-              ])
-            : _c(
+          _c("div", { staticClass: "d-flex justify-content-between" }, [
+            _c("h6", { staticClass: "mb-3" }, [
+              _vm._v("Current month : "),
+              _c("strong", { staticClass: "text-muted" }, [
+                _vm._v(_vm._s(_vm.moment().format("MMMM"))),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c("h6", [
+              _vm._v("This month rating points : "),
+              _c("strong", { staticClass: "text-warning" }, [
+                _vm._v(_vm._s(_vm.monthlyPoint)),
+              ]),
+            ]),
+          ]),
+          _vm._v(" "),
+          !_vm.reviewFound
+            ? _c(
                 "form",
                 {
                   staticClass: "row",
@@ -63757,7 +63713,14 @@ var render = function () {
                   },
                 },
                 [
-                  _vm._m(1),
+                  _c("div", { staticClass: "col-12 mb-4" }, [
+                    _c("h6", [
+                      _vm._v(_vm._s(_vm.reviews.length) + " Review Submitted "),
+                      _c("i", { staticClass: "fas fa-star text-warning" }),
+                    ]),
+                    _vm._v(" "),
+                    _c("hr"),
+                  ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-12 mb-4" }, [
                     _c("h5", [_vm._v("Performance")]),
@@ -65330,7 +65293,7 @@ var render = function () {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-12 mb-4" }, [
-                    _vm._m(2),
+                    _vm._m(0),
                     _vm._v(" "),
                     _c("textarea", {
                       directives: [
@@ -65371,7 +65334,95 @@ var render = function () {
                     1
                   ),
                 ]
-              ),
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "row" },
+            _vm._l(_vm.reviews, function (review, i) {
+              return _c(
+                "div",
+                { key: i, staticClass: "col-md-12 border-top pt-3" },
+                [
+                  _c("p", { staticClass: "text-end text-muted" }, [
+                    _c("strong", [
+                      _vm._v(
+                        _vm._s(
+                          _vm.moment(review.created_at).format("DD MMMM YYYY")
+                        )
+                      ),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "mb-4 text-center" }, [
+                    _vm._m(1, true),
+                    _vm._v(" "),
+                    _c("p", [_vm._v(_vm._s(review.feedback))]),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "mb-3 text-center" }),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "row mb-5 mb-4 justify-content-center" },
+                    [
+                      _c("div", { staticClass: "col-md-2" }, [
+                        _c("div", { staticClass: "rating-thumb" }, [
+                          _c("span", [_vm._v(_vm._s(review.rate1))]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-muted" }, [
+                            _vm._v("Performance"),
+                          ]),
+                        ]),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-2" }, [
+                        _c("div", { staticClass: "rating-thumb" }, [
+                          _c("span", [_vm._v(_vm._s(review.rate2))]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-muted" }, [
+                            _vm._v("Behaviour"),
+                          ]),
+                        ]),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-2" }, [
+                        _c("div", { staticClass: "rating-thumb" }, [
+                          _c("span", [_vm._v(_vm._s(review.rate3))]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-muted" }, [
+                            _vm._v("Subject knowledge"),
+                          ]),
+                        ]),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-2" }, [
+                        _c("div", { staticClass: "rating-thumb" }, [
+                          _c("span", [_vm._v(_vm._s(review.rate4))]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-muted" }, [
+                            _vm._v("Attitude"),
+                          ]),
+                        ]),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-2" }, [
+                        _c("div", { staticClass: "rating-thumb" }, [
+                          _c("span", [_vm._v(_vm._s(review.rate5))]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-muted" }, [
+                            _vm._v("Personality"),
+                          ]),
+                        ]),
+                      ]),
+                    ]
+                  ),
+                ]
+              )
+            }),
+            0
+          ),
         ]),
       ]),
     ]),
@@ -65382,28 +65433,15 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "" } }, [_c("b", [_vm._v("Feedback")])])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-12 mb-4" }, [
-      _c("h6", [
-        _vm._v("Review "),
-        _c("i", { staticClass: "fas fa-star text-warning" }),
-      ]),
-      _vm._v(" "),
-      _c("hr"),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("label", { attrs: { for: "" } }, [
       _c("b", [_vm._v("Write your feedback")]),
     ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "" } }, [_c("b", [_vm._v("Feedback")])])
   },
 ]
 render._withStripped = true
@@ -65547,20 +65585,40 @@ var render = function () {
                       { key: i, staticClass: "col-md-12 border-top pt-3" },
                       [
                         _c(
-                          "p",
-                          { staticClass: "text-muted text-right m-0" },
+                          "div",
+                          {
+                            staticClass: "d-flex justify-content-between mb-1",
+                          },
                           [
-                            _c("vue-moments-ago", {
-                              staticClass: "time",
-                              attrs: {
-                                prefix: "",
-                                suffix: "ago",
-                                date: rate.created_at,
-                                lang: "en",
-                              },
-                            }),
-                          ],
-                          1
+                            _c("p", { staticClass: "text-muted" }, [
+                              _c("strong", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm
+                                      .moment(rate.created_at)
+                                      .format("DD MMMM YYYY")
+                                  )
+                                ),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "p",
+                              { staticClass: "text-muted text-end m-0" },
+                              [
+                                _c("vue-moments-ago", {
+                                  staticClass: "time",
+                                  attrs: {
+                                    prefix: "",
+                                    suffix: "ago",
+                                    date: rate.created_at,
+                                    lang: "en",
+                                  },
+                                }),
+                              ],
+                              1
+                            ),
+                          ]
                         ),
                         _vm._v(" "),
                         _c("div", { staticClass: "d-flex" }, [
@@ -65583,26 +65641,7 @@ var render = function () {
                             _c(
                               "div",
                               { staticClass: "d-flex justify-content-between" },
-                              [
-                                _c("h6", [_vm._v(_vm._s(rate.rater.name))]),
-                                _vm._v(" "),
-                                _c(
-                                  "p",
-                                  { staticClass: "text-muted m-0" },
-                                  [
-                                    _c("vue-moments-ago", {
-                                      staticClass: "time",
-                                      attrs: {
-                                        prefix: "",
-                                        suffix: "ago",
-                                        date: rate.created_at,
-                                        lang: "en",
-                                      },
-                                    }),
-                                  ],
-                                  1
-                                ),
-                              ]
+                              [_c("h6", [_vm._v(_vm._s(rate.rater.name))])]
                             ),
                             _vm._v(" "),
                             _c("p", { staticClass: "m-0" }, [
@@ -65859,10 +65898,6 @@ var render = function () {
                                               "div",
                                               { staticClass: "dropdown-menu" },
                                               [
-                                                _vm._m(3, true),
-                                                _vm._v(" "),
-                                                _vm._m(4, true),
-                                                _vm._v(" "),
                                                 _c(
                                                   "router-link",
                                                   {
@@ -65973,24 +66008,6 @@ var staticRenderFns = [
       _c("td", { staticClass: "text-danger", attrs: { colspan: "6" } }, [
         _vm._v("No teacher found"),
       ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-      _c("i", { staticClass: "fas fa-edit" }),
-      _vm._v(" Edit"),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-      _c("i", { staticClass: "fas fa-eye" }),
-      _vm._v(" View"),
     ])
   },
 ]
