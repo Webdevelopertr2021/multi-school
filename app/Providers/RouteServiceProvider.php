@@ -20,7 +20,8 @@ class RouteServiceProvider extends ServiceProvider
     public const ADMIN = [
         "" => "/admin/dashboard",
         "web" => "/admin/dashboard",
-        "supervisor" => "/supervisor/dashboard"
+        "supervisor" => "/supervisor/dashboard",
+        "teacher" => "/teacher/dashboard"
     ];
 
     /**
