@@ -211,6 +211,14 @@ const routes = new VueRouter({
             meta: {
                 title: "Edit admin profile",
             }
+        },
+        {
+            path: prefix + "my-profile",
+            name: "admin.my-profile",
+            component: MyProfile,
+            meta: {
+                title : "My profile"
+            }
         }
     ],
     scrollBehavior(to, from, savedPos) {

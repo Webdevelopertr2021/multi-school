@@ -33,9 +33,9 @@
              <span class="d-sm-none d-lg-inline-block"></span></a>
         <div class="dropdown-menu dropdown-menu-right pullDown">
           <div class="dropdown-title">Hello {{ auth()->user()->name }}</div>
-          <a href="profile.html" class="dropdown-item has-icon"> <i class="far
+          <router-link  :to="{name: 'admin.my-profile'}" class="dropdown-item has-icon"> <i class="far
                                     fa-user"></i>My Profile
-          </a> 
+          </router-link> 
           <router-link :to="{name: 'admin.admin-list'}" href="timeline.html" class="dropdown-item has-icon"> <i class="fas fa-bolt"></i>
             Admins
           </router-link>

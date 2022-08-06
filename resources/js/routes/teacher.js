@@ -12,6 +12,7 @@ import MyStudent from "../components/Teacher/Students/List.vue";
 import StudentRatings from "../components/Teacher/Students/StudentRatings.vue";
 import StudentSubmitReview from "../components/Teacher/Students/SubmitReview.vue";
 import Dashboard from "../components/Teacher/dashboard/Dashboard.vue";
+import MyProfile from "../components/Teacher/dashboard/MyProfile.vue";
 // End
 
 const prefix = "/teacher/"
@@ -74,6 +75,14 @@ const routes = new VueRouter({
                     component: StudentSubmitReview,
                     meta : {
                         title: "Submit Review"
+                    }
+                },
+                {
+                    path: prefix + "my-profile",
+                    name: "teacher.my-profile",
+                    component: MyProfile,
+                    meta : {
+                        title: "My profile"
                     }
                 }
             ]

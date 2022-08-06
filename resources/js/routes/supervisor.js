@@ -10,6 +10,7 @@ import Rating from "../components/Supervisor/rating/Rating.vue";
 import LeaveRequest from "../components/Supervisor/LeaveRequest/List.vue";
 import NotificationList from "../components/NotifcationList.vue";
 import AllRatings from "../components/Supervisor/teacher/AllRatings.vue";
+import MyProfile from "../components/Supervisor/dashboard/MyProfile.vue";
 // End
 const prefix = "/supervisor/"
 const routes = new VueRouter({
@@ -63,6 +64,14 @@ const routes = new VueRouter({
             component: AllRatings,
             meta: {
                 title : "Teacher ratings"
+            }
+        },
+        {
+            path: prefix + "my-profile",
+            name: "superv.my-profile",
+            component: MyProfile,
+            meta : {
+                title: "My Profile"
             }
         }
     ],

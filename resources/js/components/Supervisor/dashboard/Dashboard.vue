@@ -47,7 +47,7 @@
                 <li class="list-group-item"><b>Email : {{ dashboardData.user.email }}</b></li>
                 <li class="list-group-item"><b>School : {{ dashboardData.school.name }}</b> </li>
               </ul>
-              <button class="btn btn-sm btn-warning text-white">Edit profile</button>
+              <router-link :to="{name: 'superv.my-profile'}" class="btn btn-sm btn-warning text-white">Edit profile</router-link>
             </div>
 
             <div class="col-md-6 mb-4">

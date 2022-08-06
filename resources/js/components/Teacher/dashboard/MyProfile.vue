@@ -78,9 +78,10 @@ export default {
       }
     },
     getMyProfile() {
-      axios.get("/admin/api/get-my-profile-data").then(resp=>{
+      axios.get("/teacher/api/get-my-profile-data").then(resp=>{
         return resp.data;
       }).then(data=>{
+        console.log(data);
         if(data.status == "ok") {
           this.form.name = data.user.name;
           this.form.email = data.user.email;
@@ -92,18 +93,18 @@ export default {
         }
         else {
           this.$router.push({
-            name: "admin.home"
+            name: "teacher.home"
           })
         }
       }).catch(err=>{
         this.$router.push({
-          name: "admin.dashboard"
+          name: "teacher.home"
         })
         console.error(err.response.data);
       })
     },
     async updateProfile() {
-      await this.form.post('/admin/api/update-my-profile').then(resp=>{
+      await this.form.post('/teacher/api/update-my-profile').then(resp=>{
         return resp.data;
       }).then(data=>{
         if(data.status == "ok") {

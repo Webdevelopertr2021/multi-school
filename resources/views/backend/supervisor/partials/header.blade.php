@@ -80,13 +80,9 @@
             <span class="d-sm-none d-lg-inline-block"></span></a>
         <div class="dropdown-menu dropdown-menu-right pullDown">
           <div class="dropdown-title">Hello {{ auth()->user()->name }}</div>
-          <a href="profile.html" class="dropdown-item has-icon"> <i class="far
-                                    fa-user"></i> Profile
-          </a> <a href="timeline.html" class="dropdown-item has-icon"> <i class="fas fa-bolt"></i>
-            Activities
-          </a> <a href="#" class="dropdown-item has-icon"> <i class="fas fa-cog"></i>
-            Settings
-          </a>
+          <router-link :to="{name : 'superv.my-profile'}" class="dropdown-item has-icon"> <i class="far
+                                    fa-user"></i> My Profile
+          </router-link>
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item has-icon text-danger" onclick="event.preventDefault();
           document.getElementById('logout-form').submit();"> <i class="fas fa-sign-out-alt"></i>

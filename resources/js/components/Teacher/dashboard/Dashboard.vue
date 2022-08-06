@@ -49,7 +49,7 @@
                 <li class="list-group-item"><b>Class : {{ dashboardData.user.classes.name }}</b> </li>
                 <li class="list-group-item"><b>Section : {{ dashboardData.user.section.name }}</b> </li>
               </ul>
-              <button class="btn btn-sm btn-warning text-white">Edit profile</button>
+              <router-link :to="{name: 'teacher.my-profile'}" class="btn btn-sm btn-warning text-white">Edit profile</router-link>
             </div>
 
             <div class="col-md-6 mb-4">
