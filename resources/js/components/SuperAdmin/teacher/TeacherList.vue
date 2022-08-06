@@ -139,6 +139,16 @@ export default {
                 }
             })
         });
+
+        $(document).on("click","button[data-rate-btn]",function(){
+            var teacherId = $(this).data("rate-btn");
+            _self.$router.push({
+                name: 'admin.teacher-ratings',
+                params: {
+                    teacherId: teacherId
+                }
+            })
+        });
     }
 }
 </script>

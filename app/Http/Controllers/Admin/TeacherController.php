@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AssignedSupervisor;
 use App\Models\Classes;
 use App\Models\Section;
+use App\Models\TeacherRating;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -76,6 +77,7 @@ class TeacherController extends Controller
             $html = "
             <button data-edit-teacher='$row->id' class='btn btn-sm btn-warning'><i class='fas fa-edit'></i></button>
             <button data-delete-teacher='$row->id' class='btn btn-sm btn-danger'><i class='fas fa-trash'></i></button>
+            <button data-rate-btn='$row->id' class='btn btn-sm btn-primary'><i class='fas fa-star'></i></button>
             ";
             return $html;
         })
@@ -126,6 +128,45 @@ class TeacherController extends Controller
                 "selectedSection" => $data->section,
                 "supervisors" => $supervisors,
                 "selectedSupervisors" => $selectedSuperVisors,
+            ];
+        }
+        else
+        {
+            return [
+                "status" => "fail"
+            ];
+        }
+    }
+
+    public function getTeacherRating(Request $req)
+    {
+        if($teacher = User::with("school:id,name")->find($req->userId,["id","name","school_id","photo","photo_url"]))
+        {
+            $ratings = TeacherRating::where("teacher_id",$teacher->id)->with("rater:id,name,photo,photo_url")->paginate(6);
+
+            $totalPoints = 0;
+            $totalRates = 0;
+            foreach($ratings as $rate)
+            {
+                $totalRates += 5;
+                $totalPoints += $rate->rate1;
+                $totalPoints += $rate->rate2;
+                $totalPoints += $rate->rate3;
+                $totalPoints += $rate->rate4;
+                $totalPoints += $rate->rate5;
+            }
+            
+            $final = 0;
+            if($totalPoints > 0)
+            {
+                $final = $totalPoints/$totalRates;
+            }
+
+            return [
+                "status" => "ok",
+                "ratings" => $ratings,
+                "teacherData" => $teacher,
+                "totalPoint" => $final,
             ];
         }
         else

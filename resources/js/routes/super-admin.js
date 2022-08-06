@@ -27,6 +27,7 @@ import AdminDashboard from "../components/SuperAdmin/home/Dashboard.vue";
 import CreateAdmin from "../components/SuperAdmin/admins/Create.vue";
 import EditAdmin from "../components/SuperAdmin/admins/Edit.vue";
 import MyProfile from "../components/SuperAdmin/admins/MyProfile.vue";
+import TeacherRatings from "../components/SuperAdmin/teacher/AllRatings.vue";
 // End
 
 const prefix = "/admin/"
@@ -186,6 +187,14 @@ const routes = new VueRouter({
             component: EditTeacher,
             meta : {
                 title: "Teacher Edit"
+            }
+        },
+        {
+            path: prefix + "teacher-ratings/:teacherId",
+            name: "admin.teacher-ratings",
+            component: TeacherRatings,
+            meta: {
+                title: "Teacher Rating"
             }
         },
         {
