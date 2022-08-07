@@ -152,10 +152,10 @@ class SuperVisorController extends Controller
     {
         $school = $req->schoolId;
         $data = User::where("role","supervisor");
-        if($school != "")
-        {
-            $data->where("school_id",$school);
-        }
+        // if($school != "")
+        // {
+        //     $data->where("school_id",$school);
+        // }
         $data = $data->get(['id',"name"]);
 
         return response()->json($data);
