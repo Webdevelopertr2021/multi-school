@@ -2766,45 +2766,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       isLoading: true,
-      paginateData: {},
       moment: moment
     };
   },
@@ -2812,8 +2777,7 @@ __webpack_require__.r(__webpack_exports__);
     getList: function getList() {
       var _this = this;
 
-      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      axios.get("/admin/api/get-leave-request?page=" + page).then(function (resp) {
+      axios.get("/admin/api/get-leave-request").then(function (resp) {
         return resp.data;
       }).then(function (data) {
         if (data.status == "ok") {
@@ -2867,7 +2831,56 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    this.getList();
+    var _self = this;
+
+    $("#datatable").DataTable({
+      processing: true,
+      serverside: true,
+      ajax: '/admin/api/get-leave-request',
+      lengthChange: true,
+      columns: [{
+        data: "photo"
+      }, {
+        data: "request_by"
+      }, {
+        data: "subject"
+      }, {
+        data: "date_range"
+      }, {
+        data: "total_day"
+      }, {
+        data: "application_date"
+      }, {
+        data: "status"
+      } // { data: 'action', name: 'action', orderable: false, searchable: false  }
+      ],
+      dom: 'Bfrtip',
+      buttons: [{
+        extend: 'copyHtml5',
+        exportOptions: {
+          columns: [0, ':visible']
+        }
+      }, {
+        extend: 'excelHtml5',
+        exportOptions: {
+          columns: ':visible'
+        }
+      }, {
+        extend: 'pdfHtml5',
+        exportOptions: {
+          columns: ':visible'
+        }
+      }, {
+        extend: 'colvis',
+        text: '<i class="fas fa-eye"></i> Columns'
+      }],
+      createdRow: function createdRow(row, data, dataIndex) {
+        // Set the data-status attribute, and add a class
+        $(row).addClass("text-center");
+      }
+    });
+    $('#datatable').removeClass("dataTable");
+    $('#datatable').css("width", "100%");
   }
 });
 
@@ -56050,216 +56063,60 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row justify-content-center" }, [
-    _c("div", { staticClass: "col-md-12" }, [
-      _c("div", { staticClass: "card" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-body" }, [
-          _vm.isLoading
-            ? _c(
-                "div",
-                { staticClass: "row" },
-                _vm._l(10, function (n) {
-                  return _c(
-                    "div",
-                    { key: n, staticClass: "col-12 mb-2" },
-                    [
-                      _c("skeleton", {
-                        attrs: { width: "100%", height: "40px" },
-                      }),
-                    ],
-                    1
-                  )
-                }),
-                0
-              )
-            : _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-12" }, [
-                  _c("div", { staticClass: "table-responsive" }, [
-                    _c("table", { staticClass: "table" }, [
-                      _vm._m(1),
-                      _vm._v(" "),
-                      _c(
-                        "tbody",
-                        [
-                          _vm.paginateData.data.length <= 0
-                            ? [_vm._m(2)]
-                            : _vm._l(_vm.paginateData.data, function (req, i) {
-                                return _c(
-                                  "tr",
-                                  { key: i, staticClass: "text-center" },
-                                  [
-                                    _c("td", [
-                                      req.teacher.photo == null
-                                        ? _c("img", {
-                                            staticClass: "user-thumb-40",
-                                            attrs: {
-                                              src: "/image/portrait-placeholder.png",
-                                              alt: "",
-                                            },
-                                          })
-                                        : _c("img", {
-                                            staticClass: "user-thumb-40",
-                                            attrs: {
-                                              src: req.teacher.photo_url,
-                                              alt: "",
-                                            },
-                                          }),
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _c("b", [
-                                        _vm._v(_vm._s(req.teacher.name)),
-                                      ]),
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _vm._v(_vm._s(req.leave.subject)),
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _vm._v(
-                                        _vm._s(req.leave.from_date) +
-                                          " to " +
-                                          _vm._s(req.leave.to_date)
-                                      ),
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _vm._v(_vm._s(req.leave.total_days)),
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _vm._v(
-                                        _vm._s(
-                                          _vm
-                                            .moment(req.leave.created_at)
-                                            .format("DD MMMM YYYY")
-                                        )
-                                      ),
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      req.status == "pending"
-                                        ? _c(
-                                            "span",
-                                            {
-                                              staticClass:
-                                                "bage badge-pill badge-warning",
-                                            },
-                                            [_vm._v("Pending")]
-                                          )
-                                        : req.status == "rejected"
-                                        ? _c(
-                                            "span",
-                                            {
-                                              staticClass:
-                                                "bage badge-pill badge-danger",
-                                            },
-                                            [_vm._v("Rejected")]
-                                          )
-                                        : req.status == "approved"
-                                        ? _c(
-                                            "span",
-                                            {
-                                              staticClass:
-                                                "bage badge-pill badge-success",
-                                            },
-                                            [_vm._v("Approved")]
-                                          )
-                                        : _vm._e(),
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _c(
-                                        "button",
-                                        {
-                                          staticClass: "btn btn-primary btn-sm",
-                                          on: {
-                                            click: function ($event) {
-                                              return _vm.actionModal(req, i)
-                                            },
-                                          },
-                                        },
-                                        [
-                                          _vm._v("Take action "),
-                                          _c("i", {
-                                            staticClass: "fas fa-arrow-right",
-                                          }),
-                                        ]
-                                      ),
-                                    ]),
-                                  ]
-                                )
-                              }),
-                        ],
-                        2
-                      ),
-                    ]),
-                  ]),
-                ]),
-              ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
-            _c(
-              "div",
-              { staticClass: "col-md-12 d-flex justify-content-center" },
-              [
-                _c("pagination", {
-                  attrs: { data: _vm.paginateData },
-                  on: { "pagination-change-page": _vm.getList },
-                }),
-              ],
-              1
-            ),
-          ]),
-        ]),
-      ]),
-    ]),
-  ])
+  return _vm._m(0)
 }
 var staticRenderFns = [
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "card-header d-flex justify-content-between" },
-      [_c("h4", [_vm._v("Leave Requests")])]
-    )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", { staticClass: "text-center" }, [
-        _c("th", [_vm._v("Photo")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Requested by")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Subject")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Date range")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Total")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Application date")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Status")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Action")]),
+    return _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "card" }, [
+          _c(
+            "div",
+            { staticClass: "card-header d-flex justify-content-between" },
+            [_c("h4", [_vm._v("Leave Requests")])]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-12" }, [
+                _c("div", { staticClass: "table-responsive" }, [
+                  _c(
+                    "table",
+                    {
+                      staticClass: "table table-striped table-bordered",
+                      attrs: { id: "datatable" },
+                    },
+                    [
+                      _c("thead", [
+                        _c("tr", { staticClass: "text-center" }, [
+                          _c("th", [_vm._v("Photo")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Requested By")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Subject")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Date Range")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Total days")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Application Date")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Status")]),
+                        ]),
+                      ]),
+                      _vm._v(" "),
+                      _c("tbody"),
+                    ]
+                  ),
+                ]),
+              ]),
+            ]),
+          ]),
+        ]),
       ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", { staticClass: "text-center" }, [
-      _c("td", { staticClass: "text-danger" }, [_vm._v("No data found")]),
     ])
   },
 ]

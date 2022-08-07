@@ -7,6 +7,8 @@ use App\Models\LeaveRequest;
 use App\Models\LeaveRequestApproval;
 use Illuminate\Http\Request;
 use App\Models\Notification as CustomNotification;
+use Carbon\Carbon;
+use DataTables;
 
 class LeaveRequestController extends Controller
 {
@@ -17,12 +19,58 @@ class LeaveRequestController extends Controller
 
     public function getList(Request $req)
     {
-        $leaves = LeaveRequestApproval::with("teacher:id,name,photo,photo_url")->with("leave")->paginate(10);
+        $leaves = LeaveRequestApproval::with("teacher:id,name,photo,photo_url")->with("leave");
 
-        return [
-            "status" => "ok",
-            "leaves" => $leaves,
-        ];
+        return DataTables::of($leaves)
+        ->addColumn("photo",function($row){
+            if($row->teacher->photo == "")
+            {
+                $html = '<img class="user-thumb-40" src="/image/portrait-placeholder.png" alt="">';
+            }
+            else
+            {
+                $html = '<img class="user-thumb-40" src="'.$row->teacher->photo_url.'" alt="">';
+            }
+            return $html; 
+        })
+        
+        ->addColumn("request_by",function($row){
+          return $row->teacher->name;      
+        })
+        ->addColumn("subject",function($row){
+            return $row->leave->subject;
+        })
+        ->addColumn("date_range",function($row){
+            $text = Carbon::parse($row->leave->from_date)->format("d M Y"). " - " . Carbon::parse($row->leave->to_date)->format("d M Y");
+            return $text;
+        })
+        ->addColumn("total_day",function($row){
+            return $row->leave->total_days . " days";
+        })
+        ->addColumn("application_date",function($row){
+            return Carbon::parse($row->leave->created_at)->format("d M Y - H:i A");
+        })
+        ->addColumn("status",function($row){
+            if($row->leave->status == "pending")
+            {
+                $html = '<span class="bage badge-pill badge-warning">Pending</span>';
+            }
+            else if($row->leave->status == "rejected")
+            {
+                $html = '<span class="bage badge-pill badge-danger">Rejected</span>';
+            }
+            else if($row->leave->status == "approved")
+            {
+                $html = '<span class="bage badge-pill badge-success">Approved</span>';
+            }
+            return $html;
+        })
+        // ->addColumn("action",function($row){
+        //     $html = '<button class="btn btn-primary btn-sm">Take action <i class="fas fa-arrow-right"></i></button>';
+        //     return $html;
+        // })
+        ->rawColumns(["photo","status"])
+        ->make(true);
     }
 
     public function updateStatus(Request $req)
