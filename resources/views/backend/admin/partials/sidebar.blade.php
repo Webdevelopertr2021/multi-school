@@ -43,6 +43,11 @@
         <li class="dropdown">
           <router-link :to="{name: 'admin.all-teacher'}" class="nav-link"><i data-feather="users"></i><span>All Teachers</span></router-link>
         </li>
+
+        <li class="dropdown">
+          <router-link :to="{name: 'admin.leave-request'}" class="nav-link"><i data-feather="minus-square"></i>
+            <span>Leave Requests</span></router-link>
+        </li>  
         
 
       </ul>

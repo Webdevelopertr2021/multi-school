@@ -28,6 +28,7 @@ import CreateAdmin from "../components/SuperAdmin/admins/Create.vue";
 import EditAdmin from "../components/SuperAdmin/admins/Edit.vue";
 import MyProfile from "../components/SuperAdmin/admins/MyProfile.vue";
 import TeacherRatings from "../components/SuperAdmin/teacher/AllRatings.vue";
+import LeaveRequest from "../components/SuperAdmin/LeaveRequest/List.vue";
 // End
 
 const prefix = "/admin/"
@@ -227,6 +228,14 @@ const routes = new VueRouter({
             component: MyProfile,
             meta: {
                 title : "My profile"
+            }
+        },
+        {
+            path: prefix+ "leave-request",
+            name: "admin.leave-request",
+            component:LeaveRequest,
+            meta : {
+                title: "Leave requests"
             }
         }
     ],

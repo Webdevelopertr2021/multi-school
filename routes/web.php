@@ -138,6 +138,12 @@ Route::group(["prefix"=>"admin","middleware"=>"auth"],function(){
 
         // End
 
+        // Leave request
+
+        Route::get("/get-leave-request","Admin\LeaveRequestController@getList");
+
+        // end
+
 
     });
 });
