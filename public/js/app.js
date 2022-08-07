@@ -9047,19 +9047,132 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     VueMomentsAgo: vue_moments_ago__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   data: function data() {
+    var start = 2022;
+    var end = moment().format("YYYY");
+    var years = [];
+
+    while (start <= end) {
+      years.push(start);
+      start++;
+    }
+
     return {
       isLoading: true,
       totalPoint: 0,
       isRatingLoading: true,
       studentData: null,
       ratingData: {},
-      rates: []
+      rates: [],
+      overallReviewCount: 0,
+      filterYear: moment().format("YYYY"),
+      filterMonth: "",
+      years: years,
+      filterMode: false,
+      filterRates: [],
+      selectedMonth: "",
+      selectedYear: "",
+      monthlyRate: 0,
+      moment: moment
     };
   },
   methods: {
@@ -9081,6 +9194,7 @@ __webpack_require__.r(__webpack_exports__);
           _this.isLoading = false;
           _this.ratingData = data.ratings;
           _this.rates = data.ratings.data;
+          _this.overallReviewCount = data.totalRatingCount;
           _this.isRatingLoading = false;
         } else {
           _this.$router.push({
@@ -9090,6 +9204,34 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (err) {
         console.error(err.response.data);
       });
+    },
+    filterRatings: function filterRatings() {
+      var _this2 = this;
+
+      if (this.filterYear != "" && this.filterMonth != "") {
+        this.filterMode = true;
+        this.isRatingLoading = true;
+        axios.get("/teacher/api/get-student-ratings", {
+          params: {
+            studentId: this.$route.params.studentId,
+            year: this.filterYear,
+            month: this.filterMonth
+          }
+        }).then(function (resp) {
+          return resp.data;
+        }).then(function (data) {
+          _this2.filterRates = data.review;
+          _this2.selectedMonth = data.selectedMonth;
+          _this2.selectedYear = data.selectedYear;
+          _this2.monthlyRate = data.monthlyPoint;
+          _this2.isRatingLoading = false;
+        })["catch"](function (err) {
+          console.error(err.response.data);
+        });
+      } else {
+        this.filterMode = false;
+        this.isRatingLoading = false;
+      }
     }
   },
   mounted: function mounted() {
@@ -9427,6 +9569,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -9441,7 +9591,10 @@ __webpack_require__.r(__webpack_exports__);
         rate5: 1,
         studentId: this.$route.params.studentId,
         feedback: ""
-      })
+      }),
+      totalReview: 0,
+      monthlyPoint: 0,
+      review: []
     };
   },
   methods: {
@@ -9461,16 +9614,9 @@ __webpack_require__.r(__webpack_exports__);
           _this.userData = data.student;
           _this.reviewData = data.review;
           _this.reviewFound = data.reviewFound;
-
-          if (data.reviewFound) {
-            _this.form.rate1 = data.review.rate1;
-            _this.form.rate2 = data.review.rate2;
-            _this.form.rate3 = data.review.rate3;
-            _this.form.rate4 = data.review.rate4;
-            _this.form.rate5 = data.review.rate5;
-            _this.form.feedback = data.review.feedback;
-          }
-
+          _this.totalReview = data.totalReview;
+          _this.monthlyPoint = data.monthlyPoint;
+          _this.review = data.review;
           _this.isLoading = false;
         } else {
           _this.$router.push({
@@ -9492,14 +9638,13 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     submitReview: function submitReview() {
-      var _this2 = this;
-
       this.form.post("/teacher/api/submit-review").then(function (resp) {
         return resp.data;
       }).then(function (data) {
         if (data.status == "ok") {
-          swal.fire("Success", data.msg, "success");
-          _this2.reviewFound = true;
+          swal.fire("Success", data.msg, "success").then(function () {
+            window.location.reload();
+          });
         }
       })["catch"](function (err) {
         console.error(err.response.data);
@@ -67533,11 +67678,14 @@ var render = function () {
                       ]),
                       _vm._v(" "),
                       _c("p", { staticClass: "m-0" }, [
-                        _c("b", [_vm._v("Total Rating ")]),
+                        _c("b", [_vm._v("Overall Rating ")]),
                         _vm._v(":   "),
                         _c("span", { staticClass: "text-warning" }, [
                           _vm._v(_vm._s(_vm.totalPoint)),
                         ]),
+                        _vm._v(
+                          " (" + _vm._s(_vm.overallReviewCount) + " Reviews)"
+                        ),
                       ]),
                     ]),
                   ]),
@@ -67552,6 +67700,133 @@ var render = function () {
         _vm._m(0),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
+          _c(
+            "form",
+            {
+              staticClass: "row mb-3",
+              on: {
+                submit: function ($event) {
+                  $event.preventDefault()
+                  return _vm.filterRatings.apply(null, arguments)
+                },
+              },
+            },
+            [
+              _c("div", { staticClass: "col-md-3 col-6" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.filterYear,
+                        expression: "filterYear",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    on: {
+                      change: function ($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function (o) {
+                            return o.selected
+                          })
+                          .map(function (o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.filterYear = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      },
+                    },
+                  },
+                  _vm._l(_vm.years, function (year) {
+                    return _c(
+                      "option",
+                      { key: year, domProps: { value: year } },
+                      [_vm._v(_vm._s(year))]
+                    )
+                  }),
+                  0
+                ),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3 col-6" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.filterMonth,
+                        expression: "filterMonth",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    on: {
+                      change: function ($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function (o) {
+                            return o.selected
+                          })
+                          .map(function (o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.filterMonth = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      },
+                    },
+                  },
+                  [
+                    _c("option", { attrs: { value: "" } }, [_vm._v("None")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "1" } }, [
+                      _vm._v("January"),
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "2" } }, [
+                      _vm._v("February"),
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "3" } }, [_vm._v("March")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "4" } }, [_vm._v("April")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "5" } }, [_vm._v("May")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "6" } }, [_vm._v("June")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "7" } }, [_vm._v("July")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "8" } }, [_vm._v("August")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "9" } }, [
+                      _vm._v("September"),
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "10" } }, [
+                      _vm._v("October"),
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "11" } }, [
+                      _vm._v("November"),
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "12" } }, [
+                      _vm._v("December"),
+                    ]),
+                  ]
+                ),
+              ]),
+              _vm._v(" "),
+              _vm._m(1),
+            ]
+          ),
+          _vm._v(" "),
           _vm.isRatingLoading
             ? _c(
                 "div",
@@ -67570,30 +67845,72 @@ var render = function () {
                 }),
                 0
               )
-            : _c(
+            : _vm._e(),
+          _vm._v(" "),
+          !_vm.isRatingLoading && _vm.filterMode
+            ? _c(
                 "div",
                 { staticClass: "row" },
                 [
-                  _vm._l(_vm.rates, function (rate, i) {
+                  _c("div", { staticClass: "col-12 mt-3" }, [
+                    _c("hr"),
+                    _vm._v(" "),
+                    _c("h6", { staticClass: "text-success" }, [
+                      _vm._v("Reviews of - "),
+                      _c("strong", { staticClass: "text-muted" }, [
+                        _vm._v(
+                          _vm._s(_vm.selectedMonth) +
+                            ", " +
+                            _vm._s(_vm.selectedYear)
+                        ),
+                      ]),
+                      _vm._v(" : "),
+                      _c("span", { staticClass: "text-warning" }, [
+                        _vm._v("(" + _vm._s(_vm.monthlyRate) + ")"),
+                      ]),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.filterRates, function (rate, i) {
                     return _c(
                       "div",
                       { key: i, staticClass: "col-md-12 border-top pt-3" },
                       [
                         _c(
-                          "p",
-                          { staticClass: "text-muted text-right m-0" },
+                          "div",
+                          {
+                            staticClass: "d-flex justify-content-between mb-1",
+                          },
                           [
-                            _c("vue-moments-ago", {
-                              staticClass: "time",
-                              attrs: {
-                                prefix: "",
-                                suffix: "ago",
-                                date: rate.created_at,
-                                lang: "en",
-                              },
-                            }),
-                          ],
-                          1
+                            _c("p", { staticClass: "text-muted" }, [
+                              _c("strong", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm
+                                      .moment(rate.created_at)
+                                      .format("DD MMMM YYYY")
+                                  )
+                                ),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "p",
+                              { staticClass: "text-muted text-end m-0" },
+                              [
+                                _c("vue-moments-ago", {
+                                  staticClass: "time",
+                                  attrs: {
+                                    prefix: "",
+                                    suffix: "ago",
+                                    date: rate.created_at,
+                                    lang: "en",
+                                  },
+                                }),
+                              ],
+                              1
+                            ),
+                          ]
                         ),
                         _vm._v(" "),
                         _c("div", { staticClass: "d-flex" }, [
@@ -67700,7 +68017,162 @@ var render = function () {
                   ),
                 ],
                 2
-              ),
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          !_vm.isRatingLoading && !_vm.filterMode
+            ? _c(
+                "div",
+                { staticClass: "row" },
+                [
+                  _vm._l(_vm.rates, function (rate, i) {
+                    return _c(
+                      "div",
+                      { key: i, staticClass: "col-md-12 border-top pt-3" },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "d-flex justify-content-between mb-1",
+                          },
+                          [
+                            _c("p", { staticClass: "text-muted" }, [
+                              _c("strong", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm
+                                      .moment(rate.created_at)
+                                      .format("DD MMMM YYYY")
+                                  )
+                                ),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "p",
+                              { staticClass: "text-muted text-end m-0" },
+                              [
+                                _c("vue-moments-ago", {
+                                  staticClass: "time",
+                                  attrs: {
+                                    prefix: "",
+                                    suffix: "ago",
+                                    date: rate.created_at,
+                                    lang: "en",
+                                  },
+                                }),
+                              ],
+                              1
+                            ),
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "d-flex" }, [
+                          _c("div", { staticClass: "text-center" }, [
+                            rate.rater.photo == null
+                              ? _c("img", {
+                                  staticClass: "user-thumb-40 border",
+                                  attrs: {
+                                    src: "/image/portrait-placeholder.png",
+                                    alt: "",
+                                  },
+                                })
+                              : _c("img", {
+                                  staticClass: "user-thumb-40 border",
+                                  attrs: { src: rate.rater.photo_url, alt: "" },
+                                }),
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "ml-3" }, [
+                            _c(
+                              "div",
+                              { staticClass: "d-flex justify-content-between" },
+                              [_c("h6", [_vm._v(_vm._s(rate.rater.name))])]
+                            ),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "m-0" }, [
+                              _vm._v(_vm._s(rate.feedback)),
+                            ]),
+                          ]),
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "row mt-3 justify-content-center" },
+                          [
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate1))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Performance"),
+                                ]),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate2))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Behaviour"),
+                                ]),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate3))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Subject knowledge"),
+                                ]),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate4))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Attitude"),
+                                ]),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate5))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Personality"),
+                                ]),
+                              ]),
+                            ]),
+                          ]
+                        ),
+                      ]
+                    )
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "col-md-12 d-flex justify-content-center mt-2",
+                    },
+                    [
+                      _c("pagination", {
+                        attrs: { data: _vm.ratingData },
+                        on: { "pagination-change-page": _vm.getStudentRating },
+                      }),
+                    ],
+                    1
+                  ),
+                ],
+                2
+              )
+            : _vm._e(),
         ]),
       ]),
     ]),
@@ -67713,6 +68185,18 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
       _c("h4", { staticClass: "text-muted" }, [_vm._v("Student ratings")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-3 col-6" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-success mt-1", attrs: { type: "submit" } },
+        [_vm._v("Filter")]
+      ),
     ])
   },
 ]
@@ -67803,75 +68287,24 @@ var render = function () {
         ),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
-          _vm.reviewFound
-            ? _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-12 border-top pt-3" }, [
-                  _c("div", { staticClass: "mb-4 text-center" }, [
-                    _vm._m(0),
-                    _vm._v(" "),
-                    _c("p", [_vm._v(_vm._s(_vm.form.feedback))]),
-                  ]),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "mb-3 text-center" }),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "row mb-5 mb-4 justify-content-center" },
-                    [
-                      _c("div", { staticClass: "col-md-2" }, [
-                        _c("div", { staticClass: "rating-thumb" }, [
-                          _c("span", [_vm._v(_vm._s(_vm.form.rate1))]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "text-muted" }, [
-                            _vm._v("Performance"),
-                          ]),
-                        ]),
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-2" }, [
-                        _c("div", { staticClass: "rating-thumb" }, [
-                          _c("span", [_vm._v(_vm._s(_vm.form.rate2))]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "text-muted" }, [
-                            _vm._v("Behaviour"),
-                          ]),
-                        ]),
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-2" }, [
-                        _c("div", { staticClass: "rating-thumb" }, [
-                          _c("span", [_vm._v(_vm._s(_vm.form.rate3))]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "text-muted" }, [
-                            _vm._v("Subject knowledge"),
-                          ]),
-                        ]),
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-2" }, [
-                        _c("div", { staticClass: "rating-thumb" }, [
-                          _c("span", [_vm._v(_vm._s(_vm.form.rate4))]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "text-muted" }, [
-                            _vm._v("Attitude"),
-                          ]),
-                        ]),
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-2" }, [
-                        _c("div", { staticClass: "rating-thumb" }, [
-                          _c("span", [_vm._v(_vm._s(_vm.form.rate5))]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "text-muted" }, [
-                            _vm._v("Personality"),
-                          ]),
-                        ]),
-                      ]),
-                    ]
-                  ),
-                ]),
-              ])
-            : _c(
+          _c("div", { staticClass: "d-flex justify-content-between" }, [
+            _c("h6", { staticClass: "mb-3" }, [
+              _vm._v("Current month : "),
+              _c("strong", { staticClass: "text-muted" }, [
+                _vm._v(_vm._s(_vm.moment().format("MMMM"))),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c("h6", [
+              _vm._v("This month rating points : "),
+              _c("strong", { staticClass: "text-warning" }, [
+                _vm._v(_vm._s(_vm.monthlyPoint)),
+              ]),
+            ]),
+          ]),
+          _vm._v(" "),
+          !_vm.reviewFound
+            ? _c(
                 "form",
                 {
                   staticClass: "row",
@@ -67883,7 +68316,14 @@ var render = function () {
                   },
                 },
                 [
-                  _vm._m(1),
+                  _c("div", { staticClass: "col-12 mb-4" }, [
+                    _c("h6", [
+                      _vm._v(_vm._s(_vm.totalReview) + " Reviews "),
+                      _c("i", { staticClass: "fas fa-star text-warning" }),
+                    ]),
+                    _vm._v(" "),
+                    _c("hr"),
+                  ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-12 mb-4" }, [
                     _c("h5", [_vm._v("Performance")]),
@@ -69456,7 +69896,7 @@ var render = function () {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-12 mb-4" }, [
-                    _vm._m(2),
+                    _vm._m(0),
                     _vm._v(" "),
                     _c("textarea", {
                       directives: [
@@ -69497,7 +69937,97 @@ var render = function () {
                     1
                   ),
                 ]
-              ),
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "row" },
+            _vm._l(_vm.review, function (rev, i) {
+              return _c(
+                "div",
+                { key: i, staticClass: "col-md-12 border-top pt-3" },
+                [
+                  _c("p", { staticClass: "text-end text-muted" }, [
+                    _c("strong", [
+                      _vm._v(
+                        _vm._s(
+                          _vm
+                            .moment(_vm.review.created_at)
+                            .format("DD MMMM YYYY")
+                        )
+                      ),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "mb-4 text-center" }, [
+                    _vm._m(1, true),
+                    _vm._v(" "),
+                    _c("p", [_vm._v(_vm._s(rev.feedback))]),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "mb-3 text-center" }),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "row mb-5 mb-4 justify-content-center" },
+                    [
+                      _c("div", { staticClass: "col-md-2" }, [
+                        _c("div", { staticClass: "rating-thumb" }, [
+                          _c("span", [_vm._v(_vm._s(rev.rate1))]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-muted" }, [
+                            _vm._v("Performance"),
+                          ]),
+                        ]),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-2" }, [
+                        _c("div", { staticClass: "rating-thumb" }, [
+                          _c("span", [_vm._v(_vm._s(rev.rate2))]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-muted" }, [
+                            _vm._v("Behaviour"),
+                          ]),
+                        ]),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-2" }, [
+                        _c("div", { staticClass: "rating-thumb" }, [
+                          _c("span", [_vm._v(_vm._s(rev.rate3))]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-muted" }, [
+                            _vm._v("Subject knowledge"),
+                          ]),
+                        ]),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-2" }, [
+                        _c("div", { staticClass: "rating-thumb" }, [
+                          _c("span", [_vm._v(_vm._s(rev.rate4))]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-muted" }, [
+                            _vm._v("Attitude"),
+                          ]),
+                        ]),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-2" }, [
+                        _c("div", { staticClass: "rating-thumb" }, [
+                          _c("span", [_vm._v(_vm._s(rev.rate5))]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-muted" }, [
+                            _vm._v("Personality"),
+                          ]),
+                        ]),
+                      ]),
+                    ]
+                  ),
+                ]
+              )
+            }),
+            0
+          ),
         ]),
       ]),
     ]),
@@ -69508,28 +70038,15 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "" } }, [_c("b", [_vm._v("Feedback")])])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-12 mb-4" }, [
-      _c("h6", [
-        _vm._v("Review "),
-        _c("i", { staticClass: "fas fa-star text-warning" }),
-      ]),
-      _vm._v(" "),
-      _c("hr"),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("label", { attrs: { for: "" } }, [
       _c("b", [_vm._v("Write your feedback")]),
     ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "" } }, [_c("b", [_vm._v("Feedback")])])
   },
 ]
 render._withStripped = true

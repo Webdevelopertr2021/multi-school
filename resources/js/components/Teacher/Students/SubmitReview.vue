@@ -20,53 +20,14 @@
             </div>
             <div class="card-body">
 
-                <div class="row" v-if="reviewFound">
-                    <div class="col-md-12 border-top pt-3">
-                        <div class="mb-4 text-center">
-                            <label for=""><b>Feedback</b></label>
-                            <p>{{ form.feedback }}</p>
-                        </div>
-                        <p class="mb-3 text-center"></p>
-                        <div class="row mb-5 mb-4 justify-content-center">
-                            <div class="col-md-2">
-                            <div class="rating-thumb">
-                                <span>{{ form.rate1 }}</span>
-                                <p class="text-muted">Performance</p>
-                            </div>
-                            </div>
-                            <div class="col-md-2">
-                            <div class="rating-thumb">
-                                <span>{{ form.rate2 }}</span>
-                                <p class="text-muted">Behaviour</p>
-                            </div>
-                            </div>
-                            <div class="col-md-2">
-                            <div class="rating-thumb">
-                                <span>{{ form.rate3 }}</span>
-                                <p class="text-muted">Subject knowledge</p>
-                            </div>
-                            </div>
-                            <div class="col-md-2">
-                            <div class="rating-thumb">
-                                <span>{{ form.rate4 }}</span>
-                                <p class="text-muted">Attitude</p>
-                            </div>
-                            </div>
-                            <div class="col-md-2">
-                            <div class="rating-thumb">
-                                <span>{{ form.rate5 }}</span>
-                                <p class="text-muted">Personality</p>
-                            </div>
-                            </div>
-                            
-                            
-                        </div>
-                        </div>
+                <div class="d-flex justify-content-between">
+                    <h6 class="mb-3">Current month : <strong class="text-muted">{{ moment().format("MMMM") }}</strong></h6>
+                    <h6>This month rating points : <strong class="text-warning">{{ monthlyPoint }}</strong></h6>
                 </div>
 
-                <form v-else @submit.prevent="submitReview" class="row">
+                <form v-if="!reviewFound" @submit.prevent="submitReview" class="row">
                     <div class="col-12 mb-4">
-                        <h6>Review <i class="fas fa-star text-warning"></i></h6>
+                        <h6>{{ totalReview }} Reviews <i class="fas fa-star text-warning"></i></h6>
                         <hr>
                     </div>
                     <div class="col-md-12 mb-4">
@@ -309,6 +270,53 @@
                     </div>
 
                 </form>
+
+                <div class="row">
+                    <div class="col-md-12 border-top pt-3" v-for="(rev,i) in review" :key="i">
+                        <p class="text-end text-muted"><strong>{{ moment(review.created_at).format("DD MMMM YYYY") }}</strong></p>
+                        <div class="mb-4 text-center">
+                            <label for=""><b>Feedback</b></label>
+                            <p>{{ rev.feedback }}</p>
+                        </div>
+                        <p class="mb-3 text-center"></p>
+                        <div class="row mb-5 mb-4 justify-content-center">
+                            <div class="col-md-2">
+                            <div class="rating-thumb">
+                                <span>{{ rev.rate1 }}</span>
+                                <p class="text-muted">Performance</p>
+                            </div>
+                            </div>
+                            <div class="col-md-2">
+                            <div class="rating-thumb">
+                                <span>{{ rev.rate2 }}</span>
+                                <p class="text-muted">Behaviour</p>
+                            </div>
+                            </div>
+                            <div class="col-md-2">
+                            <div class="rating-thumb">
+                                <span>{{ rev.rate3 }}</span>
+                                <p class="text-muted">Subject knowledge</p>
+                            </div>
+                            </div>
+                            <div class="col-md-2">
+                            <div class="rating-thumb">
+                                <span>{{ rev.rate4 }}</span>
+                                <p class="text-muted">Attitude</p>
+                            </div>
+                            </div>
+                            <div class="col-md-2">
+                            <div class="rating-thumb">
+                                <span>{{ rev.rate5 }}</span>
+                                <p class="text-muted">Personality</p>
+                            </div>
+                            </div>
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
             </div>
         </div>
     </div>
@@ -330,7 +338,10 @@ export default {
                 rate5: 1,
                 studentId: this.$route.params.studentId,
                 feedback: "",
-            })
+            }),
+            totalReview: 0,
+            monthlyPoint: 0,
+            review: [],
         }
     },
     methods: {
@@ -347,14 +358,9 @@ export default {
                     this.userData = data.student;
                     this.reviewData = data.review;
                     this.reviewFound = data.reviewFound;
-                    if(data.reviewFound) {
-                        this.form.rate1 = data.review.rate1;
-                        this.form.rate2 = data.review.rate2;
-                        this.form.rate3 = data.review.rate3;
-                        this.form.rate4 = data.review.rate4;
-                        this.form.rate5 = data.review.rate5;
-                        this.form.feedback = data.review.feedback;
-                    }
+                    this.totalReview = data.totalReview;
+                    this.monthlyPoint = data.monthlyPoint;
+                    this.review = data.review;
                     this.isLoading = false;
                 }
                 else {
@@ -380,8 +386,10 @@ export default {
                 return resp.data;
             }).then(data=>{
                 if(data.status == "ok") {
-                    swal.fire("Success",data.msg,"success");
-                    this.reviewFound = true;
+                    swal.fire("Success",data.msg,"success").then(()=>{
+                        window.location.reload();
+                    });
+                    
                 }
             }).catch(err=>{
                 console.error(err.response.data);
