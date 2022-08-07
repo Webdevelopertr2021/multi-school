@@ -61,7 +61,10 @@ class SupervisorController extends Controller
                     $monthlyPoint += $rev->total;
                 }
 
-                $monthlyPoint = round($monthlyPoint/$i,1);
+                if($i > 0)
+                {
+                    $monthlyPoint = round($monthlyPoint/$i,1);
+                }
 
                 return [
                     "status" => "ok",
