@@ -224,6 +224,16 @@ Route::group(["prefix" => "teacher", "middleware" => "auth:teacher"], function()
 });
 // End
 
+// Manager
+Route::group(["prefix" => "manager","middleware" => "auth:manager"],function(){
+
+    Route::get("/{any}",function(){
+        return "HI";
+    })->where("any", "^(?!api/.*$).*$");
+    
+});
+// End
+
 // User notification
 Route::get("/user-notifications","NotificationController@getList");
 // End

@@ -68,6 +68,10 @@ class LoginController extends Controller
             {
                 $redirectUrl = url("/teacher/dashboard");
             }
+            else if($guard == "manager")
+            {
+                $redirectUrl = url("/manager/dashboard");
+            }
 
             if(Auth::guard($guard)->attempt($credentials,$req->remember))
             {
