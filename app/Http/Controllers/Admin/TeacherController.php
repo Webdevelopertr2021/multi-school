@@ -215,4 +215,85 @@ class TeacherController extends Controller
             ];
         }
     }
+
+    public function getTeacherBySuperv(Request $req)
+    {
+        if($superv = User::find($req->supervisorId))
+        {
+            $teachers = AssignedSupervisor::where("supervisor_id",$req->supervisorId)->pluck("teacher_id")->toArray();
+
+            $teachers = User::where("role","teacher")->whereIn("id",$teachers)
+            ->with("school:id,name")
+            ->with("classes:id,name")
+            ->with("section:id,name")
+            ->with("rating")
+            ->with("supervisor:id,supervisor_id,teacher_id")
+            ->orderBy("name","desc");
+
+            return DataTables::of($teachers)
+            ->addColumn("school",function($row){
+                $school = $row->school->name;
+                return $school;
+            })
+            ->addColumn("class",function($row){
+                $class = $row->classes["name"]??"N/A";
+                return $class;
+            })
+            ->addColumn("section",function($row){
+                $section = $row->section->name??"N/A";
+                return $section;
+            })
+            ->addColumn("ratings",function($row){
+
+                $total = 0;
+                $totalPoint = 0;
+                $totalRating = 0;
+                foreach($row->rating as $rating)
+                {
+                    $total += 5;
+                    $totalPoint += $rating->rate1;
+                    $totalPoint += $rating->rate2;
+                    $totalPoint += $rating->rate3;
+                    $totalPoint += $rating->rate4;
+                    $totalPoint += $rating->rate5;
+                }
+                if($total > 0)
+                {
+                    $totalRating = $totalPoint/$total;
+                }
+                return $totalRating . " <i class='fas fa-star text-warning'></i>";
+            })
+            ->addColumn("supervisors",function($row){
+                $html = "";
+                foreach($row->supervisor as $super)
+                {
+                    $html .= "<span class='badge badge-success badge-pill mb-2'>".$super->user["name"]."</span>";
+                }
+                
+                return $html;
+            })
+            ->addColumn("action",function($row){
+                $html = "
+                <button data-edit-teacher='$row->id' class='btn btn-sm btn-warning'><i class='fas fa-edit'></i></button>
+                <button data-delete-teacher='$row->id' class='btn btn-sm btn-danger'><i class='fas fa-trash'></i></button>
+                <button data-rate-btn='$row->id' class='btn btn-sm btn-primary'><i class='fas fa-star'></i></button>
+                
+                ";
+                return $html;
+            })
+            ->addColumn("total_students",function($row){
+                $students = Student::where("class_id",$row->class_id)->where("section_id",$row->section_id)->count();
+                return "<a href='/admin/teacher/$row->id/studetn-list'><u>$students</u></a>";
+            })
+            ->rawColumns(["ratings","supervisors","action","total_students"])
+            ->make(true);
+        }
+        else
+        {
+            return [
+                "staus" => "fail"
+            ];
+        }
+
+    }
 }

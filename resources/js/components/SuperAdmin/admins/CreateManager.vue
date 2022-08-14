@@ -3,25 +3,25 @@
     <div class="col-md-6">
         <div class="card">
             <div class="card-header d-flex justify-content-between">
-                <h4>Create new admin</h4>
-                <router-link :to="{name: 'admin.admin-list'}" class="btn btn-sm btn-primary"><i class="fas fa-list"></i> Admin list</router-link>
+                <h4>Create new manager</h4>
+                <router-link :to="{name: 'admin.manager-list'}" class="btn btn-sm btn-primary"><i class="fas fa-list"></i> Manager list</router-link>
             </div>
             <div class="card-body">
                 <form @submit.prevent="addAdmin" class="row">
                   <div class="col-md-12 mb-4">
-                    <label for="">Admin name</label>
-                    <input type="text" class="form-control" v-model="form.name" placeholder="Admin name..." :class="{'is-invalid' : form.errors.has('name')}">
+                    <label for="">Manager name</label>
+                    <input type="text" class="form-control" v-model="form.name" placeholder="Manager name..." :class="{'is-invalid' : form.errors.has('name')}">
                     <HasError :form="form" field="name" />
                   </div>
                   <div class="col-md-12 mb-4">
                     <label for="">Phone</label>
-                    <input type="tel" class="form-control" v-model="form.phone" placeholder="Admin phone..." :class="{'is-invalid' : form.errors.has('phone')}">
+                    <input type="tel" class="form-control" v-model="form.phone" placeholder="Manager phone..." :class="{'is-invalid' : form.errors.has('phone')}">
                     <HasError :form="form" field="phone" />
                   </div>
 
                   <div class="col-md-12 mb-4">
                     <label for="">Email</label>
-                    <input type="email" class="form-control" v-model="form.email" placeholder="Admin email..." :class="{'is-invalid' : form.errors.has('email')}">
+                    <input type="email" class="form-control" v-model="form.email" placeholder="Manager email..." :class="{'is-invalid' : form.errors.has('email')}">
                     <HasError :form="form" field="email" />
                   </div>
 
@@ -73,7 +73,7 @@ export default {
       }
     },
     async addAdmin() {
-      await this.form.post('/admin/api/create-admin').then(resp=>{
+      await this.form.post('/admin/api/create-manager').then(resp=>{
         return resp.data;
       }).then(data=>{
         if(data.status == "ok") {

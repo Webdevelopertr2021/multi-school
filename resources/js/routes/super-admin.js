@@ -23,13 +23,17 @@ import StudentRatings from "../components/SuperAdmin/student/StudentRatings.vue"
 import AllTeacherList from "../components/SuperAdmin/teacher/TeacherList.vue";
 import EditTeacher from "../components/SuperAdmin/teacher/EditTeacher.vue";
 import AllAdmin from "../components/SuperAdmin/admins/List.vue";
+import AllManger from "../components/SuperAdmin/admins/ManagerList.vue";
 import AdminDashboard from "../components/SuperAdmin/home/Dashboard.vue";
 import CreateAdmin from "../components/SuperAdmin/admins/Create.vue";
+import CreateManager from "../components/SuperAdmin/admins/CreateManager.vue";
 import EditAdmin from "../components/SuperAdmin/admins/Edit.vue";
+import EditManager from "../components/SuperAdmin/admins/EditManager.vue";
 import MyProfile from "../components/SuperAdmin/admins/MyProfile.vue";
 import TeacherRatings from "../components/SuperAdmin/teacher/AllRatings.vue";
 import LeaveRequest from "../components/SuperAdmin/LeaveRequest/List.vue";
 import StudentListByTeacher from "../components/SuperAdmin/teacher/StudentListByTeacher.vue";
+import TeacherListSuperv from "../components/SuperAdmin/supervisor/Teachers.vue";
 // End
 
 const prefix = "/admin/"
@@ -246,7 +250,39 @@ const routes = new VueRouter({
             meta: {
                 title : "Student List"
             }
-        }
+        },
+        {
+            path: prefix + "supervisor/:supervisorId/teachers",
+            name: "admin.superv.teachers",
+            component: TeacherListSuperv,
+            meta : {
+                title : "Supervisor List"
+            }
+        },
+        {
+            path: prefix + "manager-list",
+            name: "admin.manager-list",
+            component: AllManger,
+            meta: {
+                title : "Manager List"
+            }
+        },
+        {
+            path: prefix + "create-manager",
+            name: "admin.create-manager",
+            component: CreateManager,
+            meta: {
+                title: "Create manager"
+            }
+        },
+        {
+            path: prefix + "edit-manager-profile/:adminId",
+            name: "admin.edit-manager",
+            component: EditManager,
+            meta: {
+                title: "Edit manager"
+            }
+        },
     ],
     scrollBehavior(to, from, savedPos) {
         if (savedPos) {

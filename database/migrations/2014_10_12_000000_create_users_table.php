@@ -28,7 +28,7 @@ return new class extends Migration
             $table->integer("teacher_application_permission")->nullable();
             $table->integer("class_id")->nullable();
             $table->integer("section_id")->nullable();
-            $table->integer("salary");
+            $table->integer("salary")->nullable();
             $table->integer("credit_without_salary")->default(1);
             $table->integer("credit_time")->default(3);
             $table->timestamps();

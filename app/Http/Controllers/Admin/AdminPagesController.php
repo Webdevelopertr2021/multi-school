@@ -250,4 +250,92 @@ class AdminPagesController extends Controller
             "msg" => "Profile was updated"
         ];
     }
+    public function managerList(Request $req)
+    {
+        $admins = User::where("role","manager")
+        ->where("id","!=",auth()->user()->id)
+        ->get();
+
+        return response()->json($admins);
+    }
+
+    public function createManager(Request $req)
+    {
+        $this->validate($req,[
+            "name" => "required",
+            "phone" => "required|unique:users,phone",
+            "email" => "nullable|unique:users,email",
+            "password" => "required|min:8",
+            "photo" => "nullable|mimes:jpg,jpeg,png,JPG,JPEG,PNG",
+        ]);
+
+        $admin = new User();
+        $admin->name = $req->name;
+        $admin->phone = $req->phone;
+        $admin->email = $req->email;
+        $admin->role = "manager";
+        $admin->password = bcrypt($req->password);
+
+        if($req->hasFile("photo"))
+        {
+            $file = $req->file("photo");
+            $newName = rand()."_".time().".".$file->getClientOriginalExtension();
+            $file_path = $file->storeAs("",$newName,"UserPhotos");
+            $admin->photo = $newName;
+            $admin->photo_url = route("user-photo",["filename" => $newName]);
+        }
+
+        $admin->save();
+
+        return [
+            "status" => "ok",
+            "msg" => "Manager created"
+        ];
+    }
+
+    public function updateManager(Request $req)
+    {
+        $this->validate($req,[
+            "name" => "required",
+            "phone" => "required|unique:users,phone,$req->adminId,id",
+            "email" => "nullable|unique:users,email,$req->adminId,id",
+            "password" => "nullable|min:8",
+            "photo" => "nullable|mimes:jpg,jpeg,png,JPG,JPEG,PNG",
+        ]);
+
+        $admin = User::find($req->adminId);
+        $admin->name = $req->name;
+        $admin->phone = $req->phone;
+        $admin->email = $req->email;
+        $admin->role = "manager";
+
+        if($req->password != "")
+        {
+            $admin->password = bcrypt($req->password);
+        }
+
+        if($req->hasFile("photo"))
+        {
+            if($admin->photo != "")
+            {
+                if(Storage::disk("UserPhotos")->exists($admin->photo))
+                {
+                    Storage::disk("UserPhotos")->delete($admin->photo);
+                }
+            }
+            $file = $req->file("photo");
+            $newName = rand()."_".time().".".$file->getClientOriginalExtension();
+            $file_path = $file->storeAs("",$newName,"UserPhotos");
+            $admin->photo = $newName;
+            $admin->photo_url = route("user-photo",["filename" => $newName]);
+        }
+
+        $admin->save();
+
+        return [
+            "status" => "ok",
+            "msg" => "Manager updated"
+        ];
+    }
+    
 }

@@ -4,8 +4,7 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between">
                 <h4>Edit teacher</h4>
-                <router-link class="btn btn-sm btn-primary" 
-                :to="{name: 'admin.all-teacher'}"><i class="fas fa-arrow-left"></i> Go back</router-link>
+                <a href="#" class="btn btn-sm btn-primary" @click="$router.go(-1)"><i class="fas fa-arrow-left"></i> Go back</a>
             </div>
             <div class="card-body">
                 <div class="row mb-4">

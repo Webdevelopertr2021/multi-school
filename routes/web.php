@@ -65,6 +65,8 @@ Route::group(["prefix"=>"admin","middleware"=>"auth"],function(){
         Route::get("/get-all-supervisors","Admin\SuperVisorController@getList");
 
         Route::get("/get-user-data","Admin\SuperVisorController@getUser");
+
+        Route::get("/get-teacher-list-by-supervisor","Admin\TeacherController@getTeacherBySuperv");
         // 
 
         // class
@@ -129,6 +131,8 @@ Route::group(["prefix"=>"admin","middleware"=>"auth"],function(){
 
         Route::get("/get-admin-list","Admin\AdminPagesController@adminList");
 
+        Route::get("/get-manager-list","Admin\AdminPagesController@managerList");
+
         Route::post('/create-admin',"Admin\AdminPagesController@createAdmin");
 
         Route::post("/delete-admin","Admin\AdminPagesController@deleteAdmin");
@@ -140,6 +144,10 @@ Route::group(["prefix"=>"admin","middleware"=>"auth"],function(){
         Route::get("/get-my-profile-data","Admin\AdminPagesController@myProfile");
 
         Route::post('/update-my-profile',"Admin\AdminPagesController@updateMyProfile");
+
+        Route::post('/create-manager',"Admin\AdminPagesController@createManager");
+
+        Route::post("/update-manager","Admin\AdminPagesController@updateManager");
 
         // End
 

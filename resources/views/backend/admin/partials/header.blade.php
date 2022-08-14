@@ -36,9 +36,15 @@
           <router-link  :to="{name: 'admin.my-profile'}" class="dropdown-item has-icon"> <i class="far
                                     fa-user"></i>My Profile
           </router-link> 
-          <router-link :to="{name: 'admin.admin-list'}" href="timeline.html" class="dropdown-item has-icon"> <i class="fas fa-bolt"></i>
+
+          <router-link :to="{name: 'admin.admin-list'}" class="dropdown-item has-icon"> <i class="fas fa-bolt"></i>
             Admins
           </router-link>
+
+          <router-link  :to="{name: 'admin.manager-list'}" class="dropdown-item has-icon"> <i class="far
+            fa-user"></i> Managers
+          </router-link> 
+
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item has-icon text-danger" onclick="event.preventDefault();
           document.getElementById('logout-form').submit();"> <i class="fas fa-sign-out-alt"></i>
