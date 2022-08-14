@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AssignedSupervisor;
 use App\Models\Classes;
 use App\Models\Section;
+use App\Models\Student;
 use App\Models\TeacherRating;
 use App\Models\User;
 use Carbon\Carbon;
@@ -79,10 +80,15 @@ class TeacherController extends Controller
             <button data-edit-teacher='$row->id' class='btn btn-sm btn-warning'><i class='fas fa-edit'></i></button>
             <button data-delete-teacher='$row->id' class='btn btn-sm btn-danger'><i class='fas fa-trash'></i></button>
             <button data-rate-btn='$row->id' class='btn btn-sm btn-primary'><i class='fas fa-star'></i></button>
+            
             ";
             return $html;
         })
-        ->rawColumns(["ratings","supervisors","action"])
+        ->addColumn("total_students",function($row){
+            $students = Student::where("class_id",$row->class_id)->where("section_id",$row->section_id)->count();
+            return "<a href='/admin/teacher/$row->id/studetn-list'><u>$students</u></a>";
+        })
+        ->rawColumns(["ratings","supervisors","action","total_students"])
         ->make(true);
 
     }

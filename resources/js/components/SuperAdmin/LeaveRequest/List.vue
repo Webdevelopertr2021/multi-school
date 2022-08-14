@@ -15,6 +15,7 @@
                             <th>Photo</th>
                             <th>Requested By</th>
                             <th>Subject</th>
+                            <th>Vacation Type</th>
                             <th>Date Range</th>
                             <th>Total days</th>
                             <th>Application Date</th>
@@ -123,6 +124,7 @@ export default {
         { data: "photo"},
         { data: "request_by" },
         { data: "subject" },
+        { data: "vacation_type" },
         { data: "date_range" },
         { data: "total_day" },
         { data: "application_date" },

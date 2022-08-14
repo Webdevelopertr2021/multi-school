@@ -55,6 +55,7 @@
                                                     <div class="dropdown-menu">
                                                         <router-link class="dropdown-item" :to="{name: 'superv.teacher-ratings', params: {userId: teacher.id}}"><i class="fas fa-star"></i> See ratings</router-link>
                                                         <router-link :to="{name: 'superv.add-rating', params: {userId: teacher.id}}" class="dropdown-item"><i class="fas fa-star"></i> Add / Edit Review</router-link>
+                                                        <router-link :to="{name: 'superv.studentlist-by-teacher', params: {teacherId: teacher.id}}" class="dropdown-item"><i class="fas fa-users"></i> See Students</router-link>
                                                     </div>
                                                 </div>
                                             </td>

@@ -24,6 +24,7 @@
             <div class="card-body">
               <div class="d-flex">
                 <div class="w-50">
+                  <p><strong>Vacation Type :</strong> &nbsp; {{ req.vacation_type }}</p>
                   <p><strong>Leave From :</strong> &nbsp; {{ req.from_date }}</p>
                   <p><strong>To :</strong> &nbsp; {{ req.to_date }}</p>
                   <p><strong>Total {{ req.total_days }} Days</strong></p>

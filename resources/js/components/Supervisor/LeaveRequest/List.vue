@@ -20,6 +20,7 @@
                             <th>Photo</th>
                             <th>Requested by</th>
                             <th>Subject</th>
+                            <th>Vacation Type</th>
                             <th>Date range</th>
                             <th>Total</th>
                             <th>Application date</th>
@@ -30,7 +31,7 @@
                         <tbody>
                           <template v-if="paginateData.data.length <=0">
                             <tr class="text-center">
-                              <td class="text-danger">No data found</td>
+                              <td colspan="9" class="text-danger">No data found</td>
                             </tr>
                           </template>
                           <template v-else>
@@ -41,6 +42,7 @@
                               </td>
                               <td><b>{{ req.teacher.name }}</b></td>
                               <td>{{ req.leave.subject }}</td>
+                              <td>{{ req.leave.vacation_type }}</td>
                               <td>{{ req.leave.from_date }} to {{ req.leave.to_date }}</td>
                               <td>{{ req.leave.total_days }}</td>
                               <td>{{ moment(req.leave.created_at).format("DD MMMM YYYY") }}</td>

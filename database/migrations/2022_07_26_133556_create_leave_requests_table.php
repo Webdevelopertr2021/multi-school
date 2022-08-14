@@ -21,7 +21,9 @@ return new class extends Migration
             $table->date("to_date");
             $table->integer("total_days");
             $table->string("subject");
+            $table->string("vacation_type");
             $table->text("desc");
+            $table->integer("approved_by_manager")->default(0);
             $table->timestamps();
         });
     }

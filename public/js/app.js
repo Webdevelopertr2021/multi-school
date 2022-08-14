@@ -2766,6 +2766,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2844,6 +2845,8 @@ __webpack_require__.r(__webpack_exports__);
         data: "request_by"
       }, {
         data: "subject"
+      }, {
+        data: "vacation_type"
       }, {
         data: "date_range"
       }, {
@@ -4621,6 +4624,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -4638,7 +4659,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         selectedSuperVisors: [],
         superVisors: null,
         classId: null,
-        sectionId: null
+        sectionId: null,
+        salary: "",
+        credit_without_salary: 1,
+        credit_time: 3
       }),
       schools: [],
       supervisor: [],
@@ -7270,6 +7294,185 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/SuperAdmin/teacher/StudentListByTeacher.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/SuperAdmin/teacher/StudentListByTeacher.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      teacherData: {}
+    };
+  },
+  methods: {
+    getTeacherData: function getTeacherData() {
+      var _this = this;
+
+      axios.get("/admin/api/get-teacher-data", {
+        params: {
+          teacherId: this.$route.params.teacherId
+        }
+      }).then(function (resp) {
+        return resp.data;
+      }).then(function (data) {
+        if (data.status == "ok") {
+          _this.teacherData = data.teacher;
+        } else {
+          _this.$router.push({
+            name: "superv.teacher-list"
+          });
+        }
+      })["catch"](function (err) {
+        _this.$router.push({
+          name: "superv.teacher-list"
+        });
+
+        console.error(err.response.data);
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.getTeacherData();
+
+    var _self = this;
+
+    $('#datatable').DataTable({
+      processing: true,
+      serverside: true,
+      ajax: '/admin/api/get-teachers-students?teacherId=' + _self.$route.params.teacherId,
+      lengthChange: true,
+      columns: [{
+        data: "id"
+      }, {
+        data: "name"
+      }, {
+        data: "phone"
+      }, {
+        data: "email"
+      }, {
+        data: "address"
+      }, {
+        data: "school"
+      }, {
+        data: "class"
+      }, {
+        data: "section"
+      }, {
+        data: 'ratings'
+      }, {
+        data: 'action',
+        name: 'action',
+        orderable: false,
+        searchable: false
+      }],
+      dom: 'Bfrtip',
+      buttons: [{
+        extend: 'copyHtml5',
+        exportOptions: {
+          columns: [0, ':visible']
+        }
+      }, {
+        extend: 'excelHtml5',
+        exportOptions: {
+          columns: ':visible'
+        }
+      }, {
+        extend: 'pdfHtml5',
+        exportOptions: {
+          columns: ':visible'
+        }
+      }, {
+        extend: 'colvis',
+        text: '<i class="fas fa-eye"></i> Columns'
+      }],
+      createdRow: function createdRow(row, data, dataIndex) {
+        // Set the data-status attribute, and add a class
+        $(row).addClass("text-center");
+      }
+    });
+    $('#datatable').removeClass("dataTable");
+    $('#datatable').css("width", "100%");
+    $(document).on("click", "button[data-ratings]", function () {
+      var studentId = $(this).data("ratings");
+
+      _self.$router.push({
+        name: 'teacher.student-ratings',
+        params: {
+          studentId: studentId
+        }
+      });
+    });
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/SuperAdmin/teacher/TeacherList.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/SuperAdmin/teacher/TeacherList.vue?vue&type=script&lang=js& ***!
@@ -7281,6 +7484,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
 //
 //
 //
@@ -7348,6 +7552,8 @@ __webpack_require__.r(__webpack_exports__);
         data: "class"
       }, {
         data: "section"
+      }, {
+        data: "total_students"
       }, {
         data: 'ratings'
       }, {
@@ -7449,6 +7655,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
 //
 //
 //
@@ -8439,6 +8647,165 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Supervisor/teacher/StudentListByTeacher.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Supervisor/teacher/StudentListByTeacher.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      teacherData: {}
+    };
+  },
+  methods: {
+    getTeacherData: function getTeacherData() {
+      var _this = this;
+
+      axios.get("/supervisor/api/get-teacher-data", {
+        params: {
+          teacherId: this.$route.params.teacherId
+        }
+      }).then(function (resp) {
+        return resp.data;
+      }).then(function (data) {
+        if (data.status == "ok") {
+          _this.teacherData = data.teacher;
+        } else {
+          _this.$router.push({
+            name: "superv.teacher-list"
+          });
+        }
+      })["catch"](function (err) {
+        _this.$router.push({
+          name: "superv.teacher-list"
+        });
+
+        console.error(err.response.data);
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.getTeacherData();
+
+    var _self = this;
+
+    $('#datatable').DataTable({
+      processing: true,
+      serverside: true,
+      ajax: '/supervisor/api/get-teachers-students?teacherId=' + _self.$route.params.teacherId,
+      lengthChange: true,
+      columns: [{
+        data: "id"
+      }, {
+        data: "name"
+      }, {
+        data: "phone"
+      }, {
+        data: "email"
+      }, {
+        data: "address"
+      }, {
+        data: "school"
+      }, {
+        data: "class"
+      }, {
+        data: "section"
+      }, {
+        data: 'ratings'
+      }, {
+        data: 'action',
+        name: 'action',
+        orderable: false,
+        searchable: false
+      }],
+      dom: 'Bfrtip',
+      buttons: [{
+        extend: 'copyHtml5',
+        exportOptions: {
+          columns: [0, ':visible']
+        }
+      }, {
+        extend: 'excelHtml5',
+        exportOptions: {
+          columns: ':visible'
+        }
+      }, {
+        extend: 'pdfHtml5',
+        exportOptions: {
+          columns: ':visible'
+        }
+      }, {
+        extend: 'colvis',
+        text: '<i class="fas fa-eye"></i> Columns'
+      }],
+      createdRow: function createdRow(row, data, dataIndex) {
+        // Set the data-status attribute, and add a class
+        $(row).addClass("text-center");
+      }
+    });
+    $('#datatable').removeClass("dataTable");
+    $('#datatable').css("width", "100%");
+    $(document).on("click", "button[data-ratings]", function () {
+      var studentId = $(this).data("ratings");
+
+      _self.$router.push({
+        name: 'teacher.student-ratings',
+        params: {
+          studentId: studentId
+        }
+      });
+    });
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Supervisor/teacher/TeacherList.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Supervisor/teacher/TeacherList.vue?vue&type=script&lang=js& ***!
@@ -8450,6 +8817,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
 //
 //
 //
@@ -8672,6 +9040,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -8759,6 +9128,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -8766,7 +9146,8 @@ __webpack_require__.r(__webpack_exports__);
         fromDate: "",
         toDate: "",
         subject: "",
-        desc: ""
+        desc: "",
+        reason: ""
       })
     };
   },
@@ -8785,6 +9166,8 @@ __webpack_require__.r(__webpack_exports__);
               name: 'teacher.leave-list'
             });
           });
+        } else {
+          swal.fire("Can not submit this request", data.msg, "warning");
         }
       })["catch"](function (err) {
         console.error(err.response.data);
@@ -9252,6 +9635,52 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -10101,9 +10530,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_SuperAdmin_admins_MyProfile_vue__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../components/SuperAdmin/admins/MyProfile.vue */ "./resources/js/components/SuperAdmin/admins/MyProfile.vue");
 /* harmony import */ var _components_SuperAdmin_teacher_AllRatings_vue__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../components/SuperAdmin/teacher/AllRatings.vue */ "./resources/js/components/SuperAdmin/teacher/AllRatings.vue");
 /* harmony import */ var _components_SuperAdmin_LeaveRequest_List_vue__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../components/SuperAdmin/LeaveRequest/List.vue */ "./resources/js/components/SuperAdmin/LeaveRequest/List.vue");
+/* harmony import */ var _components_SuperAdmin_teacher_StudentListByTeacher_vue__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../components/SuperAdmin/teacher/StudentListByTeacher.vue */ "./resources/js/components/SuperAdmin/teacher/StudentListByTeacher.vue");
 
 
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]); // Components
+
 
 
 
@@ -10312,6 +10743,13 @@ var routes = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     meta: {
       title: "Leave requests"
     }
+  }, {
+    path: prefix + "teacher/:teacherId/studetn-list",
+    name: "admin.student-by-teacher",
+    component: _components_SuperAdmin_teacher_StudentListByTeacher_vue__WEBPACK_IMPORTED_MODULE_27__["default"],
+    meta: {
+      title: "Student List"
+    }
   }],
   scrollBehavior: function scrollBehavior(to, from, savedPos) {
     if (savedPos) {
@@ -10356,9 +10794,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_NotifcationList_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/NotifcationList.vue */ "./resources/js/components/NotifcationList.vue");
 /* harmony import */ var _components_Supervisor_teacher_AllRatings_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/Supervisor/teacher/AllRatings.vue */ "./resources/js/components/Supervisor/teacher/AllRatings.vue");
 /* harmony import */ var _components_Supervisor_dashboard_MyProfile_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/Supervisor/dashboard/MyProfile.vue */ "./resources/js/components/Supervisor/dashboard/MyProfile.vue");
+/* harmony import */ var _components_Supervisor_teacher_StudentListByTeacher_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/Supervisor/teacher/StudentListByTeacher.vue */ "./resources/js/components/Supervisor/teacher/StudentListByTeacher.vue");
 
 
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]); // Components
+
 
 
 
@@ -10421,6 +10861,13 @@ var routes = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     component: _components_Supervisor_dashboard_MyProfile_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
     meta: {
       title: "My Profile"
+    }
+  }, {
+    path: prefix + "teacher/:teacherId/student-list",
+    name: "superv.studentlist-by-teacher",
+    component: _components_Supervisor_teacher_StudentListByTeacher_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
+    meta: {
+      title: "Students"
     }
   }],
   scrollBehavior: function scrollBehavior(to, from, savedPos) {
@@ -53119,6 +53566,45 @@ component.options.__file = "resources/js/components/SuperAdmin/teacher/EditTeach
 
 /***/ }),
 
+/***/ "./resources/js/components/SuperAdmin/teacher/StudentListByTeacher.vue":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/SuperAdmin/teacher/StudentListByTeacher.vue ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _StudentListByTeacher_vue_vue_type_template_id_3113b382___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./StudentListByTeacher.vue?vue&type=template&id=3113b382& */ "./resources/js/components/SuperAdmin/teacher/StudentListByTeacher.vue?vue&type=template&id=3113b382&");
+/* harmony import */ var _StudentListByTeacher_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./StudentListByTeacher.vue?vue&type=script&lang=js& */ "./resources/js/components/SuperAdmin/teacher/StudentListByTeacher.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _StudentListByTeacher_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _StudentListByTeacher_vue_vue_type_template_id_3113b382___WEBPACK_IMPORTED_MODULE_0__.render,
+  _StudentListByTeacher_vue_vue_type_template_id_3113b382___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/SuperAdmin/teacher/StudentListByTeacher.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/SuperAdmin/teacher/TeacherList.vue":
 /*!********************************************************************!*\
   !*** ./resources/js/components/SuperAdmin/teacher/TeacherList.vue ***!
@@ -53349,6 +53835,45 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 /* hot reload */
 if (false) { var api; }
 component.options.__file = "resources/js/components/Supervisor/teacher/AllRatings.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Supervisor/teacher/StudentListByTeacher.vue":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/Supervisor/teacher/StudentListByTeacher.vue ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _StudentListByTeacher_vue_vue_type_template_id_f232d42a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./StudentListByTeacher.vue?vue&type=template&id=f232d42a& */ "./resources/js/components/Supervisor/teacher/StudentListByTeacher.vue?vue&type=template&id=f232d42a&");
+/* harmony import */ var _StudentListByTeacher_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./StudentListByTeacher.vue?vue&type=script&lang=js& */ "./resources/js/components/Supervisor/teacher/StudentListByTeacher.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _StudentListByTeacher_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _StudentListByTeacher_vue_vue_type_template_id_f232d42a___WEBPACK_IMPORTED_MODULE_0__.render,
+  _StudentListByTeacher_vue_vue_type_template_id_f232d42a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Supervisor/teacher/StudentListByTeacher.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -54136,6 +54661,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/SuperAdmin/teacher/StudentListByTeacher.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************!*\
+  !*** ./resources/js/components/SuperAdmin/teacher/StudentListByTeacher.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_StudentListByTeacher_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./StudentListByTeacher.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/SuperAdmin/teacher/StudentListByTeacher.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_StudentListByTeacher_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/SuperAdmin/teacher/TeacherList.vue?vue&type=script&lang=js&":
 /*!*********************************************************************************************!*\
   !*** ./resources/js/components/SuperAdmin/teacher/TeacherList.vue?vue&type=script&lang=js& ***!
@@ -54229,6 +54770,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AllRatings_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./AllRatings.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Supervisor/teacher/AllRatings.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AllRatings_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Supervisor/teacher/StudentListByTeacher.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************!*\
+  !*** ./resources/js/components/Supervisor/teacher/StudentListByTeacher.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_StudentListByTeacher_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./StudentListByTeacher.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Supervisor/teacher/StudentListByTeacher.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_StudentListByTeacher_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -55150,6 +55707,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/SuperAdmin/teacher/StudentListByTeacher.vue?vue&type=template&id=3113b382&":
+/*!************************************************************************************************************!*\
+  !*** ./resources/js/components/SuperAdmin/teacher/StudentListByTeacher.vue?vue&type=template&id=3113b382& ***!
+  \************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StudentListByTeacher_vue_vue_type_template_id_3113b382___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StudentListByTeacher_vue_vue_type_template_id_3113b382___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StudentListByTeacher_vue_vue_type_template_id_3113b382___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./StudentListByTeacher.vue?vue&type=template&id=3113b382& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/SuperAdmin/teacher/StudentListByTeacher.vue?vue&type=template&id=3113b382&");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/SuperAdmin/teacher/TeacherList.vue?vue&type=template&id=d1634ffa&":
 /*!***************************************************************************************************!*\
   !*** ./resources/js/components/SuperAdmin/teacher/TeacherList.vue?vue&type=template&id=d1634ffa& ***!
@@ -55248,6 +55822,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AllRatings_vue_vue_type_template_id_f8b075a4___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AllRatings_vue_vue_type_template_id_f8b075a4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./AllRatings.vue?vue&type=template&id=f8b075a4& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Supervisor/teacher/AllRatings.vue?vue&type=template&id=f8b075a4&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Supervisor/teacher/StudentListByTeacher.vue?vue&type=template&id=f232d42a&":
+/*!************************************************************************************************************!*\
+  !*** ./resources/js/components/Supervisor/teacher/StudentListByTeacher.vue?vue&type=template&id=f232d42a& ***!
+  \************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StudentListByTeacher_vue_vue_type_template_id_f232d42a___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StudentListByTeacher_vue_vue_type_template_id_f232d42a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StudentListByTeacher_vue_vue_type_template_id_f232d42a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./StudentListByTeacher.vue?vue&type=template&id=f232d42a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Supervisor/teacher/StudentListByTeacher.vue?vue&type=template&id=f232d42a&");
 
 
 /***/ }),
@@ -56242,6 +56833,8 @@ var staticRenderFns = [
                           _c("th", [_vm._v("Requested By")]),
                           _vm._v(" "),
                           _c("th", [_vm._v("Subject")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Vacation Type")]),
                           _vm._v(" "),
                           _c("th", [_vm._v("Date Range")]),
                           _vm._v(" "),
@@ -59522,6 +60115,138 @@ var render = function () {
                   }),
                   _vm._v(" "),
                   _c("HasError", { attrs: { form: _vm.form, field: "email" } }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-md-4 mb-4" },
+                [
+                  _c("label", { attrs: { for: "" } }, [_vm._v("Salary")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.salary,
+                        expression: "form.salary",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    class: { "is-invalid": _vm.form.errors.has("salary") },
+                    attrs: {
+                      type: "number",
+                      name: "salary",
+                      placeholder: "Salary...",
+                    },
+                    domProps: { value: _vm.form.salary },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.form, "salary", $event.target.value)
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("HasError", {
+                    attrs: { form: _vm.form, field: "salary" },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-md-4 mb-4" },
+                [
+                  _c("label", { attrs: { for: "" } }, [
+                    _vm._v("Total Credit for leave without salary"),
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.credit_without_salary,
+                        expression: "form.credit_without_salary",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    class: {
+                      "is-invalid": _vm.form.errors.has(
+                        "credit_without_salary"
+                      ),
+                    },
+                    attrs: {
+                      type: "number",
+                      name: "credit_salry",
+                      placeholder: "Credit...",
+                    },
+                    domProps: { value: _vm.form.credit_without_salary },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.form,
+                          "credit_without_salary",
+                          $event.target.value
+                        )
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("HasError", {
+                    attrs: { form: _vm.form, field: "credit_without_salary" },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-md-4 mb-4" },
+                [
+                  _c("label", { attrs: { for: "" } }, [
+                    _vm._v("Total Credit for Time Leave"),
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.credit_time,
+                        expression: "form.credit_time",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    class: { "is-invalid": _vm.form.errors.has("credit_time") },
+                    attrs: {
+                      type: "number",
+                      name: "credit_time",
+                      placeholder: "Credit...",
+                    },
+                    domProps: { value: _vm.form.credit_time },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.form, "credit_time", $event.target.value)
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("HasError", {
+                    attrs: { form: _vm.form, field: "credit_time" },
+                  }),
                 ],
                 1
               ),
@@ -63728,6 +64453,132 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/SuperAdmin/teacher/StudentListByTeacher.vue?vue&type=template&id=3113b382&":
+/*!***************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/SuperAdmin/teacher/StudentListByTeacher.vue?vue&type=template&id=3113b382& ***!
+  \***************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row justify-content-center" }, [
+    _vm.teacherData.name
+      ? _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "card" }, [
+            _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "d-flex" }, [
+                _c("div", { staticClass: "mr-2" }, [
+                  _vm.teacherData.photo != null
+                    ? _c("img", {
+                        staticClass: "user-thumb-100",
+                        attrs: { src: _vm.teacherData.photo_url, alt: "" },
+                      })
+                    : _c("img", {
+                        staticClass: "user-thumb-100",
+                        attrs: {
+                          src: "/image/portrait-placeholder.png",
+                          alt: "",
+                        },
+                      }),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "ml-4" }, [
+                  _c("h4", [_vm._v(_vm._s(_vm.teacherData.name))]),
+                  _vm._v(" "),
+                  _c("p", [
+                    _vm._v("School : " + _vm._s(_vm.teacherData.school.name)),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", [
+                    _vm._v("Class : " + _vm._s(_vm.teacherData.classes.name)),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", [
+                    _vm._v("Section : " + _vm._s(_vm.teacherData.section.name)),
+                  ]),
+                ]),
+              ]),
+            ]),
+          ]),
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm._m(0),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12" }, [
+      _c("div", { staticClass: "card" }, [
+        _c(
+          "div",
+          { staticClass: "card-header d-flex justify-content-between" },
+          [_c("h4", [_vm._v("Student List")])]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-12" }, [
+              _c("div", { staticClass: "table-responsive" }, [
+                _c(
+                  "table",
+                  {
+                    staticClass: "table table-striped table-bordered",
+                    attrs: { id: "datatable" },
+                  },
+                  [
+                    _c("thead", [
+                      _c("tr", { staticClass: "text-center" }, [
+                        _c("th", [_vm._v("ID")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Student name")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Phone")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Email")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Address")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("School")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Class")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Section")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Rating Points")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Action")]),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("tbody"),
+                  ]
+                ),
+              ]),
+            ]),
+          ]),
+        ]),
+      ]),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/SuperAdmin/teacher/TeacherList.vue?vue&type=template&id=d1634ffa&":
 /*!******************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/SuperAdmin/teacher/TeacherList.vue?vue&type=template&id=d1634ffa& ***!
@@ -63788,6 +64639,8 @@ var staticRenderFns = [
                           _c("th", [_vm._v("Class")]),
                           _vm._v(" "),
                           _c("th", [_vm._v("Section")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Total Students")]),
                           _vm._v(" "),
                           _c("th", [_vm._v("Ratings")]),
                           _vm._v(" "),
@@ -63895,6 +64748,10 @@ var render = function () {
                                     _vm._v(" "),
                                     _c("td", [
                                       _vm._v(_vm._s(req.leave.subject)),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(req.leave.vacation_type)),
                                     ]),
                                     _vm._v(" "),
                                     _c("td", [
@@ -64021,6 +64878,8 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Subject")]),
         _vm._v(" "),
+        _c("th", [_vm._v("Vacation Type")]),
+        _vm._v(" "),
         _c("th", [_vm._v("Date range")]),
         _vm._v(" "),
         _c("th", [_vm._v("Total")]),
@@ -64038,7 +64897,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", { staticClass: "text-center" }, [
-      _c("td", { staticClass: "text-danger" }, [_vm._v("No data found")]),
+      _c("td", { staticClass: "text-danger", attrs: { colspan: "9" } }, [
+        _vm._v("No data found"),
+      ]),
     ])
   },
 ]
@@ -66666,6 +67527,96 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Supervisor/teacher/StudentListByTeacher.vue?vue&type=template&id=f232d42a&":
+/*!***************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Supervisor/teacher/StudentListByTeacher.vue?vue&type=template&id=f232d42a& ***!
+  \***************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "card" }, [
+          _c(
+            "div",
+            { staticClass: "card-header d-flex justify-content-between" },
+            [
+              _c("h4", [
+                _vm._v("All students of "),
+                _c("b", [_vm._v('"Teacher Name"')]),
+              ]),
+            ]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-12" }, [
+                _c("div", { staticClass: "table-responsive" }, [
+                  _c(
+                    "table",
+                    {
+                      staticClass: "table table-striped table-bordered",
+                      attrs: { id: "datatable" },
+                    },
+                    [
+                      _c("thead", [
+                        _c("tr", { staticClass: "text-center" }, [
+                          _c("th", [_vm._v("ID")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Student name")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Phone")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Email")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Address")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("School")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Class")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Section")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Rating Points")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Action")]),
+                        ]),
+                      ]),
+                      _vm._v(" "),
+                      _c("tbody"),
+                    ]
+                  ),
+                ]),
+              ]),
+            ]),
+          ]),
+        ]),
+      ]),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Supervisor/teacher/TeacherList.vue?vue&type=template&id=4cad56d7&":
 /*!******************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Supervisor/teacher/TeacherList.vue?vue&type=template&id=4cad56d7& ***!
@@ -66862,6 +67813,29 @@ var render = function () {
                                                     _vm._v(
                                                       " Add / Edit Review"
                                                     ),
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "router-link",
+                                                  {
+                                                    staticClass:
+                                                      "dropdown-item",
+                                                    attrs: {
+                                                      to: {
+                                                        name: "superv.studentlist-by-teacher",
+                                                        params: {
+                                                          teacherId: teacher.id,
+                                                        },
+                                                      },
+                                                    },
+                                                  },
+                                                  [
+                                                    _c("i", {
+                                                      staticClass:
+                                                        "fas fa-users",
+                                                    }),
+                                                    _vm._v(" See Students"),
                                                   ]
                                                 ),
                                               ],
@@ -67062,6 +68036,11 @@ var render = function () {
                   _c("div", { staticClass: "card-body" }, [
                     _c("div", { staticClass: "d-flex" }, [
                       _c("div", { staticClass: "w-50" }, [
+                        _c("p", [
+                          _c("strong", [_vm._v("Vacation Type :")]),
+                          _vm._v("   " + _vm._s(req.vacation_type)),
+                        ]),
+                        _vm._v(" "),
                         _c("p", [
                           _c("strong", [_vm._v("Leave From :")]),
                           _vm._v("   " + _vm._s(req.from_date)),
@@ -67413,6 +68392,81 @@ var render = function () {
                   _vm._v(" "),
                   _c("HasError", {
                     attrs: { form: _vm.form, field: "subject" },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-md-12 mb-4" },
+                [
+                  _c("label", { attrs: { for: "" } }, [
+                    _vm._v("Vacation Type"),
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.reason,
+                          expression: "form.reason",
+                        },
+                      ],
+                      staticClass: "form-control",
+                      class: { "is-invalid": _vm.form.errors.has("reason") },
+                      on: {
+                        change: function ($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function (o) {
+                              return o.selected
+                            })
+                            .map(function (o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.form,
+                            "reason",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        },
+                      },
+                    },
+                    [
+                      _c(
+                        "option",
+                        { attrs: { value: "", disabled: "", hidden: "" } },
+                        [_vm._v("Select vacation type")]
+                      ),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "Salary Clinic" } }, [
+                        _vm._v("Salary Clinic"),
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "option",
+                        { attrs: { value: "Ordinary without salary" } },
+                        [_vm._v("Ordinary without salary")]
+                      ),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "1 Hour" } }, [
+                        _vm._v("1 Hour"),
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "Time Satisfying" } }, [
+                        _vm._v("Time Satisfying"),
+                      ]),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("HasError", {
+                    attrs: { form: _vm.form, field: "reason" },
                   }),
                 ],
                 1
@@ -68326,7 +69380,7 @@ var render = function () {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-12 mb-4" }, [
-                    _c("h5", [_vm._v("Performance")]),
+                    _c("h5", [_vm._v("Attendance")]),
                     _vm._v(" "),
                     _c(
                       "div",
@@ -68640,7 +69694,7 @@ var render = function () {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-12 mb-4" }, [
-                    _c("h5", [_vm._v("Behaviour")]),
+                    _c("h5", [_vm._v("Fetch Syllabus")]),
                     _vm._v(" "),
                     _c(
                       "div",
@@ -68954,7 +70008,7 @@ var render = function () {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-12 mb-4" }, [
-                    _c("h5", [_vm._v("Subject Knowledge")]),
+                    _c("h5", [_vm._v("Intercation with class")]),
                     _vm._v(" "),
                     _c(
                       "div",
@@ -69268,7 +70322,7 @@ var render = function () {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-12 mb-4" }, [
-                    _c("h5", [_vm._v("Attitude")]),
+                    _c("h5", [_vm._v("Homework Solution")]),
                     _vm._v(" "),
                     _c(
                       "div",
@@ -69582,7 +70636,7 @@ var render = function () {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-12 mb-4" }, [
-                    _c("h5", [_vm._v("Personality")]),
+                    _c("h5", [_vm._v("Speed and accuracy of the solution ")]),
                     _vm._v(" "),
                     _c(
                       "div",
@@ -69878,6 +70932,320 @@ var render = function () {
                             on: {
                               change: function ($event) {
                                 return _vm.$set(_vm.form, "rate5", "10")
+                              },
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "selectgroup-button selectgroup-button-icon",
+                            },
+                            [_vm._v("10")]
+                          ),
+                        ]),
+                      ]
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-12 mb-4" }, [
+                    _c("h5", [_vm._v("Test Results")]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "selectgroup selectgroup-pills mt-4" },
+                      [
+                        _c("label", { staticClass: "selectgroup-item" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.rate5,
+                                expression: "form.rate5",
+                              },
+                            ],
+                            staticClass: "selectgroup-input",
+                            attrs: { type: "radio", name: "rate5", value: "1" },
+                            domProps: { checked: _vm._q(_vm.form.rate5, "1") },
+                            on: {
+                              change: function ($event) {
+                                return _vm.$set(_vm.form, "rate5", "1")
+                              },
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "selectgroup-button selectgroup-button-icon",
+                            },
+                            [_vm._v("1")]
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("label", { staticClass: "selectgroup-item" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.rate5,
+                                expression: "form.rate5",
+                              },
+                            ],
+                            staticClass: "selectgroup-input",
+                            attrs: { type: "radio", name: "rate5", value: "2" },
+                            domProps: { checked: _vm._q(_vm.form.rate5, "2") },
+                            on: {
+                              change: function ($event) {
+                                return _vm.$set(_vm.form, "rate5", "2")
+                              },
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "selectgroup-button selectgroup-button-icon",
+                            },
+                            [_vm._v("2")]
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("label", { staticClass: "selectgroup-item" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.rate6,
+                                expression: "form.rate6",
+                              },
+                            ],
+                            staticClass: "selectgroup-input",
+                            attrs: { type: "radio", name: "rate5", value: "3" },
+                            domProps: { checked: _vm._q(_vm.form.rate6, "3") },
+                            on: {
+                              change: function ($event) {
+                                return _vm.$set(_vm.form, "rate6", "3")
+                              },
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "selectgroup-button selectgroup-button-icon",
+                            },
+                            [_vm._v("3")]
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("label", { staticClass: "selectgroup-item" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.rate6,
+                                expression: "form.rate6",
+                              },
+                            ],
+                            staticClass: "selectgroup-input",
+                            attrs: { type: "radio", name: "rate5", value: "4" },
+                            domProps: { checked: _vm._q(_vm.form.rate6, "4") },
+                            on: {
+                              change: function ($event) {
+                                return _vm.$set(_vm.form, "rate6", "4")
+                              },
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "selectgroup-button selectgroup-button-icon",
+                            },
+                            [_vm._v("4")]
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("label", { staticClass: "selectgroup-item" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.rate6,
+                                expression: "form.rate6",
+                              },
+                            ],
+                            staticClass: "selectgroup-input",
+                            attrs: { type: "radio", name: "rate5", value: "5" },
+                            domProps: { checked: _vm._q(_vm.form.rate6, "5") },
+                            on: {
+                              change: function ($event) {
+                                return _vm.$set(_vm.form, "rate6", "5")
+                              },
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "selectgroup-button selectgroup-button-icon",
+                            },
+                            [_vm._v("5")]
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("label", { staticClass: "selectgroup-item" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.rate6,
+                                expression: "form.rate6",
+                              },
+                            ],
+                            staticClass: "selectgroup-input",
+                            attrs: { type: "radio", name: "rate5", value: "6" },
+                            domProps: { checked: _vm._q(_vm.form.rate6, "6") },
+                            on: {
+                              change: function ($event) {
+                                return _vm.$set(_vm.form, "rate6", "6")
+                              },
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "selectgroup-button selectgroup-button-icon",
+                            },
+                            [_vm._v("6")]
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("label", { staticClass: "selectgroup-item" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.rate6,
+                                expression: "form.rate6",
+                              },
+                            ],
+                            staticClass: "selectgroup-input",
+                            attrs: { type: "radio", name: "rate5", value: "7" },
+                            domProps: { checked: _vm._q(_vm.form.rate6, "7") },
+                            on: {
+                              change: function ($event) {
+                                return _vm.$set(_vm.form, "rate6", "7")
+                              },
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "selectgroup-button selectgroup-button-icon",
+                            },
+                            [_vm._v("7")]
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("label", { staticClass: "selectgroup-item" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.rate6,
+                                expression: "form.rate6",
+                              },
+                            ],
+                            staticClass: "selectgroup-input",
+                            attrs: { type: "radio", name: "rate5", value: "8" },
+                            domProps: { checked: _vm._q(_vm.form.rate6, "8") },
+                            on: {
+                              change: function ($event) {
+                                return _vm.$set(_vm.form, "rate6", "8")
+                              },
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "selectgroup-button selectgroup-button-icon",
+                            },
+                            [_vm._v("8")]
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("label", { staticClass: "selectgroup-item" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.rate6,
+                                expression: "form.rate6",
+                              },
+                            ],
+                            staticClass: "selectgroup-input",
+                            attrs: { type: "radio", name: "rate5", value: "9" },
+                            domProps: { checked: _vm._q(_vm.form.rate6, "9") },
+                            on: {
+                              change: function ($event) {
+                                return _vm.$set(_vm.form, "rate6", "9")
+                              },
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "selectgroup-button selectgroup-button-icon",
+                            },
+                            [_vm._v("9")]
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("label", { staticClass: "selectgroup-item" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.rate6,
+                                expression: "form.rate6",
+                              },
+                            ],
+                            staticClass: "selectgroup-input",
+                            attrs: {
+                              type: "radio",
+                              name: "rate5",
+                              value: "10",
+                            },
+                            domProps: { checked: _vm._q(_vm.form.rate6, "10") },
+                            on: {
+                              change: function ($event) {
+                                return _vm.$set(_vm.form, "rate6", "10")
                               },
                             },
                           }),

@@ -23,20 +23,45 @@ class LeaveRequestController extends Controller
             "toDate" => "required|after:fromDate",
             "subject" => "required",
             "desc" => "required",
+            "reason" => "required",
         ],[
             "fromDate.required" => "Select the date from you want to take leave",
             "fromDate.after_or_equal" => "You can't select past dates",
             "toDate.required" => "Select the date till you want the leave",
             "toDate.after" => "You must select date after $req->fromDate",
             "subject.required" => "Please write the subject about your leave",
-            "desc.required" => "Please explain the reason why you are taking leave"
+            "desc.required" => "Please explain the reason why you are taking leave",
+            "reason.required" => "Please specify the vacation type"
         ]);
+        $me = auth("teacher")->user();
+
+        if($req->reason == "Ordinary without salary")
+        {
+            if($me->credit_without_salary < 1)
+            {
+                return [
+                    "status" => "fail",
+                    "msg" => "You've already requested maximum time for this vacation type"
+                ];
+            }
+        }
+
+        if($req->reason == "1 Hour")
+        {
+            if($me->credit_time < 1)
+            {
+                return [
+                    "status" => "fail",
+                    "msg" => "You've already requested maximum time for this vacation type"
+                ];
+            }
+        }
 
         $superVisors = AssignedSupervisor::where('teacher_id',auth("teacher")->user()->id)
         ->with("user:id,teacher_application_permission")
         ->get(["id","supervisor_id"]);
         $totalDay = Carbon::parse($req->fromDate)->diffInDays($req->toDate);
-        $teacherId = auth("teacher")->user()->id;
+        $teacherId = $me->id;
 
         $leave = new LeaveRequest();
         $leave->from_date = $req->fromDate;
@@ -44,6 +69,7 @@ class LeaveRequestController extends Controller
         $leave->teacher_id = $teacherId;
         $leave->total_days = $totalDay;
         $leave->subject = $req->subject;
+        $leave->vacation_type = $req->reason;
         $leave->desc = $req->desc;
         $leave->save();
 

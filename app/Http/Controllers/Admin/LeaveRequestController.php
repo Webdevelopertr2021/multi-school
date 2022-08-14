@@ -40,6 +40,9 @@ class LeaveRequestController extends Controller
         ->addColumn("subject",function($row){
             return $row->leave->subject;
         })
+        ->addColumn("vacation_type",function($row){
+            return $row->leave->vacation_type;
+        })
         ->addColumn("date_range",function($row){
             $text = Carbon::parse($row->leave->from_date)->format("d M Y"). " - " . Carbon::parse($row->leave->to_date)->format("d M Y");
             return $text;

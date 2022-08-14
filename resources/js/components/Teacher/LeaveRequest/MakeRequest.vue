@@ -24,6 +24,17 @@
                         <HasError :form="form" field="subject" />
                     </div>
                     <div class="col-md-12 mb-4">
+                        <label for="">Vacation Type</label>
+                        <select class="form-control" :class="{'is-invalid':form.errors.has('reason')}" v-model="form.reason">
+                            <option value="" disabled hidden>Select vacation type</option>
+                            <option value="Salary Clinic">Salary Clinic</option>
+                            <option value="Ordinary without salary">Ordinary without salary</option>
+                            <option value="1 Hour">1 Hour</option>
+                            <option value="Time Satisfying">Time Satisfying</option>
+                        </select>
+                        <HasError :form="form" field="reason" />
+                    </div>
+                    <div class="col-md-12 mb-4">
                         <label for="">Description</label>
                         <textarea class="form-control" :class="{'is-invalid':form.errors.has('desc')}" placeholder="Write your description..." v-model="form.desc"></textarea>
                         <HasError :form="form" field="desc" />
@@ -47,6 +58,7 @@ export default {
                 toDate: "",
                 subject: "",
                 desc: "",
+                reason: "",
             }),
         }
     },
@@ -62,6 +74,9 @@ export default {
                             name: 'teacher.leave-list'
                         })
                     });
+                }
+                else {
+                    swal.fire("Can not submit this request",data.msg,"warning");
                 }
             }).catch(err=>{
                 console.error(err.response.data);

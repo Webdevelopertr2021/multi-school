@@ -29,6 +29,7 @@ import EditAdmin from "../components/SuperAdmin/admins/Edit.vue";
 import MyProfile from "../components/SuperAdmin/admins/MyProfile.vue";
 import TeacherRatings from "../components/SuperAdmin/teacher/AllRatings.vue";
 import LeaveRequest from "../components/SuperAdmin/LeaveRequest/List.vue";
+import StudentListByTeacher from "../components/SuperAdmin/teacher/StudentListByTeacher.vue";
 // End
 
 const prefix = "/admin/"
@@ -236,6 +237,14 @@ const routes = new VueRouter({
             component:LeaveRequest,
             meta : {
                 title: "Leave requests"
+            }
+        },
+        {
+            path: prefix + "teacher/:teacherId/studetn-list",
+            name: "admin.student-by-teacher",
+            component: StudentListByTeacher,
+            meta: {
+                title : "Student List"
             }
         }
     ],

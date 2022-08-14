@@ -20,6 +20,7 @@
                                         <th>School</th>
                                         <th>Class</th>
                                         <th>Section</th>
+                                        <th>Total Students</th>
                                         <th>Ratings</th>
                                         <th>Actions</th>
                                     </tr>
@@ -61,6 +62,7 @@ export default {
                 { data: "school" },
                 { data: "class" },
                 { data: "section" },
+                { data: "total_students" },
                 { data: 'ratings' },
                 { data: 'action', name: 'action', orderable: false, searchable: false  }
             ],

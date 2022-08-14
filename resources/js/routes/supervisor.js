@@ -11,6 +11,7 @@ import LeaveRequest from "../components/Supervisor/LeaveRequest/List.vue";
 import NotificationList from "../components/NotifcationList.vue";
 import AllRatings from "../components/Supervisor/teacher/AllRatings.vue";
 import MyProfile from "../components/Supervisor/dashboard/MyProfile.vue";
+import StudentListByTeacher from "../components/Supervisor/teacher/StudentListByTeacher.vue";
 // End
 const prefix = "/supervisor/"
 const routes = new VueRouter({
@@ -72,6 +73,14 @@ const routes = new VueRouter({
             component: MyProfile,
             meta : {
                 title: "My Profile"
+            }
+        },
+        {
+            path : prefix + "teacher/:teacherId/student-list",
+            name: "superv.studentlist-by-teacher",
+            component: StudentListByTeacher,
+            meta : {
+                title: "Students"
             }
         }
     ],

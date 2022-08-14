@@ -56,6 +56,24 @@
                     </div>
 
                     <div class="col-md-4 mb-4">
+                        <label for="">Salary</label>
+                        <input type="number" name="salary" class="form-control" :class="{'is-invalid' : form.errors.has('salary')}" v-model="form.salary" placeholder="Salary...">
+                        <HasError :form="form" field="salary" />
+                    </div>
+
+                    <div class="col-md-4 mb-4">
+                        <label for="">Total Credit for leave without salary</label>
+                        <input type="number" name="credit_salry" class="form-control" :class="{'is-invalid' : form.errors.has('credit_without_salary')}" v-model="form.credit_without_salary" placeholder="Credit...">
+                        <HasError :form="form" field="credit_without_salary" />
+                    </div>
+
+                    <div class="col-md-4 mb-4">
+                        <label for="">Total Credit for Time Leave</label>
+                        <input type="number" name="credit_time" class="form-control" :class="{'is-invalid' : form.errors.has('credit_time')}" v-model="form.credit_time" placeholder="Credit...">
+                        <HasError :form="form" field="credit_time" />
+                    </div>
+
+                    <div class="col-md-4 mb-4">
                         <label for="">Password</label>
                         <input type="text" class="form-control" :class="{'is-invalid' : form.errors.has('password')}" 
                         v-model="form.password" placeholder="Set password...">
@@ -104,6 +122,9 @@ export default {
                 superVisors: null,
                 classId : null,
                 sectionId: null,
+                salary: "",
+                credit_without_salary: 1,
+                credit_time: 3,
             }),
             schools: [],
             supervisor: [],

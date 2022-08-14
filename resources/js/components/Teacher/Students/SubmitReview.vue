@@ -31,7 +31,7 @@
                         <hr>
                     </div>
                     <div class="col-md-12 mb-4">
-                        <h5>Performance</h5>
+                        <h5>Attendance</h5>
                         <div class="selectgroup selectgroup-pills mt-4">
                             <label class="selectgroup-item">
                                 <input type="radio" name="rate1" value="1" class="selectgroup-input" v-model="form.rate1">
@@ -77,7 +77,7 @@
                     </div>
 
                     <div class="col-md-12 mb-4">
-                        <h5>Behaviour</h5>
+                        <h5>Fetch Syllabus</h5>
                         <div class="selectgroup selectgroup-pills mt-4">
                             <label class="selectgroup-item">
                                 <input type="radio" name="rate2" value="1" class="selectgroup-input" v-model="form.rate2">
@@ -123,7 +123,7 @@
                     </div>
 
                     <div class="col-md-12 mb-4">
-                        <h5>Subject Knowledge</h5>
+                        <h5>Intercation with class</h5>
                         <div class="selectgroup selectgroup-pills mt-4">
                             <label class="selectgroup-item">
                                 <input type="radio" name="rate3" value="1" class="selectgroup-input" v-model="form.rate3">
@@ -169,7 +169,7 @@
                     </div>
 
                     <div class="col-md-12 mb-4">
-                        <h5>Attitude</h5>
+                        <h5>Homework Solution</h5>
                         <div class="selectgroup selectgroup-pills mt-4">
                             <label class="selectgroup-item">
                                 <input type="radio" name="rate4" value="1" class="selectgroup-input" v-model="form.rate4">
@@ -215,7 +215,7 @@
                     </div>
 
                     <div class="col-md-12 mb-4">
-                        <h5>Personality</h5>
+                        <h5>Speed and accuracy of the solution </h5>
                         <div class="selectgroup selectgroup-pills mt-4">
                             <label class="selectgroup-item">
                                 <input type="radio" name="rate5" value="1" class="selectgroup-input" v-model="form.rate5">
@@ -255,6 +255,52 @@
                             </label>
                             <label class="selectgroup-item">
                                 <input type="radio" name="rate5" value="10" class="selectgroup-input" v-model="form.rate5">
+                                <span class="selectgroup-button selectgroup-button-icon">10</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mb-4">
+                        <h5>Test Results</h5>
+                        <div class="selectgroup selectgroup-pills mt-4">
+                            <label class="selectgroup-item">
+                                <input type="radio" name="rate5" value="1" class="selectgroup-input" v-model="form.rate5">
+                                <span class="selectgroup-button selectgroup-button-icon">1</span>
+                            </label>
+                            <label class="selectgroup-item">
+                                <input type="radio" name="rate5" value="2" class="selectgroup-input" v-model="form.rate5">
+                                <span class="selectgroup-button selectgroup-button-icon">2</span>
+                            </label>
+                            <label class="selectgroup-item">
+                                <input type="radio" name="rate5" value="3" class="selectgroup-input" v-model="form.rate6">
+                                <span class="selectgroup-button selectgroup-button-icon">3</span>
+                            </label>
+                            <label class="selectgroup-item">
+                                <input type="radio" name="rate5" value="4" class="selectgroup-input" v-model="form.rate6">
+                                <span class="selectgroup-button selectgroup-button-icon">4</span>
+                            </label>
+                            <label class="selectgroup-item">
+                                <input type="radio" name="rate5" value="5" class="selectgroup-input" v-model="form.rate6">
+                                <span class="selectgroup-button selectgroup-button-icon">5</span>
+                            </label>
+                            <label class="selectgroup-item">
+                                <input type="radio" name="rate5" value="6" class="selectgroup-input" v-model="form.rate6">
+                                <span class="selectgroup-button selectgroup-button-icon">6</span>
+                            </label>
+                            <label class="selectgroup-item">
+                                <input type="radio" name="rate5" value="7" class="selectgroup-input" v-model="form.rate6">
+                                <span class="selectgroup-button selectgroup-button-icon">7</span>
+                            </label>
+                            <label class="selectgroup-item">
+                                <input type="radio" name="rate5" value="8" class="selectgroup-input" v-model="form.rate6">
+                                <span class="selectgroup-button selectgroup-button-icon">8</span>
+                            </label>
+                            <label class="selectgroup-item">
+                                <input type="radio" name="rate5" value="9" class="selectgroup-input" v-model="form.rate6">
+                                <span class="selectgroup-button selectgroup-button-icon">9</span>
+                            </label>
+                            <label class="selectgroup-item">
+                                <input type="radio" name="rate5" value="10" class="selectgroup-input" v-model="form.rate6">
                                 <span class="selectgroup-button selectgroup-button-icon">10</span>
                             </label>
                         </div>

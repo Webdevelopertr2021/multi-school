@@ -116,6 +116,11 @@ Route::group(["prefix"=>"admin","middleware"=>"auth"],function(){
         Route::post("/update-teacher","Admin\SuperVisorController@updateTeacher");
 
         Route::get("/get-teacher-ratings","Admin\TeacherController@getTeacherRating");
+
+        Route::get("/get-teacher-data","Admin\SuperVisorController@getTeacherData");
+
+        Route::get("/get-teachers-students","Admin\SuperVisorController@getStudentByTeacher");
+
         // End
 
         // Dashboard
@@ -173,6 +178,10 @@ Route::group(["prefix" => "supervisor", "middleware" => "auth:supervisor"],funct
         Route::get('/get-my-profile-data',"Supervisor\DashboardController@myProfile");
 
         Route::post('/update-my-profile',"Supervisor\DashboardController@updateMyProfile");
+
+        Route::get("/get-teacher-data","Supervisor\SuperVisorController@getTeacherData");
+
+        Route::get("/get-teachers-students","Supervisor\SuperVisorController@getStudentByTeacher");
 
     });
 
