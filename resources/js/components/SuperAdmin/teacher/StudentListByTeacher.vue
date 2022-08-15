@@ -1,7 +1,7 @@
 <template>
   <div class="row justify-content-center">
     
-    <div class="col-md-12" v-if="teacherData.name">
+    <div class="col-md-12" v-if="!isLoading">
         <div class="card">
             <div class="card-body">
                 <div class="d-flex">
@@ -63,6 +63,7 @@ export default {
     data() {
         return {
             teacherData: {},
+            isLoading: true,
         }
     },
     methods : {
@@ -76,6 +77,7 @@ export default {
             }).then(data=>{
                 if(data.status == "ok") {
                     this.teacherData = data.teacher;
+                    this.isLoading = false;
                 }
                 else {
                     this.$router.push({

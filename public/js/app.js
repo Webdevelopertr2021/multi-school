@@ -2739,6 +2739,187 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Manager/teacher/StudentListByTeacher.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Manager/teacher/StudentListByTeacher.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      teacherData: {},
+      isLoading: true
+    };
+  },
+  methods: {
+    getTeacherData: function getTeacherData() {
+      var _this = this;
+
+      axios.get("/manager/api/get-teacher-data", {
+        params: {
+          teacherId: this.$route.params.teacherId
+        }
+      }).then(function (resp) {
+        return resp.data;
+      }).then(function (data) {
+        if (data.status == "ok") {
+          _this.teacherData = data.teacher;
+          _this.isLoading = false;
+        } else {
+          _this.$router.push({
+            name: "manager.teacher-list"
+          });
+        }
+      })["catch"](function (err) {
+        _this.$router.push({
+          name: "manager.teacher-list"
+        });
+
+        console.error(err.response.data);
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.getTeacherData();
+
+    var _self = this;
+
+    $('#datatable').DataTable({
+      processing: true,
+      serverside: true,
+      ajax: '/manager/api/get-teachers-students?teacherId=' + _self.$route.params.teacherId,
+      lengthChange: true,
+      columns: [{
+        data: "id"
+      }, {
+        data: "name"
+      }, {
+        data: "phone"
+      }, {
+        data: "email"
+      }, {
+        data: "address"
+      }, {
+        data: "school"
+      }, {
+        data: "class"
+      }, {
+        data: "section"
+      }, {
+        data: 'ratings'
+      }, {
+        data: 'action',
+        name: 'action',
+        orderable: false,
+        searchable: false
+      }],
+      dom: 'Bfrtip',
+      buttons: [{
+        extend: 'copyHtml5',
+        exportOptions: {
+          columns: [0, ':visible']
+        }
+      }, {
+        extend: 'excelHtml5',
+        exportOptions: {
+          columns: ':visible'
+        }
+      }, {
+        extend: 'pdfHtml5',
+        exportOptions: {
+          columns: ':visible'
+        }
+      }, {
+        extend: 'colvis',
+        text: '<i class="fas fa-eye"></i> Columns'
+      }],
+      createdRow: function createdRow(row, data, dataIndex) {
+        // Set the data-status attribute, and add a class
+        $(row).addClass("text-center");
+      }
+    });
+    $('#datatable').removeClass("dataTable");
+    $('#datatable').css("width", "100%");
+    $(document).on("click", "button[data-ratings]", function () {
+      var studentId = $(this).data("ratings");
+
+      _self.$router.push({
+        name: 'teacher.student-ratings',
+        params: {
+          studentId: studentId
+        }
+      });
+    });
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Manager/teacher/TeacherList.vue?vue&type=script&lang=js&":
 /*!**********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Manager/teacher/TeacherList.vue?vue&type=script&lang=js& ***!
@@ -8334,7 +8515,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      teacherData: {}
+      teacherData: {},
+      isLoading: true
     };
   },
   methods: {
@@ -8350,6 +8532,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (data) {
         if (data.status == "ok") {
           _this.teacherData = data.teacher;
+          _this.isLoading = false;
         } else {
           _this.$router.push({
             name: "superv.teacher-list"
@@ -11485,9 +11668,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Manager_supervisor_List_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/Manager/supervisor/List.vue */ "./resources/js/components/Manager/supervisor/List.vue");
 /* harmony import */ var _components_Manager_students_List_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/Manager/students/List.vue */ "./resources/js/components/Manager/students/List.vue");
 /* harmony import */ var _components_Manager_teacher_TeacherList_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/Manager/teacher/TeacherList.vue */ "./resources/js/components/Manager/teacher/TeacherList.vue");
+/* harmony import */ var _components_Manager_teacher_StudentListByTeacher_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/Manager/teacher/StudentListByTeacher.vue */ "./resources/js/components/Manager/teacher/StudentListByTeacher.vue");
 
 
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]); // Components
+
 
 
 
@@ -11526,6 +11711,13 @@ var routes = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     component: _components_Manager_teacher_TeacherList_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
     meta: {
       title: "Teacher List"
+    }
+  }, {
+    path: prefix + "teacher/:teacherId/student-list",
+    name: "manager.studentlist-by-teacher",
+    component: _components_Manager_teacher_StudentListByTeacher_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
+    meta: {
+      title: "Students"
     }
   }],
   scrollBehavior: function scrollBehavior(to, from, savedPos) {
@@ -53694,6 +53886,45 @@ component.options.__file = "resources/js/components/Manager/supervisor/List.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/Manager/teacher/StudentListByTeacher.vue":
+/*!**************************************************************************!*\
+  !*** ./resources/js/components/Manager/teacher/StudentListByTeacher.vue ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _StudentListByTeacher_vue_vue_type_template_id_6a65ebcc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./StudentListByTeacher.vue?vue&type=template&id=6a65ebcc& */ "./resources/js/components/Manager/teacher/StudentListByTeacher.vue?vue&type=template&id=6a65ebcc&");
+/* harmony import */ var _StudentListByTeacher_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./StudentListByTeacher.vue?vue&type=script&lang=js& */ "./resources/js/components/Manager/teacher/StudentListByTeacher.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _StudentListByTeacher_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _StudentListByTeacher_vue_vue_type_template_id_6a65ebcc___WEBPACK_IMPORTED_MODULE_0__.render,
+  _StudentListByTeacher_vue_vue_type_template_id_6a65ebcc___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Manager/teacher/StudentListByTeacher.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/Manager/teacher/TeacherList.vue":
 /*!*****************************************************************!*\
   !*** ./resources/js/components/Manager/teacher/TeacherList.vue ***!
@@ -55663,6 +55894,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Manager/teacher/StudentListByTeacher.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/components/Manager/teacher/StudentListByTeacher.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_StudentListByTeacher_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./StudentListByTeacher.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Manager/teacher/StudentListByTeacher.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_StudentListByTeacher_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/Manager/teacher/TeacherList.vue?vue&type=script&lang=js&":
 /*!******************************************************************************************!*\
   !*** ./resources/js/components/Manager/teacher/TeacherList.vue?vue&type=script&lang=js& ***!
@@ -56792,6 +57039,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_List_vue_vue_type_template_id_23a4ba88___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_List_vue_vue_type_template_id_23a4ba88___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./List.vue?vue&type=template&id=23a4ba88& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Manager/supervisor/List.vue?vue&type=template&id=23a4ba88&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Manager/teacher/StudentListByTeacher.vue?vue&type=template&id=6a65ebcc&":
+/*!*********************************************************************************************************!*\
+  !*** ./resources/js/components/Manager/teacher/StudentListByTeacher.vue?vue&type=template&id=6a65ebcc& ***!
+  \*********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StudentListByTeacher_vue_vue_type_template_id_6a65ebcc___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StudentListByTeacher_vue_vue_type_template_id_6a65ebcc___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StudentListByTeacher_vue_vue_type_template_id_6a65ebcc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./StudentListByTeacher.vue?vue&type=template&id=6a65ebcc& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Manager/teacher/StudentListByTeacher.vue?vue&type=template&id=6a65ebcc&");
 
 
 /***/ }),
@@ -58230,6 +58494,132 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Manager/teacher/StudentListByTeacher.vue?vue&type=template&id=6a65ebcc&":
+/*!************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Manager/teacher/StudentListByTeacher.vue?vue&type=template&id=6a65ebcc& ***!
+  \************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row justify-content-center" }, [
+    !_vm.isLoading
+      ? _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "card" }, [
+            _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "d-flex" }, [
+                _c("div", { staticClass: "mr-2" }, [
+                  _vm.teacherData.photo != null
+                    ? _c("img", {
+                        staticClass: "user-thumb-100",
+                        attrs: { src: _vm.teacherData.photo_url, alt: "" },
+                      })
+                    : _c("img", {
+                        staticClass: "user-thumb-100",
+                        attrs: {
+                          src: "/image/portrait-placeholder.png",
+                          alt: "",
+                        },
+                      }),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "ml-4" }, [
+                  _c("h4", [_vm._v(_vm._s(_vm.teacherData.name))]),
+                  _vm._v(" "),
+                  _c("p", [
+                    _vm._v("School : " + _vm._s(_vm.teacherData.school.name)),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", [
+                    _vm._v("Class : " + _vm._s(_vm.teacherData.classes.name)),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", [
+                    _vm._v("Section : " + _vm._s(_vm.teacherData.section.name)),
+                  ]),
+                ]),
+              ]),
+            ]),
+          ]),
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm._m(0),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12" }, [
+      _c("div", { staticClass: "card" }, [
+        _c(
+          "div",
+          { staticClass: "card-header d-flex justify-content-between" },
+          [_c("h4", [_vm._v("Student List")])]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-12" }, [
+              _c("div", { staticClass: "table-responsive" }, [
+                _c(
+                  "table",
+                  {
+                    staticClass: "table table-striped table-bordered",
+                    attrs: { id: "datatable" },
+                  },
+                  [
+                    _c("thead", [
+                      _c("tr", { staticClass: "text-center" }, [
+                        _c("th", [_vm._v("ID")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Student name")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Phone")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Email")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Address")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("School")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Class")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Section")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Rating Points")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Action")]),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("tbody"),
+                  ]
+                ),
+              ]),
+            ]),
+          ]),
+        ]),
+      ]),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Manager/teacher/TeacherList.vue?vue&type=template&id=54cea054&":
 /*!***************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Manager/teacher/TeacherList.vue?vue&type=template&id=54cea054& ***!
@@ -58411,7 +58801,7 @@ var render = function () {
                                                       "dropdown-item",
                                                     attrs: {
                                                       to: {
-                                                        name: "superv.studentlist-by-teacher",
+                                                        name: "manager.studentlist-by-teacher",
                                                         params: {
                                                           teacherId: teacher.id,
                                                         },
@@ -67418,7 +67808,7 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row justify-content-center" }, [
-    _vm.teacherData.name
+    !_vm.isLoading
       ? _c("div", { staticClass: "col-md-12" }, [
           _c("div", { staticClass: "card" }, [
             _c("div", { staticClass: "card-body" }, [

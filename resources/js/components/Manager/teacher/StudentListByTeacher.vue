@@ -1,9 +1,29 @@
 <template>
   <div class="row justify-content-center">
+
+    <div class="col-md-12" v-if="!isLoading">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="mr-2">
+                        <img v-if="teacherData.photo != null" class="user-thumb-100" :src="teacherData.photo_url" alt="">
+                        <img v-else class="user-thumb-100" src="/image/portrait-placeholder.png" alt="">
+                    </div>
+                    <div class="ml-4">
+                        <h4>{{ teacherData.name }}</h4>
+                        <p>School : {{ teacherData.school.name }}</p>
+                        <p>Class : {{ teacherData.classes.name }}</p>
+                        <p>Section : {{ teacherData.section.name }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="col-md-12">
         <div class="card">
             <div class="card-header d-flex justify-content-between">
-                <h4>All students of <b>"Teacher Name"</b></h4>
+                <h4>Student List</h4>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -43,11 +63,12 @@ export default {
     data() {
         return {
             teacherData: {},
+            isLoading: true,
         }
     },
     methods : {
         getTeacherData() {
-            axios.get("/supervisor/api/get-teacher-data",{
+            axios.get("/manager/api/get-teacher-data",{
                 params: {
                     teacherId : this.$route.params.teacherId
                 }
@@ -56,15 +77,16 @@ export default {
             }).then(data=>{
                 if(data.status == "ok") {
                     this.teacherData = data.teacher;
+                    this.isLoading = false;
                 }
                 else {
                     this.$router.push({
-                        name: "superv.teacher-list"
+                        name: "manager.teacher-list"
                     });
                 }
             }).catch(err=>{
                 this.$router.push({
-                    name: "superv.teacher-list"
+                    name: "manager.teacher-list"
                 });
                 console.error(err.response.data);
             });
@@ -76,7 +98,7 @@ export default {
         $('#datatable').DataTable({
         processing: true,
         serverside:true,
-        ajax: '/supervisor/api/get-teachers-students?teacherId='+_self.$route.params.teacherId,
+        ajax: '/manager/api/get-teachers-students?teacherId='+_self.$route.params.teacherId,
         lengthChange : true,
         columns: [
             {data: "id"},

@@ -8,6 +8,7 @@ import Dashboard from "../components/Manager/home/Dashboard.vue";
 import SuperVisorList from "../components/Manager/supervisor/List.vue";
 import StudentList from "../components/Manager/students/List.vue";
 import TeacherList from "../components/Manager/teacher/TeacherList.vue";
+import StudentListByTeacher from "../components/Manager/teacher/StudentListByTeacher.vue";
 // End
 
 const prefix = "/manager/"
@@ -46,6 +47,14 @@ const routes = new VueRouter({
             component: TeacherList,
             meta: {
                 title: "Teacher List"
+            }
+        },
+        {
+            path : prefix + "teacher/:teacherId/student-list",
+            name: "manager.studentlist-by-teacher",
+            component: StudentListByTeacher,
+            meta : {
+                title: "Students"
             }
         }
     ],

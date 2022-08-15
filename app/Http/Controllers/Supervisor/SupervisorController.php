@@ -38,7 +38,7 @@ class SupervisorController extends Controller
 
     public function getTeacherData(Request $req)
     {
-        if($teacher = User::find($req->teacherId))
+        if($teacher = User::with("classes")->with("section")->with("school")->find($req->teacherId))
         {
             return [
                 "status" => "ok",
