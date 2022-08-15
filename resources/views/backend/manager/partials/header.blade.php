@@ -70,8 +70,8 @@
       </li>
       <li class="dropdown"><a href="#" data-toggle="dropdown"
           class="nav-link dropdown-toggle nav-link-lg nav-link-user"> 
-          @if(auth("supervisor")->user()->photo != "")
-            <img class="user-thumb-40" alt="image" src="{{ auth()->user("supervisor")->photo_url }}"
+          @if(auth("manager")->user()->photo != "")
+            <img class="user-thumb-40" alt="image" src="{{ auth("manager")->user()->photo_url }}"
             class="user-img-radious-style">
           @else
             <img class="user-thumb-40" alt="image" src="{{ asset("image/portrait-placeholder.png") }}"
@@ -79,7 +79,7 @@
           @endif
             <span class="d-sm-none d-lg-inline-block"></span></a>
         <div class="dropdown-menu dropdown-menu-right pullDown">
-          <div class="dropdown-title">Hello {{ auth()->user()->name }}</div>
+          <div class="dropdown-title">Hello {{ auth("manager")->user()->name }}</div>
           <router-link :to="{name : 'superv.my-profile'}" class="dropdown-item has-icon"> <i class="far
                                     fa-user"></i> My Profile
           </router-link>
@@ -89,7 +89,7 @@
             Logout
           </a>
             <form id="logout-form" action="{{ route('user-logout') }}" method="POST" class="d-none">
-            <input type="hidden" value="{{ auth("supervisor")->user()->role }}" name="role">
+            <input type="hidden" value="{{ auth("manager")->user()->role }}" name="role">
             @csrf
           </form>
         </div>

@@ -1,11 +1,11 @@
 @extends('backend.layouts.master')
 
 @section('header')
-    @include("backend.supervisor.partials.header")
+    @include("backend.manager.partials.header")
 @endsection
 
 @section("sidebar")
-    @include('backend.supervisor.partials.sidebar')
+    @include('backend.manager.partials.sidebar')
 @endsection
 
 @section("content")

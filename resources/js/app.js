@@ -19,6 +19,7 @@ import VueProgressBar from "vue-progressbar";
 import SuperAdminRouter from "./routes/super-admin";
 import SuperVisorRouter from "./routes/supervisor";
 import TeacherRouter from "./routes/teacher";
+import ManagerRouter from "./routes/manager";
 
 import Swal from "sweetalert2";
 
@@ -139,5 +140,13 @@ if(document.getElementById("teacher_app"))
     const teacherApp = new Vue({
         el: "#teacher_app",
         router: TeacherRouter,
+    })
+}
+
+if(document.getElementById("manager_app"))
+{
+    const managerApp = new Vue({
+        el: "#manager_app",
+        router: ManagerRouter,
     })
 }

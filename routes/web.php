@@ -227,9 +227,17 @@ Route::group(["prefix" => "teacher", "middleware" => "auth:teacher"], function()
 // Manager
 Route::group(["prefix" => "manager","middleware" => "auth:manager"],function(){
 
-    Route::get("/{any}",function(){
-        return "HI";
-    })->where("any", "^(?!api/.*$).*$");
+    Route::get("/{any}","Manager\ManagerController@index")->where("any", "^(?!api/.*$).*$");
+
+    Route::group(["prefix" => "api"],function(){
+
+        Route::get("/get-all-supervisors","Manager\SupervisorController@getList");
+
+        Route::get("/get-my-students","Manager\StudentController@getStudents");
+
+        Route::get("/get-teacher-list","Manager\TeacherController@getTeacher");
+
+    });
     
 });
 // End

@@ -1,8 +1,8 @@
 @php
     $applicationCount = 0;
-    if(auth("supervisor")->user()->teacher_application_permission == 1)
+    if(auth("manager")->user()->teacher_application_permission == 1)
     {
-      $data = \App\Models\LeaveRequestApproval::where("supervisor_id",auth("supervisor")->user()->id)->where("status","pending")->get();
+      $data = \App\Models\LeaveRequestApproval::where("supervisor_id",auth("manager")->user()->id)->where("status","pending")->get();
       $applicationCount = count($data);
     }
 @endphp
@@ -10,19 +10,28 @@
     <aside id="sidebar-wrapper">
       <div class="sidebar-brand">
         <a href="index.html"> <img alt="image" src="{{ asset("backend/img/logo.png") }}" class="header-logo" /> <span
-            class="logo-name">{{ auth("supervisor")->user()->role }}</span>
+            class="logo-name">{{ auth("manager")->user()->role }}</span>
         </a>
       </div>
       <ul class="sidebar-menu">
         <li class="menu-header">Main</li>
         <li class="dropdown">
-          <router-link :to="{name: 'superv.dashboard'}" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></router-link>
-        </li>
-        <li class="dropdown">
-          <router-link :to="{name: 'superv.teacher-list'}" class="nav-link"><i data-feather="users"></i><span>My Teachers</span></router-link>
+          <router-link :to="{name: 'manager.dashboard'}" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></router-link>
         </li>
 
-        @if (auth("supervisor")->user()->teacher_application_permission == 1)
+        <li class="dropdown">
+          <router-link :to="{name: 'manager.supervisors'}" class="nav-link"><i data-feather="users"></i><span>Supervisors</span></router-link>
+        </li>
+
+        <li class="dropdown">
+          <router-link :to="{name: 'manager.student-list'}" class="nav-link"><i data-feather="users"></i><span>Student List</span></router-link>
+        </li>
+
+        <li class="dropdown">
+          <router-link :to="{name: 'manager.teacher-list'}" class="nav-link"><i data-feather="users"></i><span>My Teachers</span></router-link>
+        </li>
+
+        @if (auth("manager")->user()->teacher_application_permission == 1)
         <li class="dropdown">
           <router-link :to="{name: 'superv.leave-request'}" class="nav-link"><i data-feather="minus-square"></i>
             <span>Leave Requests @if($applicationCount > 0) <span class="text-danger">({{ $applicationCount }})</span> @endif</span></router-link>
