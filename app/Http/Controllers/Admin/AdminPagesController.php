@@ -276,6 +276,15 @@ class AdminPagesController extends Controller
         $admin->role = "manager";
         $admin->password = bcrypt($req->password);
 
+        if($req->accessToLeave == true)
+        {
+            $admin->teacher_application_permission = 1;
+        }
+        else
+        {
+            $admin->teacher_application_permission = null;
+        }
+
         if($req->hasFile("photo"))
         {
             $file = $req->file("photo");
@@ -312,6 +321,15 @@ class AdminPagesController extends Controller
         if($req->password != "")
         {
             $admin->password = bcrypt($req->password);
+        }
+
+        if($req->accessToLeave == true)
+        {
+            $admin->teacher_application_permission = 1;
+        }
+        else
+        {
+            $admin->teacher_application_permission = null;
         }
 
         if($req->hasFile("photo"))

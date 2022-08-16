@@ -47,7 +47,7 @@
                                                 Action
                                                 </button>
                                                 <div class="dropdown-menu">
-                                                    <router-link :to="{name: 'admin.superv.teachers', params: {supervisorId: superv.id}}" class="dropdown-item">
+                                                    <router-link :to="{name: 'manager.superv.teachers', params: {supervisorId: superv.id}}" class="dropdown-item">
                                                         <i class="fas fa-users"></i> Show Teachers
                                                     </router-link>
                                                     <!-- <router-link :to="{name: 'admin.edit-superv', params: {userId: superv.id}}" 

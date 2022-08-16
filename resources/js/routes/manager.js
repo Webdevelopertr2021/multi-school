@@ -9,6 +9,8 @@ import SuperVisorList from "../components/Manager/supervisor/List.vue";
 import StudentList from "../components/Manager/students/List.vue";
 import TeacherList from "../components/Manager/teacher/TeacherList.vue";
 import StudentListByTeacher from "../components/Manager/teacher/StudentListByTeacher.vue";
+import TeacherListSuperv from "../components/Manager/supervisor/Teachers.vue";
+import LeaveRequest from "../components/Manager/LeaveRequest/List.vue";
 // End
 
 const prefix = "/manager/"
@@ -56,7 +58,23 @@ const routes = new VueRouter({
             meta : {
                 title: "Students"
             }
-        }
+        },
+        {
+            path: prefix + "supervisor/:supervisorId/teachers",
+            name: "manager.superv.teachers",
+            component: TeacherListSuperv,
+            meta : {
+                title : "Supervisor List"
+            }
+        },
+        {
+            path: prefix + 'leave-requests',
+            name: "manager.leave-request",
+            component: LeaveRequest,
+            meta: {
+                title: "Leave request",
+            }
+        },
     ],
     scrollBehavior(to, from, savedPos) {
         if (savedPos) {

@@ -33,7 +33,7 @@
 
         @if (auth("manager")->user()->teacher_application_permission == 1)
         <li class="dropdown">
-          <router-link :to="{name: 'superv.leave-request'}" class="nav-link"><i data-feather="minus-square"></i>
+          <router-link :to="{name: 'manager.leave-request'}" class="nav-link"><i data-feather="minus-square"></i>
             <span>Leave Requests @if($applicationCount > 0) <span class="text-danger">({{ $applicationCount }})</span> @endif</span></router-link>
         </li>    
         @endif

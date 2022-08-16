@@ -241,6 +241,12 @@ Route::group(["prefix" => "manager","middleware" => "auth:manager"],function(){
 
         Route::get("/get-teachers-students","Manager\TeacherController@getStudentByTeacher");
 
+        Route::get("/get-teacher-list-by-supervisor","Manager\TeacherController@getTeacherBySuperv");
+
+        Route::get("/get-leave-request","Manager\LeaveRequestController@getList");
+
+        Route::post("/update-application-status","Manager\LeaveRequestController@updateStatus");
+
     });
     
 });

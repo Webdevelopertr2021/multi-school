@@ -48,9 +48,9 @@
                               <td>{{ req.leave.total_days }}</td>
                               <td>{{ moment(req.leave.created_at).format("DD MMMM YYYY") }}</td>
                               <td>
-                                <span v-if="req.status=='pending'" class="bage badge-pill badge-warning">Pending</span>
-                                <span v-else-if="req.status=='rejected'" class="bage badge-pill badge-danger">Rejected</span>
-                                <span v-else-if="req.status == 'approved'" class="bage badge-pill badge-success">Approved</span>
+                                <span v-if="req.status=='pending'" class="badge badge-pill badge-warning">Pending</span>
+                                <span v-else-if="req.status=='rejected'" class="badge badge-pill badge-danger">Rejected</span>
+                                <span v-else-if="req.status == 'approved'" class="badge badge-pill badge-success">Approved</span>
                               </td>
                               <td>
                                 <span v-if="req.leave.approved_by_manager == 1" class="badge badge-pill badge-success">Approved</span>
@@ -86,7 +86,7 @@ export default {
   },
   methods : {
     getList(page = 1) {
-      axios.get("/supervisor/api/get-leave-request?page="+page).then(resp=>{
+      axios.get("/manager/api/get-leave-request?page="+page).then(resp=>{
         return resp.data;
       }).then(data=>{
         if(data.status == "ok") {
@@ -115,9 +115,8 @@ export default {
           <div class="col-12 mb-4">
             <label class="text-left"><b>Choose action</b></label>
             <select id="actionStatus" class="form-control">
-              <option value="pending" ${data.status=='pending'?'selected':''}>Pending</option>
-              <option value="rejected" ${data.status=='rejected'?'selected':''}>Reject</option>
-              <option value="approved" ${data.status=='approved'?'selected':''}>Approve</option>
+              <option value="pending" ${data.approved_by_manager==0?'selected':''}>Pending</option>
+              <option value="approved" ${data.approved_by_manager==1?'selected':''}>Approve</option>
             </select>
           </div>
           <div class="col-12 mb-4">
@@ -135,7 +134,7 @@ export default {
         }
       }).then((result) => {
         if(result.isConfirmed) {
-          axios.post("/supervisor/api/update-application-status",{
+          axios.post("/manager/api/update-application-status",{
             status: result.value.status,
             msg: result.value.msg,
             id: data.id,
@@ -145,7 +144,7 @@ export default {
           }).then(data=>{
             if(data.status == "ok") {
               swal.fire("Data updated",data.msg,"success").then(()=>{
-                this.paginateData.data[index].status = data.action;
+                window.location.reload();
               });
             }
           }).catch(err=>{

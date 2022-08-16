@@ -77,22 +77,22 @@ class LeaveRequestController extends Controller
 
             
 
-            if($status == "approved")
-            {
-                $notify = new CustomNotification();
-                $notify->user_id = $mainLeaveReq->teacher_id;
-                $notify->type = "application_approve";
-                $notify->msg = "Your application for leave request ($mainLeaveReq->subject) was approved";
-                $notify->save();
-            }
-            else if($status == "rejected")
-            {
-                $notify = new CustomNotification();
-                $notify->user_id = $mainLeaveReq->teacher_id;
-                $notify->type = "application_approve";
-                $notify->msg = "Your application for leave request ($mainLeaveReq->subject) was denied. Please apply again with proper explanation";
-                $notify->save();
-            }
+            // if($status == "approved")
+            // {
+            //     $notify = new CustomNotification();
+            //     $notify->user_id = $mainLeaveReq->teacher_id;
+            //     $notify->type = "application_approve";
+            //     $notify->msg = "Your application for leave request ($mainLeaveReq->subject) was approved";
+            //     $notify->save();
+            // }
+            // else if($status == "rejected")
+            // {
+            //     $notify = new CustomNotification();
+            //     $notify->user_id = $mainLeaveReq->teacher_id;
+            //     $notify->type = "application_approve";
+            //     $notify->msg = "Your application for leave request ($mainLeaveReq->subject) was denied. Please apply again with proper explanation";
+            //     $notify->save();
+            // }
 
             return [ 
                 "status" => "ok",

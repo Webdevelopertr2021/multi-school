@@ -38,6 +38,10 @@
                   </div>
 
                   <div class="col-md-12 mb-4">
+                      <label for="access"><input type="checkbox" id="access" v-model="form.accessToLeave"> &nbsp; Can access teachers leave applications</label>
+                  </div>
+
+                  <div class="col-md-12 mb-4">
                     <Button :form="form" class="btn btn-success">Save</Button>
                   </div>
 
@@ -61,6 +65,7 @@ export default {
         phone: '',
         password: 'school2022',
         photo: null,
+        accessToLeave: false,
       })
     }
   },
@@ -83,6 +88,10 @@ export default {
           this.form.phone = data.user.phone;
           this.form.email = data.user.email;
           this.form.password = null;
+          if(data.user.teacher_application_permission == 1)
+          {
+            this.form.accessToLeave = true;
+          }
         }
         else
         {

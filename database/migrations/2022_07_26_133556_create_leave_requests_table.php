@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string("vacation_type");
             $table->text("desc");
             $table->integer("approved_by_manager")->default(0);
+            $table->string("manager_msg")->nullable();
             $table->timestamps();
         });
     }

@@ -38,6 +38,10 @@
                   </div>
 
                   <div class="col-md-12 mb-4">
+                      <label for="access"><input type="checkbox" id="access" v-model="form.accessToLeave"> &nbsp; Can access teachers leave applications</label>
+                  </div>
+
+                  <div class="col-md-12 mb-4">
                     <Button :form="form" class="btn btn-success">Save</Button>
                   </div>
 
@@ -58,7 +62,7 @@ export default {
         phone: '',
         password: 'school2022',
         photo: null,
-        type: "superadmin"
+        accessToLeave : false,
       })
     }
   },

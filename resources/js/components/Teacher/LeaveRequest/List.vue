@@ -17,9 +17,15 @@
           <div class="card">
             <div class="card-header d-flex justify-content-between">
               <h4>{{ req.subject }}</h4>
-              <span v-if="req.status == 'pending'" class="bage badge-pill text-white badge-warning">Pending</span>
-              <span v-else-if="req.status == 'rejected'" class="bage badge-pill text-white badge-danger">Rejected</span>
-              <span v-else-if="req.status == 'approved'" class="bage badge-pill text-white badge-success">Approved</span>
+              <template v-if="req.status != 'approved'">
+                <span v-if="req.status == 'pending'" class="bage badge-pill text-white badge-warning">Pending</span>
+                <span v-else-if="req.status == 'rejected'" class="bage badge-pill text-white badge-danger">Rejected</span>
+                <span v-else-if="req.status == 'approved'" class="bage badge-pill text-white badge-success">Approved</span>
+              </template>
+              <template v-else>
+                <span v-if="req.approved_by_manager == 1" class="bage badge-pill text-white badge-success">Approved</span>
+                <span v-else class="bage badge-pill text-white badge-warning"><i class="fas fa-clock"></i> Waiting for manager approval</span>
+              </template>
             </div>
             <div class="card-body">
               <div class="d-flex">
