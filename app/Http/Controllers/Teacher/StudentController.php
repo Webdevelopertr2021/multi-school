@@ -153,9 +153,11 @@ class StudentController extends Controller
         $review->rate3 = $req->rate3;
         $review->rate4 = $req->rate4;
         $review->rate5 = $req->rate5;
+        $review->rate6 = $req->rate6;
         $review->student_id = $req->studentId;
         $review->teacher_id = auth("teacher")->user()->id;
-        $review->total = ($req->rate1 + $req->rate2 + $req->rate3 + $req->rate4 + $req->rate5)/5;
+        $review->total = ($req->rate1 + $req->rate2 + $req->rate3 + $req->rate4 + $req->rate5 + $req->rate6);
+        $review->feedback = $req->feedback;
         $review->save();
         
         return [

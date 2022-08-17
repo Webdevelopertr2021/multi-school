@@ -24,6 +24,7 @@ return new class extends Migration
             $table->integer("rate3");
             $table->integer("rate4");
             $table->integer("rate5");
+            $table->integer("rate6");
             $table->float("total");
             $table->text("feedback")->nullable();
             $table->timestamps();

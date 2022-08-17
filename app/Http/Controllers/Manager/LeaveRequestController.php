@@ -56,6 +56,20 @@ class LeaveRequestController extends Controller
         $mainLeaveReq->manager_msg = $req->msg;
         $mainLeaveReq->save();
 
+        if($$mainLeaveReq->vacation_type == "Ordinary without salary")
+        {
+            $teacher = User::find($mainLeaveReq->teacher_id);
+            $teacher->credit_without_salary = $teacher->credit_without_salary - 1;
+            $teacher->save();
+        }
+
+        if($$mainLeaveReq->vacation_type == "1 Hour")
+        {
+            $teacher = User::find($mainLeaveReq->teacher_id);
+            $teacher->credit_time = $teacher->credit_time - 1;
+            $teacher->save();
+        }
+
         
 
         if($status == 1)
