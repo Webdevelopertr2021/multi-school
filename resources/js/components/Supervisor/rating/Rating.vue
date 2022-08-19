@@ -26,235 +26,57 @@
                         <h6>{{ reviews.length }} Review Submitted <i class="fas fa-star text-warning"></i></h6>
                         <hr>
                     </div>
+
                     <div class="col-md-12 mb-4">
-                        <h5>Performance</h5>
-                        <div class="selectgroup selectgroup-pills mt-4">
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate1" value="1" class="selectgroup-input" v-model="form.rate1">
-                                <span class="selectgroup-button selectgroup-button-icon">1</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate1" value="2" class="selectgroup-input" v-model="form.rate1">
-                                <span class="selectgroup-button selectgroup-button-icon">2</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate1" value="3" class="selectgroup-input" v-model="form.rate1">
-                                <span class="selectgroup-button selectgroup-button-icon">3</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate1" value="4" class="selectgroup-input" v-model="form.rate1">
-                                <span class="selectgroup-button selectgroup-button-icon">4</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate1" value="5" class="selectgroup-input" v-model="form.rate1">
-                                <span class="selectgroup-button selectgroup-button-icon">5</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate1" value="6" class="selectgroup-input" v-model="form.rate1">
-                                <span class="selectgroup-button selectgroup-button-icon">6</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate1" value="7" class="selectgroup-input" v-model="form.rate1">
-                                <span class="selectgroup-button selectgroup-button-icon">7</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate1" value="8" class="selectgroup-input" v-model="form.rate1">
-                                <span class="selectgroup-button selectgroup-button-icon">8</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate1" value="9" class="selectgroup-input" v-model="form.rate1">
-                                <span class="selectgroup-button selectgroup-button-icon">9</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate1" value="10" class="selectgroup-input" v-model="form.rate1">
-                                <span class="selectgroup-button selectgroup-button-icon">10</span>
-                            </label>
+                        <h5>Arrive on time</h5>
+                        <div class="text-center">
+                            <h2>{{ form.rate1 }}</h2>
                         </div>
+                        <input type="range" class="form-control" min="1" max="15" step="1" style="padding: 0 !important" v-model="form.rate1">
                     </div>
 
                     <div class="col-md-12 mb-4">
-                        <h5>Behaviour</h5>
-                        <div class="selectgroup selectgroup-pills mt-4">
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate2" value="1" class="selectgroup-input" v-model="form.rate2">
-                                <span class="selectgroup-button selectgroup-button-icon">1</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate2" value="2" class="selectgroup-input" v-model="form.rate2">
-                                <span class="selectgroup-button selectgroup-button-icon">2</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate2" value="3" class="selectgroup-input" v-model="form.rate2">
-                                <span class="selectgroup-button selectgroup-button-icon">3</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate2" value="4" class="selectgroup-input" v-model="form.rate2">
-                                <span class="selectgroup-button selectgroup-button-icon">4</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate2" value="5" class="selectgroup-input" v-model="form.rate2">
-                                <span class="selectgroup-button selectgroup-button-icon">5</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate2" value="6" class="selectgroup-input" v-model="form.rate2">
-                                <span class="selectgroup-button selectgroup-button-icon">6</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate2" value="7" class="selectgroup-input" v-model="form.rate2">
-                                <span class="selectgroup-button selectgroup-button-icon">7</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate2" value="8" class="selectgroup-input" v-model="form.rate2">
-                                <span class="selectgroup-button selectgroup-button-icon">8</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate2" value="9" class="selectgroup-input" v-model="form.rate2">
-                                <span class="selectgroup-button selectgroup-button-icon">9</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate2" value="10" class="selectgroup-input" v-model="form.rate2">
-                                <span class="selectgroup-button selectgroup-button-icon">10</span>
-                            </label>
+                        <h5>Recording data</h5>
+                        <div class="text-center">
+                            <h2>{{ form.rate2 }}</h2>
                         </div>
+                        <input type="range" class="form-control" min="1" max="15" step="1" style="padding: 0 !important" v-model="form.rate2">
                     </div>
 
                     <div class="col-md-12 mb-4">
-                        <h5>Subject Knowledge</h5>
-                        <div class="selectgroup selectgroup-pills mt-4">
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate3" value="1" class="selectgroup-input" v-model="form.rate3">
-                                <span class="selectgroup-button selectgroup-button-icon">1</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate3" value="2" class="selectgroup-input" v-model="form.rate3">
-                                <span class="selectgroup-button selectgroup-button-icon">2</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate3" value="3" class="selectgroup-input" v-model="form.rate3">
-                                <span class="selectgroup-button selectgroup-button-icon">3</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate3" value="4" class="selectgroup-input" v-model="form.rate3">
-                                <span class="selectgroup-button selectgroup-button-icon">4</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate3" value="5" class="selectgroup-input" v-model="form.rate3">
-                                <span class="selectgroup-button selectgroup-button-icon">5</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate3" value="6" class="selectgroup-input" v-model="form.rate3">
-                                <span class="selectgroup-button selectgroup-button-icon">6</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate3" value="7" class="selectgroup-input" v-model="form.rate3">
-                                <span class="selectgroup-button selectgroup-button-icon">7</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate3" value="8" class="selectgroup-input" v-model="form.rate3">
-                                <span class="selectgroup-button selectgroup-button-icon">8</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate3" value="9" class="selectgroup-input" v-model="form.rate3">
-                                <span class="selectgroup-button selectgroup-button-icon">9</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate3" value="10" class="selectgroup-input" v-model="form.rate3">
-                                <span class="selectgroup-button selectgroup-button-icon">10</span>
-                            </label>
+                        <h5>Tests match the recorded data</h5>
+                        <div class="text-center">
+                            <h2>{{ form.rate3 }}</h2>
                         </div>
+                        <input type="range" class="form-control" min="1" max="15" step="1" style="padding: 0 !important" v-model="form.rate3">
                     </div>
 
                     <div class="col-md-12 mb-4">
-                        <h5>Attitude</h5>
-                        <div class="selectgroup selectgroup-pills mt-4">
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate4" value="1" class="selectgroup-input" v-model="form.rate4">
-                                <span class="selectgroup-button selectgroup-button-icon">1</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate4" value="2" class="selectgroup-input" v-model="form.rate4">
-                                <span class="selectgroup-button selectgroup-button-icon">2</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate4" value="3" class="selectgroup-input" v-model="form.rate4">
-                                <span class="selectgroup-button selectgroup-button-icon">3</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate4" value="4" class="selectgroup-input" v-model="form.rate4">
-                                <span class="selectgroup-button selectgroup-button-icon">4</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate4" value="5" class="selectgroup-input" v-model="form.rate4">
-                                <span class="selectgroup-button selectgroup-button-icon">5</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate4" value="6" class="selectgroup-input" v-model="form.rate4">
-                                <span class="selectgroup-button selectgroup-button-icon">6</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate4" value="7" class="selectgroup-input" v-model="form.rate4">
-                                <span class="selectgroup-button selectgroup-button-icon">7</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate4" value="8" class="selectgroup-input" v-model="form.rate4">
-                                <span class="selectgroup-button selectgroup-button-icon">8</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate4" value="9" class="selectgroup-input" v-model="form.rate4">
-                                <span class="selectgroup-button selectgroup-button-icon">9</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate4" value="10" class="selectgroup-input" v-model="form.rate4">
-                                <span class="selectgroup-button selectgroup-button-icon">10</span>
-                            </label>
+                        <h5>Managed material</h5>
+                        <div class="text-center">
+                            <h2>{{ form.rate4 }}</h2>
                         </div>
+                        <input type="range" class="form-control" min="1" max="20" step="1" style="padding: 0 !important" v-model="form.rate4">
                     </div>
 
                     <div class="col-md-12 mb-4">
-                        <h5>Personality</h5>
-                        <div class="selectgroup selectgroup-pills mt-4">
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate5" value="1" class="selectgroup-input" v-model="form.rate5">
-                                <span class="selectgroup-button selectgroup-button-icon">1</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate5" value="2" class="selectgroup-input" v-model="form.rate5">
-                                <span class="selectgroup-button selectgroup-button-icon">2</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate5" value="3" class="selectgroup-input" v-model="form.rate5">
-                                <span class="selectgroup-button selectgroup-button-icon">3</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate5" value="4" class="selectgroup-input" v-model="form.rate5">
-                                <span class="selectgroup-button selectgroup-button-icon">4</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate5" value="5" class="selectgroup-input" v-model="form.rate5">
-                                <span class="selectgroup-button selectgroup-button-icon">5</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate5" value="6" class="selectgroup-input" v-model="form.rate5">
-                                <span class="selectgroup-button selectgroup-button-icon">6</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate5" value="7" class="selectgroup-input" v-model="form.rate5">
-                                <span class="selectgroup-button selectgroup-button-icon">7</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate5" value="8" class="selectgroup-input" v-model="form.rate5">
-                                <span class="selectgroup-button selectgroup-button-icon">8</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate5" value="9" class="selectgroup-input" v-model="form.rate5">
-                                <span class="selectgroup-button selectgroup-button-icon">9</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="rate5" value="10" class="selectgroup-input" v-model="form.rate5">
-                                <span class="selectgroup-button selectgroup-button-icon">10</span>
-                            </label>
+                        <h5>Capability to explain</h5>
+                        <div class="text-center">
+                            <h2>{{ form.rate5 }}</h2>
                         </div>
+                        <input type="range" class="form-control" min="1" max="20" step="1" style="padding: 0 !important" v-model="form.rate5">
                     </div>
+
+                    <div class="col-md-12 mb-4">
+                        <h5>Interaction and participation of students in class</h5>
+                        <div class="text-center">
+                            <h2>{{ form.rate6 }}</h2>
+                        </div>
+                        <input type="range" class="form-control" min="1" max="20" step="1" style="padding: 0 !important" v-model="form.rate6">
+                    </div>
+                    
+
+
 
                     <div class="col-md-12 mb-4">
                         <label for=""><b>Write your feedback</b></label>
@@ -279,34 +101,40 @@
                             <div class="col-md-2">
                             <div class="rating-thumb">
                                 <span>{{ review.rate1 }}</span>
-                                <p class="text-muted">Performance</p>
+                                <p class="text-muted">Arrive on time</p>
                             </div>
                             </div>
                             <div class="col-md-2">
                             <div class="rating-thumb">
                                 <span>{{ review.rate2 }}</span>
-                                <p class="text-muted">Behaviour</p>
+                                <p class="text-muted">Recording data</p>
                             </div>
                             </div>
                             <div class="col-md-2">
                             <div class="rating-thumb">
                                 <span>{{ review.rate3 }}</span>
-                                <p class="text-muted">Subject knowledge</p>
+                                <p class="text-muted">Tests match the recorded data</p>
                             </div>
                             </div>
                             <div class="col-md-2">
                             <div class="rating-thumb">
                                 <span>{{ review.rate4 }}</span>
-                                <p class="text-muted">Attitude</p>
+                                <p class="text-muted">Managed material</p>
                             </div>
                             </div>
                             <div class="col-md-2">
                             <div class="rating-thumb">
                                 <span>{{ review.rate5 }}</span>
-                                <p class="text-muted">Personality</p>
+                                <p class="text-muted">Capability to explain</p>
                             </div>
                             </div>
                             
+                            <div class="col-md-2">
+                            <div class="rating-thumb">
+                                <span>{{ review.rate5 }}</span>
+                                <p class="text-muted">Interaction and participation of students in class</p>
+                            </div>
+                            </div>
                             
                         </div>
                     </div>
@@ -330,6 +158,7 @@ export default {
                 rate3: 1,
                 rate4: 1,
                 rate5: 1,
+                rate6: 1,
                 teacherId: this.$route.params.userId,
                 feedback: "",
             }),

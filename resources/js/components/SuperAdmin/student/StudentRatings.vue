@@ -31,7 +31,7 @@
                       <div class="ml-3 pt-2">
                         <h5>{{ teacherData.name }}</h5>
                         <p class="m-0"><strong>School</strong> : {{ teacherData.school.name }}</p>
-                        <p class="m-0"><b>Total Rating </b>: &nbsp; <span class="text-warning">{{ totalPoint }}</span></p>
+                        <p class="m-0"><b>Overall Rating </b>: &nbsp; <span class="text-warning">{{ totalPoint }}</span></p>
                       </div>
                     </div>
                   </div>
@@ -69,32 +69,38 @@
                 <div class="col-md-2">
                   <div class="rating-thumb">
                     <span>{{ rate.rate1 }}</span>
-                    <p class="text-muted">Performance</p>
+                    <p class="text-muted">Attendance</p>
                   </div>
                 </div>
                 <div class="col-md-2">
                   <div class="rating-thumb">
                     <span>{{ rate.rate2 }}</span>
-                    <p class="text-muted">Behaviour</p>
+                    <p class="text-muted">Fetch Syllabus</p>
                   </div>
                 </div>
                 <div class="col-md-2">
                   <div class="rating-thumb">
                     <span>{{ rate.rate3 }}</span>
-                    <p class="text-muted">Subject knowledge</p>
+                    <p class="text-muted">Intercation with class</p>
                   </div>
                 </div>
                 <div class="col-md-2">
                   <div class="rating-thumb">
                     <span>{{ rate.rate4 }}</span>
-                    <p class="text-muted">Attitude</p>
+                    <p class="text-muted">Homework Solution</p>
                   </div>
                 </div>
                 <div class="col-md-2">
                   <div class="rating-thumb">
                     <span>{{ rate.rate5 }}</span>
-                    <p class="text-muted">Personality</p>
+                    <p class="text-muted">Speed and accuracy of the solution</p>
                   </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="rating-thumb">
+                        <span>{{ rate.rate6 }}</span>
+                        <p class="text-muted">Test Results</p>
+                    </div>
                 </div>
                 
                 

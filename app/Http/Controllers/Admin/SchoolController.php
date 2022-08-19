@@ -108,6 +108,7 @@ class SchoolController extends Controller
             {
                 $superVisors = User::where("role","supervisor")->where("school_id",$req->schoolId)->get();
                 $teachers = User::where("role","teacher")->with("rating")->where("school_id",$req->schoolId)->get();
+                
                 return [
                     "status" => "ok",
                     "schoolData" => $data,

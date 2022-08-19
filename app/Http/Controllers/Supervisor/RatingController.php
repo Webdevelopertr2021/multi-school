@@ -36,7 +36,8 @@ class RatingController extends Controller
         $rating->rate3 = $req->rate3;
         $rating->rate4 = $req->rate4;
         $rating->rate5 = $req->rate5;
-        $rating->total = ($req->rate1 + $req->rate2 + $req->rate3 + $req->rate4 + $req->rate5) / 5;
+        $rating->rate6 = $req->rate6;
+        $rating->total = ($req->rate1 + $req->rate2 + $req->rate3 + $req->rate4 + $req->rate5 + $req->rate6);
         $rating->feedback = $req->feedback;
         $rating->save();
 

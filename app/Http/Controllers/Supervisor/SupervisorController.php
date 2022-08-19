@@ -29,8 +29,60 @@ class SupervisorController extends Controller
         $teachers = AssignedSupervisor::where("supervisor_id",$id)->pluck("teacher_id")->toArray();
 
         $users = User::whereIn("id",$teachers)->with("supervisor:id,supervisor_id,teacher_id")
-        ->with("rating")->withCount("rating")
         ->get();
+
+        foreach($users as $user)
+        {
+            $now = Carbon::now();
+            $last = Carbon::now()->subMonth(1);
+
+            $currentMonth = TeacherRating::where("teacher_id",$user->id)->whereMonth("created_at",$now)->get();
+            $totalRating = 0;
+            $i = 0;
+            if(count($currentMonth) > 0)
+            {
+                foreach($currentMonth as $rate)
+                {
+                    $i++;
+                    $totalRating += $rate->total;
+                }
+                $totalRating = round($totalRating/$i,1);
+            }
+
+            $lastMonth = TeacherRating::where("teacher_id",$user->id)->whereMonth("created_at",$last)->get();
+            $lastRating = 0;
+            $l = 0;
+            if(count($lastMonth) > 0)
+            {
+                foreach($lastMonth as $rate)
+                {
+                    $l++;
+                    $lastRating += $rate->total;
+                }
+                $lastMonth = round($lastRating/$l,1);
+            }
+
+            $ratingStat = "";
+
+            if($lastRating > 0)
+            {
+                if($totalRating > $lastRating)
+                {
+                    $ratingStat = '<span title="Improved | Last month : '.$lastRating.'" class="text-success"><i class="fas fa-arrow-up"></i></span>';
+                }
+                else if($totalRating < $lastRating)
+                {
+                    $ratingStat = '<span title="Decreased | Last month : '.$lastRating.'" class="text-danger"><i class="fas fa-arrow-down"></i></span>';
+                }
+                else if($totalRating == $lastRating)
+                {
+                    $ratingStat = '<span title="Unchanged | Last month : '.$lastRating.'" class="text-warning"><i class="fas fa-circle"></i></span>';
+                }
+            }
+            $user->rating_stat = $ratingStat;
+            $user->rating_this_month = $totalRating;
+
+        }
 
 
         return response()->json($users);

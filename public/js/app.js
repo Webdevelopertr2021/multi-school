@@ -6425,14 +6425,10 @@ __webpack_require__.r(__webpack_exports__);
       var totalRates = 0;
       var totalPoints = 0;
       ratings.forEach(function (item, i) {
-        totalRates += 5;
-        totalPoints += item.rate1;
-        totalPoints += item.rate2;
-        totalPoints += item.rate3;
-        totalPoints += item.rate4;
-        totalPoints += item.rate5;
+        totalRates++;
+        totalPoints += item.total;
       });
-      return totalPoints / totalRates;
+      return (totalPoints / totalRates).toFixed(1);
     },
     deleteTeacher: function deleteTeacher(id, index) {
       var _this3 = this;
@@ -7324,7 +7320,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
-    return {};
+    return {
+      moment: moment
+    };
   },
   mounted: function mounted() {
     var _self = this;
@@ -7451,6 +7449,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var vue_moments_ago__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-moments-ago */ "./node_modules/vue-moments-ago/src/main.js");
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -8048,7 +8052,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
-    return {};
+    return {
+      moment: moment
+    };
   },
   mounted: function mounted() {
     var _self = this;
@@ -8860,7 +8866,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       teacherData: {},
-      isLoading: true
+      isLoading: true,
+      moment: moment
     };
   },
   methods: {
@@ -8956,7 +8963,7 @@ __webpack_require__.r(__webpack_exports__);
       var studentId = $(this).data("ratings");
 
       _self.$router.push({
-        name: 'teacher.student-ratings',
+        name: 'admin.student-rating',
         params: {
           studentId: studentId
         }
@@ -9020,7 +9027,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
-    return {};
+    return {
+      moment: moment
+    };
   },
   mounted: function mounted() {
     var _self = this;
@@ -9727,178 +9736,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -9911,6 +9748,7 @@ __webpack_require__.r(__webpack_exports__);
         rate3: 1,
         rate4: 1,
         rate5: 1,
+        rate6: 1,
         teacherId: this.$route.params.userId,
         feedback: ""
       }),
@@ -10736,7 +10574,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
-    return {};
+    return {
+      moment: moment
+    };
   },
   mounted: function mounted() {
     var _self = this;
@@ -64993,7 +64833,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Email")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Ratings")]),
+        _c("th", [_vm._v("Overall Ratings")]),
         _vm._v(" "),
         _c("th", [_vm._v("Action")]),
       ]),
@@ -66334,67 +66174,73 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "row justify-content-center" }, [
+    _c("div", { staticClass: "col-md-12" }, [
+      _c("div", { staticClass: "card" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-12" }, [
+              _c("div", { staticClass: "table-responsive" }, [
+                _c(
+                  "table",
+                  {
+                    staticClass: "table table-striped table-bordered",
+                    attrs: { id: "datatable" },
+                  },
+                  [
+                    _c("thead", [
+                      _c("tr", { staticClass: "text-center" }, [
+                        _c("th", [_vm._v("ID")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Student name")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Phone")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Email")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Address")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("School")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Class")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Section")]),
+                        _vm._v(" "),
+                        _c("th", [
+                          _vm._v(
+                            "Rating (" +
+                              _vm._s(_vm.moment().format("MMMM")) +
+                              ") "
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Action")]),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("tbody"),
+                  ]
+                ),
+              ]),
+            ]),
+          ]),
+        ]),
+      ]),
+    ]),
+  ])
 }
 var staticRenderFns = [
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("div", { staticClass: "card" }, [
-          _c(
-            "div",
-            { staticClass: "card-header d-flex justify-content-between" },
-            [_c("h4", [_vm._v("Student List")])]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-12" }, [
-                _c("div", { staticClass: "table-responsive" }, [
-                  _c(
-                    "table",
-                    {
-                      staticClass: "table table-striped table-bordered",
-                      attrs: { id: "datatable" },
-                    },
-                    [
-                      _c("thead", [
-                        _c("tr", { staticClass: "text-center" }, [
-                          _c("th", [_vm._v("ID")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Student name")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Phone")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Email")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Address")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("School")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Class")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Section")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Ratings")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Action")]),
-                        ]),
-                      ]),
-                      _vm._v(" "),
-                      _c("tbody"),
-                    ]
-                  ),
-                ]),
-              ]),
-            ]),
-          ]),
-        ]),
-      ]),
-    ])
+    return _c(
+      "div",
+      { staticClass: "card-header d-flex justify-content-between" },
+      [_c("h4", [_vm._v("Student List")])]
+    )
   },
 ]
 render._withStripped = true
@@ -66495,7 +66341,7 @@ var render = function () {
                       ]),
                       _vm._v(" "),
                       _c("p", { staticClass: "m-0" }, [
-                        _c("b", [_vm._v("Total Rating ")]),
+                        _c("b", [_vm._v("Overall Rating ")]),
                         _vm._v(":   "),
                         _c("span", { staticClass: "text-warning" }, [
                           _vm._v(_vm._s(_vm.totalPoint)),
@@ -66596,7 +66442,7 @@ var render = function () {
                                 _c("span", [_vm._v(_vm._s(rate.rate1))]),
                                 _vm._v(" "),
                                 _c("p", { staticClass: "text-muted" }, [
-                                  _vm._v("Performance"),
+                                  _vm._v("Attendance"),
                                 ]),
                               ]),
                             ]),
@@ -66606,7 +66452,7 @@ var render = function () {
                                 _c("span", [_vm._v(_vm._s(rate.rate2))]),
                                 _vm._v(" "),
                                 _c("p", { staticClass: "text-muted" }, [
-                                  _vm._v("Behaviour"),
+                                  _vm._v("Fetch Syllabus"),
                                 ]),
                               ]),
                             ]),
@@ -66616,7 +66462,7 @@ var render = function () {
                                 _c("span", [_vm._v(_vm._s(rate.rate3))]),
                                 _vm._v(" "),
                                 _c("p", { staticClass: "text-muted" }, [
-                                  _vm._v("Subject knowledge"),
+                                  _vm._v("Intercation with class"),
                                 ]),
                               ]),
                             ]),
@@ -66626,7 +66472,7 @@ var render = function () {
                                 _c("span", [_vm._v(_vm._s(rate.rate4))]),
                                 _vm._v(" "),
                                 _c("p", { staticClass: "text-muted" }, [
-                                  _vm._v("Attitude"),
+                                  _vm._v("Homework Solution"),
                                 ]),
                               ]),
                             ]),
@@ -66636,7 +66482,17 @@ var render = function () {
                                 _c("span", [_vm._v(_vm._s(rate.rate5))]),
                                 _vm._v(" "),
                                 _c("p", { staticClass: "text-muted" }, [
-                                  _vm._v("Personality"),
+                                  _vm._v("Speed and accuracy of the solution"),
+                                ]),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate6))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Test Results"),
                                 ]),
                               ]),
                             ]),
@@ -67457,69 +67313,75 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "row justify-content-center" }, [
+    _c("div", { staticClass: "col-md-12" }, [
+      _c("div", { staticClass: "card" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-12" }, [
+              _c("div", { staticClass: "table-responsive" }, [
+                _c(
+                  "table",
+                  {
+                    staticClass: "table table-hover table-striped",
+                    attrs: { id: "datatable" },
+                  },
+                  [
+                    _c("thead", [
+                      _c("tr", { staticClass: "text-center" }, [
+                        _c("th", [_vm._v("ID")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Name")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Phone")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Email")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Supervisors")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("School")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Class")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Section")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Total Students")]),
+                        _vm._v(" "),
+                        _c("th", [
+                          _vm._v(
+                            "Rating (" +
+                              _vm._s(_vm.moment().format("MMMM")) +
+                              ")"
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Actions")]),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("tbody"),
+                  ]
+                ),
+              ]),
+            ]),
+          ]),
+        ]),
+      ]),
+    ]),
+  ])
 }
 var staticRenderFns = [
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("div", { staticClass: "card" }, [
-          _c(
-            "div",
-            { staticClass: "card-header d-flex justify-content-between" },
-            [_c("h4", [_vm._v("All Teachers")])]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-12" }, [
-                _c("div", { staticClass: "table-responsive" }, [
-                  _c(
-                    "table",
-                    {
-                      staticClass: "table table-hover table-striped",
-                      attrs: { id: "datatable" },
-                    },
-                    [
-                      _c("thead", [
-                        _c("tr", { staticClass: "text-center" }, [
-                          _c("th", [_vm._v("ID")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Name")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Phone")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Email")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Supervisors")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("School")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Class")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Section")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Total Students")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Ratings")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Actions")]),
-                        ]),
-                      ]),
-                      _vm._v(" "),
-                      _c("tbody"),
-                    ]
-                  ),
-                ]),
-              ]),
-            ]),
-          ]),
-        ]),
-      ]),
-    ])
+    return _c(
+      "div",
+      { staticClass: "card-header d-flex justify-content-between" },
+      [_c("h4", [_vm._v("All Teachers")])]
+    )
   },
 ]
 render._withStripped = true
@@ -68604,21 +68466,9 @@ var render = function () {
         ])
       : _vm._e(),
     _vm._v(" "),
-    _vm._m(0),
-  ])
-}
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12" }, [
+    _c("div", { staticClass: "col-md-12" }, [
       _c("div", { staticClass: "card" }, [
-        _c(
-          "div",
-          { staticClass: "card-header d-flex justify-content-between" },
-          [_c("h4", [_vm._v("Student List")])]
-        ),
+        _vm._m(0),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
           _c("div", { staticClass: "row" }, [
@@ -68649,7 +68499,13 @@ var staticRenderFns = [
                         _vm._v(" "),
                         _c("th", [_vm._v("Section")]),
                         _vm._v(" "),
-                        _c("th", [_vm._v("Rating Points")]),
+                        _c("th", [
+                          _vm._v(
+                            "Rating (" +
+                              _vm._s(_vm.moment().format("MMMM")) +
+                              ")"
+                          ),
+                        ]),
                         _vm._v(" "),
                         _c("th", [_vm._v("Action")]),
                       ]),
@@ -68663,7 +68519,19 @@ var staticRenderFns = [
           ]),
         ]),
       ]),
-    ])
+    ]),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "card-header d-flex justify-content-between" },
+      [_c("h4", [_vm._v("Student List")])]
+    )
   },
 ]
 render._withStripped = true
@@ -68688,69 +68556,75 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "row justify-content-center" }, [
+    _c("div", { staticClass: "col-md-12" }, [
+      _c("div", { staticClass: "card" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-12" }, [
+              _c("div", { staticClass: "table-responsive" }, [
+                _c(
+                  "table",
+                  {
+                    staticClass: "table table-hover table-striped",
+                    attrs: { id: "datatable" },
+                  },
+                  [
+                    _c("thead", [
+                      _c("tr", { staticClass: "text-center" }, [
+                        _c("th", [_vm._v("ID")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Name")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Phone")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Email")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Supervisors")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("School")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Class")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Section")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Total Students")]),
+                        _vm._v(" "),
+                        _c("th", [
+                          _vm._v(
+                            "Rating (" +
+                              _vm._s(_vm.moment().format("MMMM")) +
+                              ")"
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Actions")]),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("tbody"),
+                  ]
+                ),
+              ]),
+            ]),
+          ]),
+        ]),
+      ]),
+    ]),
+  ])
 }
 var staticRenderFns = [
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("div", { staticClass: "card" }, [
-          _c(
-            "div",
-            { staticClass: "card-header d-flex justify-content-between" },
-            [_c("h4", [_vm._v("All Teachers")])]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-12" }, [
-                _c("div", { staticClass: "table-responsive" }, [
-                  _c(
-                    "table",
-                    {
-                      staticClass: "table table-hover table-striped",
-                      attrs: { id: "datatable" },
-                    },
-                    [
-                      _c("thead", [
-                        _c("tr", { staticClass: "text-center" }, [
-                          _c("th", [_vm._v("ID")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Name")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Phone")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Email")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Supervisors")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("School")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Class")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Section")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Total Students")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Ratings")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Actions")]),
-                        ]),
-                      ]),
-                      _vm._v(" "),
-                      _c("tbody"),
-                    ]
-                  ),
-                ]),
-              ]),
-            ]),
-          ]),
-        ]),
-      ]),
-    ])
+    return _c(
+      "div",
+      { staticClass: "card-header d-flex justify-content-between" },
+      [_c("h4", [_vm._v("All Teachers")])]
+    )
   },
 ]
 render._withStripped = true
@@ -69618,1573 +69492,199 @@ var render = function () {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-12 mb-4" }, [
-                    _c("h5", [_vm._v("Performance")]),
+                    _c("h5", [_vm._v("Arrive on time")]),
                     _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "selectgroup selectgroup-pills mt-4" },
-                      [
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate1,
-                                expression: "form.rate1",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate1", value: "1" },
-                            domProps: { checked: _vm._q(_vm.form.rate1, "1") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate1", "1")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("1")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate1,
-                                expression: "form.rate1",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate1", value: "2" },
-                            domProps: { checked: _vm._q(_vm.form.rate1, "2") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate1", "2")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("2")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate1,
-                                expression: "form.rate1",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate1", value: "3" },
-                            domProps: { checked: _vm._q(_vm.form.rate1, "3") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate1", "3")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("3")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate1,
-                                expression: "form.rate1",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate1", value: "4" },
-                            domProps: { checked: _vm._q(_vm.form.rate1, "4") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate1", "4")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("4")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate1,
-                                expression: "form.rate1",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate1", value: "5" },
-                            domProps: { checked: _vm._q(_vm.form.rate1, "5") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate1", "5")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("5")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate1,
-                                expression: "form.rate1",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate1", value: "6" },
-                            domProps: { checked: _vm._q(_vm.form.rate1, "6") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate1", "6")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("6")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate1,
-                                expression: "form.rate1",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate1", value: "7" },
-                            domProps: { checked: _vm._q(_vm.form.rate1, "7") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate1", "7")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("7")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate1,
-                                expression: "form.rate1",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate1", value: "8" },
-                            domProps: { checked: _vm._q(_vm.form.rate1, "8") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate1", "8")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("8")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate1,
-                                expression: "form.rate1",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate1", value: "9" },
-                            domProps: { checked: _vm._q(_vm.form.rate1, "9") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate1", "9")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("9")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate1,
-                                expression: "form.rate1",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: {
-                              type: "radio",
-                              name: "rate1",
-                              value: "10",
-                            },
-                            domProps: { checked: _vm._q(_vm.form.rate1, "10") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate1", "10")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("10")]
-                          ),
-                        ]),
-                      ]
-                    ),
+                    _c("div", { staticClass: "text-center" }, [
+                      _c("h2", [_vm._v(_vm._s(_vm.form.rate1))]),
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.rate1,
+                          expression: "form.rate1",
+                        },
+                      ],
+                      staticClass: "form-control",
+                      staticStyle: { padding: "0 !important" },
+                      attrs: { type: "range", min: "1", max: "15", step: "1" },
+                      domProps: { value: _vm.form.rate1 },
+                      on: {
+                        __r: function ($event) {
+                          return _vm.$set(
+                            _vm.form,
+                            "rate1",
+                            $event.target.value
+                          )
+                        },
+                      },
+                    }),
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-12 mb-4" }, [
-                    _c("h5", [_vm._v("Behaviour")]),
+                    _c("h5", [_vm._v("Recording data")]),
                     _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "selectgroup selectgroup-pills mt-4" },
-                      [
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate2,
-                                expression: "form.rate2",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate2", value: "1" },
-                            domProps: { checked: _vm._q(_vm.form.rate2, "1") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate2", "1")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("1")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate2,
-                                expression: "form.rate2",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate2", value: "2" },
-                            domProps: { checked: _vm._q(_vm.form.rate2, "2") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate2", "2")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("2")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate2,
-                                expression: "form.rate2",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate2", value: "3" },
-                            domProps: { checked: _vm._q(_vm.form.rate2, "3") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate2", "3")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("3")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate2,
-                                expression: "form.rate2",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate2", value: "4" },
-                            domProps: { checked: _vm._q(_vm.form.rate2, "4") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate2", "4")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("4")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate2,
-                                expression: "form.rate2",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate2", value: "5" },
-                            domProps: { checked: _vm._q(_vm.form.rate2, "5") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate2", "5")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("5")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate2,
-                                expression: "form.rate2",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate2", value: "6" },
-                            domProps: { checked: _vm._q(_vm.form.rate2, "6") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate2", "6")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("6")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate2,
-                                expression: "form.rate2",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate2", value: "7" },
-                            domProps: { checked: _vm._q(_vm.form.rate2, "7") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate2", "7")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("7")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate2,
-                                expression: "form.rate2",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate2", value: "8" },
-                            domProps: { checked: _vm._q(_vm.form.rate2, "8") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate2", "8")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("8")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate2,
-                                expression: "form.rate2",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate2", value: "9" },
-                            domProps: { checked: _vm._q(_vm.form.rate2, "9") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate2", "9")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("9")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate2,
-                                expression: "form.rate2",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: {
-                              type: "radio",
-                              name: "rate2",
-                              value: "10",
-                            },
-                            domProps: { checked: _vm._q(_vm.form.rate2, "10") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate2", "10")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("10")]
-                          ),
-                        ]),
-                      ]
-                    ),
+                    _c("div", { staticClass: "text-center" }, [
+                      _c("h2", [_vm._v(_vm._s(_vm.form.rate2))]),
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.rate2,
+                          expression: "form.rate2",
+                        },
+                      ],
+                      staticClass: "form-control",
+                      staticStyle: { padding: "0 !important" },
+                      attrs: { type: "range", min: "1", max: "15", step: "1" },
+                      domProps: { value: _vm.form.rate2 },
+                      on: {
+                        __r: function ($event) {
+                          return _vm.$set(
+                            _vm.form,
+                            "rate2",
+                            $event.target.value
+                          )
+                        },
+                      },
+                    }),
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-12 mb-4" }, [
-                    _c("h5", [_vm._v("Subject Knowledge")]),
+                    _c("h5", [_vm._v("Tests match the recorded data")]),
                     _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "selectgroup selectgroup-pills mt-4" },
-                      [
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate3,
-                                expression: "form.rate3",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate3", value: "1" },
-                            domProps: { checked: _vm._q(_vm.form.rate3, "1") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate3", "1")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("1")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate3,
-                                expression: "form.rate3",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate3", value: "2" },
-                            domProps: { checked: _vm._q(_vm.form.rate3, "2") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate3", "2")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("2")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate3,
-                                expression: "form.rate3",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate3", value: "3" },
-                            domProps: { checked: _vm._q(_vm.form.rate3, "3") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate3", "3")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("3")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate3,
-                                expression: "form.rate3",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate3", value: "4" },
-                            domProps: { checked: _vm._q(_vm.form.rate3, "4") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate3", "4")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("4")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate3,
-                                expression: "form.rate3",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate3", value: "5" },
-                            domProps: { checked: _vm._q(_vm.form.rate3, "5") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate3", "5")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("5")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate3,
-                                expression: "form.rate3",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate3", value: "6" },
-                            domProps: { checked: _vm._q(_vm.form.rate3, "6") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate3", "6")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("6")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate3,
-                                expression: "form.rate3",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate3", value: "7" },
-                            domProps: { checked: _vm._q(_vm.form.rate3, "7") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate3", "7")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("7")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate3,
-                                expression: "form.rate3",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate3", value: "8" },
-                            domProps: { checked: _vm._q(_vm.form.rate3, "8") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate3", "8")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("8")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate3,
-                                expression: "form.rate3",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate3", value: "9" },
-                            domProps: { checked: _vm._q(_vm.form.rate3, "9") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate3", "9")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("9")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate3,
-                                expression: "form.rate3",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: {
-                              type: "radio",
-                              name: "rate3",
-                              value: "10",
-                            },
-                            domProps: { checked: _vm._q(_vm.form.rate3, "10") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate3", "10")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("10")]
-                          ),
-                        ]),
-                      ]
-                    ),
+                    _c("div", { staticClass: "text-center" }, [
+                      _c("h2", [_vm._v(_vm._s(_vm.form.rate3))]),
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.rate3,
+                          expression: "form.rate3",
+                        },
+                      ],
+                      staticClass: "form-control",
+                      staticStyle: { padding: "0 !important" },
+                      attrs: { type: "range", min: "1", max: "15", step: "1" },
+                      domProps: { value: _vm.form.rate3 },
+                      on: {
+                        __r: function ($event) {
+                          return _vm.$set(
+                            _vm.form,
+                            "rate3",
+                            $event.target.value
+                          )
+                        },
+                      },
+                    }),
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-12 mb-4" }, [
-                    _c("h5", [_vm._v("Attitude")]),
+                    _c("h5", [_vm._v("Managed material")]),
                     _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "selectgroup selectgroup-pills mt-4" },
-                      [
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate4,
-                                expression: "form.rate4",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate4", value: "1" },
-                            domProps: { checked: _vm._q(_vm.form.rate4, "1") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate4", "1")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("1")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate4,
-                                expression: "form.rate4",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate4", value: "2" },
-                            domProps: { checked: _vm._q(_vm.form.rate4, "2") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate4", "2")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("2")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate4,
-                                expression: "form.rate4",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate4", value: "3" },
-                            domProps: { checked: _vm._q(_vm.form.rate4, "3") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate4", "3")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("3")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate4,
-                                expression: "form.rate4",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate4", value: "4" },
-                            domProps: { checked: _vm._q(_vm.form.rate4, "4") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate4", "4")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("4")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate4,
-                                expression: "form.rate4",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate4", value: "5" },
-                            domProps: { checked: _vm._q(_vm.form.rate4, "5") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate4", "5")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("5")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate4,
-                                expression: "form.rate4",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate4", value: "6" },
-                            domProps: { checked: _vm._q(_vm.form.rate4, "6") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate4", "6")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("6")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate4,
-                                expression: "form.rate4",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate4", value: "7" },
-                            domProps: { checked: _vm._q(_vm.form.rate4, "7") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate4", "7")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("7")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate4,
-                                expression: "form.rate4",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate4", value: "8" },
-                            domProps: { checked: _vm._q(_vm.form.rate4, "8") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate4", "8")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("8")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate4,
-                                expression: "form.rate4",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate4", value: "9" },
-                            domProps: { checked: _vm._q(_vm.form.rate4, "9") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate4", "9")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("9")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate4,
-                                expression: "form.rate4",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: {
-                              type: "radio",
-                              name: "rate4",
-                              value: "10",
-                            },
-                            domProps: { checked: _vm._q(_vm.form.rate4, "10") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate4", "10")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("10")]
-                          ),
-                        ]),
-                      ]
-                    ),
+                    _c("div", { staticClass: "text-center" }, [
+                      _c("h2", [_vm._v(_vm._s(_vm.form.rate4))]),
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.rate4,
+                          expression: "form.rate4",
+                        },
+                      ],
+                      staticClass: "form-control",
+                      staticStyle: { padding: "0 !important" },
+                      attrs: { type: "range", min: "1", max: "20", step: "1" },
+                      domProps: { value: _vm.form.rate4 },
+                      on: {
+                        __r: function ($event) {
+                          return _vm.$set(
+                            _vm.form,
+                            "rate4",
+                            $event.target.value
+                          )
+                        },
+                      },
+                    }),
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-12 mb-4" }, [
-                    _c("h5", [_vm._v("Personality")]),
+                    _c("h5", [_vm._v("Capability to explain")]),
                     _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "selectgroup selectgroup-pills mt-4" },
-                      [
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate5,
-                                expression: "form.rate5",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate5", value: "1" },
-                            domProps: { checked: _vm._q(_vm.form.rate5, "1") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate5", "1")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("1")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate5,
-                                expression: "form.rate5",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate5", value: "2" },
-                            domProps: { checked: _vm._q(_vm.form.rate5, "2") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate5", "2")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("2")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate5,
-                                expression: "form.rate5",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate5", value: "3" },
-                            domProps: { checked: _vm._q(_vm.form.rate5, "3") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate5", "3")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("3")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate5,
-                                expression: "form.rate5",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate5", value: "4" },
-                            domProps: { checked: _vm._q(_vm.form.rate5, "4") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate5", "4")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("4")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate5,
-                                expression: "form.rate5",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate5", value: "5" },
-                            domProps: { checked: _vm._q(_vm.form.rate5, "5") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate5", "5")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("5")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate5,
-                                expression: "form.rate5",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate5", value: "6" },
-                            domProps: { checked: _vm._q(_vm.form.rate5, "6") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate5", "6")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("6")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate5,
-                                expression: "form.rate5",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate5", value: "7" },
-                            domProps: { checked: _vm._q(_vm.form.rate5, "7") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate5", "7")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("7")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate5,
-                                expression: "form.rate5",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate5", value: "8" },
-                            domProps: { checked: _vm._q(_vm.form.rate5, "8") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate5", "8")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("8")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate5,
-                                expression: "form.rate5",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: { type: "radio", name: "rate5", value: "9" },
-                            domProps: { checked: _vm._q(_vm.form.rate5, "9") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate5", "9")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("9")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "selectgroup-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.rate5,
-                                expression: "form.rate5",
-                              },
-                            ],
-                            staticClass: "selectgroup-input",
-                            attrs: {
-                              type: "radio",
-                              name: "rate5",
-                              value: "10",
-                            },
-                            domProps: { checked: _vm._q(_vm.form.rate5, "10") },
-                            on: {
-                              change: function ($event) {
-                                return _vm.$set(_vm.form, "rate5", "10")
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "selectgroup-button selectgroup-button-icon",
-                            },
-                            [_vm._v("10")]
-                          ),
-                        ]),
-                      ]
-                    ),
+                    _c("div", { staticClass: "text-center" }, [
+                      _c("h2", [_vm._v(_vm._s(_vm.form.rate5))]),
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.rate5,
+                          expression: "form.rate5",
+                        },
+                      ],
+                      staticClass: "form-control",
+                      staticStyle: { padding: "0 !important" },
+                      attrs: { type: "range", min: "1", max: "20", step: "1" },
+                      domProps: { value: _vm.form.rate5 },
+                      on: {
+                        __r: function ($event) {
+                          return _vm.$set(
+                            _vm.form,
+                            "rate5",
+                            $event.target.value
+                          )
+                        },
+                      },
+                    }),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-12 mb-4" }, [
+                    _c("h5", [
+                      _vm._v(
+                        "Interaction and participation of students in class"
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "text-center" }, [
+                      _c("h2", [_vm._v(_vm._s(_vm.form.rate6))]),
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.rate6,
+                          expression: "form.rate6",
+                        },
+                      ],
+                      staticClass: "form-control",
+                      staticStyle: { padding: "0 !important" },
+                      attrs: { type: "range", min: "1", max: "20", step: "1" },
+                      domProps: { value: _vm.form.rate6 },
+                      on: {
+                        __r: function ($event) {
+                          return _vm.$set(
+                            _vm.form,
+                            "rate6",
+                            $event.target.value
+                          )
+                        },
+                      },
+                    }),
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-12 mb-4" }, [
@@ -71267,7 +69767,7 @@ var render = function () {
                           _c("span", [_vm._v(_vm._s(review.rate1))]),
                           _vm._v(" "),
                           _c("p", { staticClass: "text-muted" }, [
-                            _vm._v("Performance"),
+                            _vm._v("Arrive on time"),
                           ]),
                         ]),
                       ]),
@@ -71277,7 +69777,7 @@ var render = function () {
                           _c("span", [_vm._v(_vm._s(review.rate2))]),
                           _vm._v(" "),
                           _c("p", { staticClass: "text-muted" }, [
-                            _vm._v("Behaviour"),
+                            _vm._v("Recording data"),
                           ]),
                         ]),
                       ]),
@@ -71287,7 +69787,7 @@ var render = function () {
                           _c("span", [_vm._v(_vm._s(review.rate3))]),
                           _vm._v(" "),
                           _c("p", { staticClass: "text-muted" }, [
-                            _vm._v("Subject knowledge"),
+                            _vm._v("Tests match the recorded data"),
                           ]),
                         ]),
                       ]),
@@ -71297,7 +69797,7 @@ var render = function () {
                           _c("span", [_vm._v(_vm._s(review.rate4))]),
                           _vm._v(" "),
                           _c("p", { staticClass: "text-muted" }, [
-                            _vm._v("Attitude"),
+                            _vm._v("Managed material"),
                           ]),
                         ]),
                       ]),
@@ -71307,7 +69807,19 @@ var render = function () {
                           _c("span", [_vm._v(_vm._s(review.rate5))]),
                           _vm._v(" "),
                           _c("p", { staticClass: "text-muted" }, [
-                            _vm._v("Personality"),
+                            _vm._v("Capability to explain"),
+                          ]),
+                        ]),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-2" }, [
+                        _c("div", { staticClass: "rating-thumb" }, [
+                          _c("span", [_vm._v(_vm._s(review.rate5))]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-muted" }, [
+                            _vm._v(
+                              "Interaction and participation of students in class"
+                            ),
                           ]),
                         ]),
                       ]),
@@ -71837,22 +70349,16 @@ var render = function () {
                                       _c("td", [
                                         _vm._v(
                                           "\n                                              " +
-                                            _vm._s(
-                                              _vm.calculateRating(
-                                                teacher.rating
-                                              )
-                                            ) +
-                                            " "
+                                            _vm._s(teacher.rating_this_month) +
+                                            " points "
                                         ),
-                                        _c("i", {
-                                          staticClass:
-                                            "fas fa-star text-warning",
+                                        _c("span", {
+                                          domProps: {
+                                            innerHTML: _vm._s(
+                                              teacher.rating_stat
+                                            ),
+                                          },
                                         }),
-                                        _vm._v(
-                                          " (" +
-                                            _vm._s(teacher.rating_count) +
-                                            " Reviews)\n                                          "
-                                        ),
                                       ]),
                                       _vm._v(" "),
                                       _c("td", [

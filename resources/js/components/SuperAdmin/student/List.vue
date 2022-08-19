@@ -20,7 +20,7 @@
                             <th>School</th>
                             <th>Class</th>
                             <th>Section</th>
-                            <th>Ratings</th>
+                            <th>Rating ({{ moment().format("MMMM") }}) </th>
                             <th>Action</th>
                           </tr>
                         </thead>
@@ -41,7 +41,7 @@
 export default {
   data() {
     return {
-
+      moment: moment,
     }
   },
   mounted() {

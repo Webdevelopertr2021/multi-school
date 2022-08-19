@@ -40,7 +40,7 @@
                             <th>School</th>
                             <th>Class</th>
                             <th>Section</th>
-                            <th>Rating Points</th>
+                            <th>Rating ({{ moment().format("MMMM") }})</th>
                             <th>Action</th>
                           </tr>
                         </thead>
@@ -64,6 +64,7 @@ export default {
         return {
             teacherData: {},
             isLoading: true,
+            moment: moment,
         }
     },
     methods : {
@@ -149,7 +150,7 @@ export default {
         $(document).on("click","button[data-ratings]",function(){
             let studentId = $(this).data("ratings");
             _self.$router.push({
-                name: 'teacher.student-ratings',
+                name: 'admin.student-rating',
                 params: {
                 studentId : studentId
                 }

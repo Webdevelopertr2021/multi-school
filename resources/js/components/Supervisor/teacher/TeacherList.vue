@@ -45,7 +45,7 @@
                                                 <span v-for="(superv,s) in teacher.supervisor" :key="s" class="badge badge-pill badge-success ml-1 mb-3">{{ superv.user.name }}</span>
                                             </td>
                                             <td>
-                                                {{ calculateRating(teacher.rating) }} <i class="fas fa-star text-warning"></i> ({{ teacher.rating_count }} Reviews)
+                                                {{ teacher.rating_this_month }} points <span v-html="teacher.rating_stat"></span>
                                             </td>
                                             <td>
                                                 <div class="btn-group">

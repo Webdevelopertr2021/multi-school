@@ -97,7 +97,7 @@
                     <th>Teacher name</th>
                     <th>Phone</th>
                     <th>Email</th>
-                    <th>Ratings</th>
+                    <th>Overall Ratings</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -200,15 +200,12 @@ export default {
         let totalRates = 0;
         let totalPoints = 0;
         ratings.forEach((item,i)=>{
-            totalRates+=5;
-            totalPoints += item.rate1;
-            totalPoints += item.rate2;
-            totalPoints += item.rate3;
-            totalPoints += item.rate4;
-            totalPoints += item.rate5;
+
+            totalRates++;
+            totalPoints+= item.total;
         });
 
-        return totalPoints/totalRates;
+        return (totalPoints/totalRates).toFixed(1);
     },
     deleteTeacher(id,index) {
       swal.fire({
