@@ -230,6 +230,10 @@ Route::group(["prefix" => "teacher", "middleware" => "auth:teacher"], function()
         Route::get('/get-my-profile-data',"Teacher\DashboardController@myProfile");
 
         Route::post('/update-my-profile',"Teacher\DashboardController@updateMyProfile");
+
+        Route::get("/get-payment-history","Teacher\SalaryController@getPaymentHistory");
+
+        Route::post("/accept-payment","Teacher\SalaryController@acceptPayment");
     });
 });
 // End

@@ -18,6 +18,10 @@
           <router-link :to="{name: 'teacher.my-students'}" class="nav-link"><i data-feather="users"></i><span>My Students</span></router-link>
         </li>
 
+        <li class="dropdown">
+          <router-link :to="{name: 'teacher.my-payments'}" class="nav-link"><i data-feather="dollar-sign"></i><span>My Payments</span></router-link>
+        </li>
+
 
       </ul>
     </aside>

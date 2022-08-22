@@ -13,6 +13,7 @@ import StudentRatings from "../components/Teacher/Students/StudentRatings.vue";
 import StudentSubmitReview from "../components/Teacher/Students/SubmitReview.vue";
 import Dashboard from "../components/Teacher/dashboard/Dashboard.vue";
 import MyProfile from "../components/Teacher/dashboard/MyProfile.vue";
+import MyPayment from "../components/Teacher/payments/payments.vue";
 // End
 
 const prefix = "/teacher/"
@@ -93,6 +94,14 @@ const routes = new VueRouter({
             component: NotificationList,
             meta: {
                 title : "My notifications"
+            }
+        },
+        {
+            path: prefix + "my-payments",
+            name: "teacher.my-payments",
+            component: MyPayment,
+            meta : {
+                title : "My payments"
             }
         }
     ],
