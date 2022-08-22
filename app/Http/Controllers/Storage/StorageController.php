@@ -49,4 +49,24 @@ class StorageController extends Controller
             return response("File not found",404);
         }
     }
+
+    public function getBankPhoto($filename)
+    {
+        if(Auth::check() || Auth::guard("supervisor")->check() || Auth::guard("teacher")->check() || Auth::guard("manager")->check())
+        {
+            $path = "bank/photos/$filename";
+            if(Storage::exists($path))
+            {
+                return Storage::response($path);
+            }
+            else
+            {
+                return response("File not found",404);
+            }
+        }
+        else
+        {
+            return response("File not found",404);
+        }
+    }
 }

@@ -57,6 +57,13 @@ return [
             'visibility' => 'private',
             'throw' => false,
         ],
+        'Bank' => [
+            'driver' => 'local',
+            'root' => storage_path("app/bank/photos"),
+            'url' => env("APP_URL") . '/storage/bank',
+            'visibility' => 'private',
+            'throw' => false,
+        ],
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

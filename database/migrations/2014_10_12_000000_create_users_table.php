@@ -32,6 +32,7 @@ return new class extends Migration
             $table->integer("credit_without_salary")->default(1);
             $table->integer("credit_time")->default(3);
             $table->integer("manager_id")->nullable();
+            $table->integer("wallet")->default(0);
             $table->timestamps();
         });
     }

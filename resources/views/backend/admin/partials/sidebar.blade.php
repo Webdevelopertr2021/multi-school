@@ -47,7 +47,12 @@
         <li class="dropdown">
           <router-link :to="{name: 'admin.leave-request'}" class="nav-link"><i data-feather="minus-square"></i>
             <span>Leave Requests</span></router-link>
-        </li>  
+        </li>
+
+        <li class="dropdown">
+          <router-link :to="{name: 'admin.payment-list'}" class="nav-link"><i data-feather="dollar-sign"></i>
+            <span>Payments</span></router-link>
+        </li>
         
 
       </ul>

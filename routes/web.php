@@ -29,6 +29,7 @@ Route::post("/user-logout","Auth\LoginController@logout")->name("user-logout");
 Route::group(["prefix" => "storage"],function(){
     Route::get("/user/photos/{filename}","Storage\StorageController@getUserPhoto")->name("user-photo");
     Route::get('/student/photo/{filename}',"Storage\StorageController@getStudentPhoto")->name("student-photo");
+    Route::get("/bank/photo/{filename}","Storage\StorageController@getBankPhoto")->name("bank-attachment");
 });
 // end
 
@@ -156,6 +157,15 @@ Route::group(["prefix"=>"admin","middleware"=>"auth"],function(){
         Route::get("/get-leave-request","Admin\LeaveRequestController@getList");
 
         // end
+
+        // Salary
+
+        Route::get("/get-salary-info","Admin\SalaryController@getSalaryData");
+        
+        Route::post("/submit-payment","Admin\SalaryController@submitPayment");
+
+        Route::get("/payment-list","Admin\SalaryController@getPaymentList");
+        // End
 
 
     });

@@ -23,7 +23,7 @@
                 <span v-else-if="req.status == 'approved'" class="bage badge-pill text-white badge-success">Approved</span>
               </template>
               <template v-else>
-                <span v-if="req.approved_by_manager == 1" class="bage badge-pill text-white badge-success">Approved</span>
+                <span v-if="req.approved_by_manager == 1" class="bage badge-pill text-white badge-success">Approved By Manager</span>
                 <span v-else class="bage badge-pill text-white badge-warning"><i class="fas fa-clock"></i> Waiting for manager approval</span>
               </template>
             </div>

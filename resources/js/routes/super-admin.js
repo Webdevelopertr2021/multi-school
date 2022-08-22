@@ -34,6 +34,8 @@ import TeacherRatings from "../components/SuperAdmin/teacher/AllRatings.vue";
 import LeaveRequest from "../components/SuperAdmin/LeaveRequest/List.vue";
 import StudentListByTeacher from "../components/SuperAdmin/teacher/StudentListByTeacher.vue";
 import TeacherListSuperv from "../components/SuperAdmin/supervisor/Teachers.vue";
+import PaySalary from "../components/SuperAdmin/payments/PaySalary.vue";
+import PaymentList from "../components/SuperAdmin/payments/PaymentList.vue";
 // End
 
 const prefix = "/admin/"
@@ -283,6 +285,22 @@ const routes = new VueRouter({
                 title: "Edit manager"
             }
         },
+        {
+            path: prefix + "pay-salary/:userId",
+            name: "admin.pay-salary",
+            component: PaySalary,
+            meta: {
+                title : "Pay salary"
+            }
+        },
+        {
+            path: prefix + "payment-list",
+            name: "admin.payment-list",
+            component: PaymentList,
+            meta : {
+                title : "Payment list"
+            }
+        }
     ],
     scrollBehavior(to, from, savedPos) {
         if (savedPos) {
