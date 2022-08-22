@@ -73,7 +73,6 @@ export default {
         console.log(data);
         if(data.status == "ok") {
           this.salaryPaid = data.paid;
-          this.salaryPaid = true;
         }
         else {
           this.$router.push({
@@ -108,6 +107,7 @@ export default {
       }).then(data=>{
         if(data.status == 'ok'){
           swal.fire("Success",data.msg,"success");
+          this.salaryPaid = true;
         }
       }).catch(err=>{
         console.error(err.response.data);

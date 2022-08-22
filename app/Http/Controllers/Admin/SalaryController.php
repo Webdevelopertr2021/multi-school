@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Payments;
 use Carbon\Carbon;
 use Yajra\DataTables\DataTables;
+use App\Models\Notification as CustomNotification;
 
 class SalaryController extends Controller
 {
@@ -69,6 +70,14 @@ class SalaryController extends Controller
         $user = User::find($req->teacherId);
         $user->wallet += $req->amount;
         $user->save();
+
+        // Send notification
+        $notify = new CustomNotification();
+        $notify->user_id = $req->teacherId;
+        $notify->type = "salary_deposit";
+        $notify->msg = "You have recived a new payment of $req->amount $ | Reciept number : $req->number";
+        $notify->save();
+        // End
 
 
         return [

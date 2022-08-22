@@ -5686,7 +5686,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
         if (data.status == "ok") {
           _this.salaryPaid = data.paid;
-          _this.salaryPaid = true;
         } else {
           _this.$router.push({
             name: "admin.teacher-ratings",
@@ -5729,6 +5728,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (data) {
                   if (data.status == 'ok') {
                     swal.fire("Success", data.msg, "success");
+                    _this2.salaryPaid = true;
                   }
                 })["catch"](function (err) {
                   console.error(err.response.data);

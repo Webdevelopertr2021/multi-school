@@ -33,7 +33,8 @@
           @endif
            <span class="d-sm-none d-lg-inline-block"></span></a>
         <div class="dropdown-menu dropdown-menu-right pullDown">
-          <div class="dropdown-title">Hello {{ auth()->user()->name }}</div>
+          <div class="dropdown-title">Hello {{ auth("teacher")->user()->name }}</div>
+          <div class="dropdown-title"><p class="text-warning">Balance : {{ auth("teacher")->user()->wallet }} $</p></div>
           <router-link :to="{name: 'teacher.my-profile'}" class="dropdown-item has-icon"> <i class="far
                                     fa-user"></i>My Profile
           </router-link>
