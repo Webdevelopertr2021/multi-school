@@ -9,6 +9,7 @@ use App\Models\Payments;
 use Carbon\Carbon;
 use Yajra\DataTables\DataTables;
 use App\Models\Notification as CustomNotification;
+use App\Helper\Helper;
 
 class SalaryController extends Controller
 {
@@ -21,17 +22,30 @@ class SalaryController extends Controller
     {
         if($user = User::find($req->userId))
         {
-            $now = Carbon::now();
-            $salary = Payments::where("teacher_id",$user->id)->whereMonth("created_at",$now)->first();
-            $paid = false;
-            if(!empty($salary))
+            $salaryData = array();
+
+            $salaryData["base_salary"] = $user->salary;
+
+            $lastMonth = Carbon::now()->subMonth(1);
+
+            $payment = Payments::where("teacher_id",$user->id)->whereMonth("paid_month",$lastMonth)->first();
+
+            if(!empty($payment))
             {
-                $paid = true;
+                $salaryData["paid"] = true;
             }
+            else
+            {
+                $salaryData["paid"] = false;
+            }
+
+            $salaryData["extra"] = Helper::getTeacherExtraSalary($user->id,$lastMonth);
+
+            $salaryData["month"] = $lastMonth->format("F");
+
             return [
                 "status" => "ok",
-                "paid" => $paid,
-                "salary" => $salary,
+                "salary_data" => $salaryData,
             ];
         }
         else
@@ -56,6 +70,10 @@ class SalaryController extends Controller
         $payment->reciept_number = $req->number;
         $payment->amount = $req->amount;
         $payment->note = $req->note;
+
+        $paidMonth = Carbon::parse("01-$req->month-".date("Y"));
+
+        $payment->paid_month = $paidMonth;
 
         if($req->hasFile("photo"))
         {
@@ -103,6 +121,9 @@ class SalaryController extends Controller
         ->addColumn("number",function($row){
             return $row->reciept_number;
         })
+        ->addColumn("paid_month",function($row){
+            return Carbon::parse($row->paid_month)->format("Y, F");
+        })
         ->addColumn("attachment",function($row){
             if($row->attachments != "")
             {
@@ -123,5 +144,43 @@ class SalaryController extends Controller
             }
         })
         ->rawColumns(["status","paid_to","attachment"])->make(true);
+    }
+
+    public function filterSalaryData(Request $req)
+    {
+        if($user = User::find($req->userId))
+        {
+            $salaryData = array();
+
+            $salaryData["base_salary"] = $user->salary;
+
+            $selectedMonth = Carbon::parse("01-$req->month-".date("Y"));
+
+            $payment = Payments::where("teacher_id",$user->id)->whereMonth("paid_month",$selectedMonth)->first();
+
+            if(!empty($payment))
+            {
+                $salaryData["paid"] = true;
+            }
+            else
+            {
+                $salaryData["paid"] = false;
+            }
+
+            $salaryData["extra"] = Helper::getTeacherExtraSalary($user->id,$selectedMonth);
+
+            $salaryData["month"] = $selectedMonth->format("F");
+
+            return [
+                "status" => "ok",
+                "salary_data" => $salaryData,
+            ];
+        }
+        else
+        {
+            return [
+                "status" => "fail",
+            ];
+        }
     }
 }

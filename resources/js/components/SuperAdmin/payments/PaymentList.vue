@@ -13,6 +13,7 @@
                                 <thead>
                                     <tr class="text-center">
                                         <th>Payment Date</th>
+                                        <th>Paid Month</th>
                                         <th>Paid To</th>
                                         <th>Amount</th>
                                         <th>Bank Name</th>
@@ -53,6 +54,7 @@ export default {
             lengthChange : true,
             columns: [
                 {data: "date"},
+                {data: "paid_month"},
                 {data: "paid_to"},
                 {data: "amount"},
                 {data: "bank_name"},

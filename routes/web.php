@@ -165,6 +165,8 @@ Route::group(["prefix"=>"admin","middleware"=>"auth"],function(){
         Route::post("/submit-payment","Admin\SalaryController@submitPayment");
 
         Route::get("/payment-list","Admin\SalaryController@getPaymentList");
+
+        Route::get("/filter-salary-data","Admin\SalaryController@filterSalaryData");
         // End
 
 

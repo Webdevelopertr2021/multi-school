@@ -5656,19 +5656,73 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      salaryPaid: false,
       form: new Form({
         teacherId: this.$route.params.userId,
         bankName: "",
         number: "",
         amount: "",
         note: "",
-        photo: null
+        photo: null,
+        month: moment().subtract(1, 'month').format('MM')
       }),
-      moment: moment
+      moment: moment,
+      salaryData: {},
+      isLoading: true
     };
   },
   methods: {
@@ -5682,10 +5736,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }).then(function (resp) {
         return resp.data;
       }).then(function (data) {
-        console.log(data);
-
         if (data.status == "ok") {
-          _this.salaryPaid = data.paid;
+          _this.salaryData = data.salary_data;
+          _this.form.amount = data.salary_data.base_salary + data.salary_data.extra.salary_rating + data.salary_data.extra.salary_no_leave;
+          _this.isLoading = false;
         } else {
           _this.$router.push({
             name: "admin.teacher-ratings",
@@ -5741,6 +5795,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }))();
+    },
+    filterSalaryData: function filterSalaryData() {
+      var _this3 = this;
+
+      this.isLoading = true;
+      axios.get("/admin/api/filter-salary-data", {
+        params: {
+          userId: this.$route.params.userId,
+          month: this.form.month
+        }
+      }).then(function (resp) {
+        return resp.data;
+      }).then(function (data) {
+        console.log(data);
+
+        if (data.status == "ok") {
+          _this3.salaryData = data.salary_data;
+        }
+
+        _this3.isLoading = false;
+      })["catch"](function (err) {
+        console.error(err.response.data);
+      });
     }
   },
   mounted: function mounted() {
@@ -5797,6 +5874,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {};
@@ -5812,6 +5890,8 @@ __webpack_require__.r(__webpack_exports__);
       lengthChange: true,
       columns: [{
         data: "date"
+      }, {
+        data: "paid_month"
       }, {
         data: "paid_to"
       }, {
@@ -63734,166 +63814,396 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row justify-content-center" }, [
-    _c("div", { staticClass: "col-md-6" }, [
+    _c("div", { staticClass: "col-md-5 mb-4" }, [
+      _c("div", { staticClass: "card" }, [
+        _c(
+          "div",
+          { staticClass: "card-header d-flex justify-content-between" },
+          [
+            _c("h4", [_vm._v("Salary Summary")]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v("Status :  "),
+              _c("strong", [
+                _vm._v(_vm._s(_vm.salaryData.paid == true ? "Paid" : "Unpaid")),
+              ]),
+            ]),
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _vm.isLoading
+            ? _c("div", { staticClass: "row" }, [
+                _c(
+                  "div",
+                  { staticClass: "col-12 mb-3" },
+                  [
+                    _c("skeleton", {
+                      attrs: { width: "100%", height: "30px" },
+                    }),
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "col-12 mb-3" },
+                  [
+                    _c("skeleton", {
+                      attrs: { width: "100%", height: "30px" },
+                    }),
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "col-12 mb-3" },
+                  [
+                    _c("skeleton", {
+                      attrs: { width: "100%", height: "30px" },
+                    }),
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "col-12 mb-3" },
+                  [
+                    _c("skeleton", {
+                      attrs: { width: "100%", height: "30px" },
+                    }),
+                  ],
+                  1
+                ),
+              ])
+            : _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-12" }, [
+                  _c("h6", [
+                    _c("strong", [
+                      _vm._v("Month : " + _vm._s(_vm.salaryData.month)),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _c("ul", { staticClass: "list-group" }, [
+                    _c(
+                      "li",
+                      {
+                        staticClass:
+                          "list-group-item d-flex justify-content-between align-items-center",
+                      },
+                      [
+                        _vm._v(
+                          "\n                Base Salary :\n                "
+                        ),
+                        _c("span", { staticClass: "text-success" }, [
+                          _c("strong", [
+                            _vm._v(_vm._s(_vm.salaryData.base_salary) + " $"),
+                          ]),
+                        ]),
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "li",
+                      {
+                        staticClass:
+                          "list-group-item d-flex justify-content-between align-items-center",
+                      },
+                      [
+                        _c("span", [
+                          _vm._v(
+                            "Bonus for rating - " +
+                              _vm._s(_vm.salaryData.extra.star) +
+                              " "
+                          ),
+                          _c("i", { staticClass: "fas fa-star text-warning" }),
+                          _vm._v(
+                            " (" +
+                              _vm._s(_vm.salaryData.extra.rating_count) +
+                              " Rating)"
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "text-success" }, [
+                          _c("strong", [
+                            _vm._v(
+                              _vm._s(_vm.salaryData.extra.salary_rating) + " $"
+                            ),
+                          ]),
+                        ]),
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "li",
+                      {
+                        staticClass:
+                          "list-group-item d-flex justify-content-between align-items-center",
+                      },
+                      [
+                        _vm._v(
+                          "\n                No leave in last 4 month Bonus\n                "
+                        ),
+                        _c("span", { staticClass: "text-success" }, [
+                          _c("strong", [
+                            _vm._v(
+                              _vm._s(_vm.salaryData.extra.salary_no_leave) +
+                                " $"
+                            ),
+                          ]),
+                        ]),
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "li",
+                      {
+                        staticClass:
+                          "list-group-item d-flex justify-content-between align-items-center",
+                      },
+                      [
+                        _c("strong", [_vm._v("Total")]),
+                        _vm._v(" "),
+                        _c("span", [
+                          _c("strong", [
+                            _vm._v(
+                              _vm._s(
+                                _vm.salaryData.base_salary +
+                                  _vm.salaryData.extra.salary_rating +
+                                  _vm.salaryData.extra.salary_no_leave
+                              ) + " $"
+                            ),
+                          ]),
+                        ]),
+                      ]
+                    ),
+                  ]),
+                ]),
+              ]),
+        ]),
+      ]),
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-md-7 mb-4" }, [
       _c("div", { staticClass: "card" }, [
         _vm._m(0),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
-          !_vm.salaryPaid
-            ? _c(
-                "form",
-                {
-                  staticClass: "row",
-                  on: {
-                    submit: function ($event) {
-                      $event.preventDefault()
-                      return _vm.submitPayment.apply(null, arguments)
+          _c(
+            "form",
+            {
+              staticClass: "row",
+              on: {
+                submit: function ($event) {
+                  $event.preventDefault()
+                  return _vm.submitPayment.apply(null, arguments)
+                },
+              },
+            },
+            [
+              _c("div", { staticClass: "col-md-12 mb-4" }, [
+                _c("label", { attrs: { for: "" } }, [_vm._v("Salary Month")]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.month,
+                        expression: "form.month",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    on: {
+                      change: [
+                        function ($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function (o) {
+                              return o.selected
+                            })
+                            .map(function (o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.form,
+                            "month",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        },
+                        _vm.filterSalaryData,
+                      ],
                     },
                   },
-                },
+                  [
+                    _c(
+                      "option",
+                      { domProps: { value: _vm.moment().format("MM") } },
+                      [_vm._v(_vm._s(_vm.moment().format("MMMM")))]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "option",
+                      {
+                        domProps: {
+                          value: _vm.moment().subtract(1, "month").format("MM"),
+                        },
+                      },
+                      [
+                        _vm._v(
+                          _vm._s(
+                            _vm.moment().subtract(1, "month").format("MMMM")
+                          )
+                        ),
+                      ]
+                    ),
+                  ]
+                ),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-12 mb-4" }, [
+                _vm._m(1),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.bankName,
+                      expression: "form.bankName",
+                    },
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", placeholder: "Bank name..." },
+                  domProps: { value: _vm.form.bankName },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.form, "bankName", $event.target.value)
+                    },
+                  },
+                }),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-12 mb-4" }, [
+                _c("label", { attrs: { for: "" } }, [_vm._v("Reciept Number")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.number,
+                      expression: "form.number",
+                    },
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", placeholder: "Reciept number..." },
+                  domProps: { value: _vm.form.number },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.form, "number", $event.target.value)
+                    },
+                  },
+                }),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-12 mb-4" }, [
+                _c("label", { attrs: { for: "" } }, [_vm._v("Amount")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.amount,
+                      expression: "form.amount",
+                    },
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    placeholder: "Amount...",
+                    readonly: "",
+                  },
+                  domProps: { value: _vm.form.amount },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.form, "amount", $event.target.value)
+                    },
+                  },
+                }),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-12 mb-4" }, [
+                _c("label", { attrs: { for: "" } }, [_vm._v("Note")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.note,
+                      expression: "form.note",
+                    },
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", placeholder: "Note..." },
+                  domProps: { value: _vm.form.note },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.form, "note", $event.target.value)
+                    },
+                  },
+                }),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-12 mb-4" }, [
+                _c("label", { attrs: { for: "" } }, [_vm._v("Attachments")]),
+                _vm._v(" "),
+                _c("input", {
+                  staticClass: "form-control-file",
+                  attrs: { type: "file" },
+                  on: { change: _vm.fileChange },
+                }),
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-md-12 mb-4" },
                 [
-                  _c("div", { staticClass: "col-md-12 mb-4" }, [
-                    _vm._m(1),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.form.bankName,
-                          expression: "form.bankName",
-                        },
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "text", placeholder: "Bank name..." },
-                      domProps: { value: _vm.form.bankName },
-                      on: {
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.form, "bankName", $event.target.value)
-                        },
-                      },
-                    }),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-12 mb-4" }, [
-                    _c("label", { attrs: { for: "" } }, [
-                      _vm._v("Reciept Number"),
-                    ]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.form.number,
-                          expression: "form.number",
-                        },
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "text", placeholder: "Reciept number..." },
-                      domProps: { value: _vm.form.number },
-                      on: {
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.form, "number", $event.target.value)
-                        },
-                      },
-                    }),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-12 mb-4" }, [
-                    _c("label", { attrs: { for: "" } }, [_vm._v("Amount")]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.form.amount,
-                          expression: "form.amount",
-                        },
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "text", placeholder: "Amount..." },
-                      domProps: { value: _vm.form.amount },
-                      on: {
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.form, "amount", $event.target.value)
-                        },
-                      },
-                    }),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-12 mb-4" }, [
-                    _c("label", { attrs: { for: "" } }, [_vm._v("Note")]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.form.note,
-                          expression: "form.note",
-                        },
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "text", placeholder: "Note..." },
-                      domProps: { value: _vm.form.note },
-                      on: {
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.form, "note", $event.target.value)
-                        },
-                      },
-                    }),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-12 mb-4" }, [
-                    _c("label", { attrs: { for: "" } }, [
-                      _vm._v("Attachments"),
-                    ]),
-                    _vm._v(" "),
-                    _c("input", {
-                      staticClass: "form-control-file",
-                      attrs: { type: "file" },
-                      on: { change: _vm.fileChange },
-                    }),
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "col-md-12 mb-4" },
-                    [
-                      _c(
+                  !_vm.salaryData.paid
+                    ? _c(
                         "Button",
                         {
                           staticClass: "btn btn-success",
                           attrs: { form: _vm.form },
                         },
                         [_vm._v("Pay")]
-                      ),
-                    ],
-                    1
-                  ),
-                ]
-              )
-            : _c("div", { staticClass: "text-center" }, [
-                _c("h3", [_vm._v("Salary Already Paid")]),
-                _vm._v(" "),
-                _c("h6", { staticClass: "text-success" }, [
-                  _vm._v(_vm._s(_vm.moment().format("MMMM"))),
-                ]),
-              ]),
+                      )
+                    : _vm._e(),
+                ],
+                1
+              ),
+            ]
+          ),
         ]),
       ]),
     ]),
@@ -63972,6 +64282,8 @@ var staticRenderFns = [
                       _c("thead", [
                         _c("tr", { staticClass: "text-center" }, [
                           _c("th", [_vm._v("Payment Date")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Paid Month")]),
                           _vm._v(" "),
                           _c("th", [_vm._v("Paid To")]),
                           _vm._v(" "),
