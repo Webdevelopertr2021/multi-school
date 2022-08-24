@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helper\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\AssignedSupervisor;
 use App\Models\Classes;
@@ -96,6 +97,26 @@ class TeacherController extends Controller
             }
             return $totalRating . " point &nbsp; &nbsp;" . $ratingStat;
         })
+        ->addColumn("stars",function($row){
+            $now = Carbon::now();
+
+            $currentMonth = TeacherRating::where("teacher_id",$row->id)->whereMonth("created_at",$now)->get();
+
+            $totalRating = 0;
+            $i = 0;
+            $star = 0;
+            if(count($currentMonth) > 0)
+            {
+                foreach($currentMonth as $rate)
+                {
+                    $i++;
+                    $totalRating += $rate->total;
+                }
+                $totalRating = round($totalRating/$i,1);
+                $star = Helper::getStars($totalRating);
+            }
+            return $star . "&nbsp; <i class='fas fa-star text-warning'></i>";
+        })
         ->addColumn("supervisors",function($row){
             $html = "";
             foreach($row->supervisor as $super)
@@ -118,7 +139,7 @@ class TeacherController extends Controller
             $students = Student::where("class_id",$row->class_id)->where("section_id",$row->section_id)->count();
             return "<a href='/admin/teacher/$row->id/studetn-list'><u>$students</u></a>";
         })
-        ->rawColumns(["ratings","supervisors","action","total_students"])
+        ->rawColumns(["ratings","supervisors","action","total_students","stars"])
         ->make(true);
 
     }
@@ -193,9 +214,11 @@ class TeacherController extends Controller
                 }
                 
                 $final = 0;
+                $star = 0;
                 if($totalPoints > 0)
                 {
                     $final = round($totalPoints/$i,1);
+                    $star = Helper::getStars($final);
                 }
 
                 $ratings = $ratings->paginate(10);
@@ -206,6 +229,7 @@ class TeacherController extends Controller
                     "teacherData" => $teacher,
                     "totalPoint" => $final,
                     "reviewCount" => $reviewCount,
+                    "star" => $star,
                 ];
             }
             else
@@ -219,6 +243,7 @@ class TeacherController extends Controller
 
                 $monthlyPoint = 0;
                 $i = 0;
+                $star = 0;
                 foreach($ratings as $rate)
                 {
                     $i++;
@@ -228,6 +253,7 @@ class TeacherController extends Controller
                 if($i > 0)
                 {
                     $monthlyPoint = $monthlyPoint / $i;
+                    $star = Helper::getStars($monthlyPoint);
                 }
 
                 return [
@@ -235,6 +261,7 @@ class TeacherController extends Controller
                     "ratings" => $ratings,
                     "monthlyRate" => $monthlyPoint,
                     "month" => $date->format("F"),
+                    "star" => $star,
                 ];
             }
         }

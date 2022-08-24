@@ -63,3 +63,19 @@ input.form-control{
     color: white;
     margin: 0 auto;
 }
+
+.stars{
+    list-style: none;
+    padding: 0;
+    margin-top: 50px;
+}
+
+.stars li{
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.stars li i{
+    font-size: 25px;
+    color: #ffca68;
+}

@@ -41,7 +41,7 @@
       <div class="card">
         <div class="card-body">
           <div class="d-flex justify-content-end">
-            <router-link :to="{name: 'admin.pay-salary', params: {userId: teacherData.id}}" class="btn btn-primary">Pay Salary <i class="fas fa-arrow-right"></i></router-link>
+            <router-link v-if="!isLoading" :to="{name: 'admin.pay-salary', params: {userId: teacherData.id}}" class="btn btn-primary">Pay Salary <i class="fas fa-arrow-right"></i></router-link>
           </div>
         </div>
       </div>
@@ -93,6 +93,10 @@
             <div class="col-12 mt-3">
               <hr>
               <h6 class="text-success">Review in month : <strong class="text-muted">{{ selectedMonth }}</strong> <span class="text-warning">({{ monthlyRate }})</span></h6>
+              <!-- Stars -->
+              <rating-star :star="filteredStar"></rating-star>
+              <!-- end -->
+              <p><strong>{{ filteredStar }} <i class="fas fa-star"></i></strong></p>
             </div>
             <div class="col-md-12 border-top pt-3" v-for="(rate,i) in filteredReview" :key="i">
               <div class="d-flex justify-content-between mb-1">
@@ -213,10 +217,12 @@
 
 <script>
 import VueMomentsAgo from 'vue-moments-ago'
+import RatingStar from "../../Partials/Stars.vue";
 
 export default {
   components: {
     VueMomentsAgo,
+    "rating-star" : RatingStar,
   },
   data() {
 
@@ -240,6 +246,7 @@ export default {
       filteredReview: [],
       filterYear: moment().format("YYYY"),
       filterMonth: "",
+      filteredStar: 0,
       years: years,
       monthlyRate: 0,
       selectedMonth: "",
@@ -296,6 +303,7 @@ export default {
             this.filteredReview = data.ratings;
             this.monthlyRate = data.monthlyRate;
             this.selectedMonth = data.month;
+            this.filteredStar = data.star;
             this.isRatingLoading = false;
           }
         }).catch(err=>{
@@ -314,7 +322,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>
