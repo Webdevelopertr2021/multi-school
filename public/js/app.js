@@ -8954,6 +8954,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -8972,7 +8991,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         selectedSuperVisors: [],
         superVisors: null,
         classId: null,
-        sectionId: null
+        sectionId: null,
+        salary: "",
+        credit_without_salary: 1,
+        credit_time: 3
       }),
       schools: [],
       supervisor: [],
@@ -9010,6 +9032,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           _this.form.schoolId = data.teacher.school_id;
           _this.form.classId = data.teacher.class_id;
           _this.form.sectionId = data.teacher.section_id;
+          _this.form.salary = data.teacher.salary;
+          _this.form.credit_without_salary = data.teacher.credit_without_salary;
+          _this.form.credit_time = data.teacher.credit_time;
 
           if (data.teacher.photo_url != null) {
             _this.teacherPhotoUrl = data.teacher.photo_url;
@@ -69429,6 +69454,138 @@ var render = function () {
                   }),
                   _vm._v(" "),
                   _c("HasError", { attrs: { form: _vm.form, field: "email" } }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-md-4 mb-4" },
+                [
+                  _c("label", { attrs: { for: "" } }, [_vm._v("Salary")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.salary,
+                        expression: "form.salary",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    class: { "is-invalid": _vm.form.errors.has("salary") },
+                    attrs: {
+                      type: "number",
+                      name: "salary",
+                      placeholder: "Salary...",
+                    },
+                    domProps: { value: _vm.form.salary },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.form, "salary", $event.target.value)
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("HasError", {
+                    attrs: { form: _vm.form, field: "salary" },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-md-4 mb-4" },
+                [
+                  _c("label", { attrs: { for: "" } }, [
+                    _vm._v("Total Credit for leave without salary"),
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.credit_without_salary,
+                        expression: "form.credit_without_salary",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    class: {
+                      "is-invalid": _vm.form.errors.has(
+                        "credit_without_salary"
+                      ),
+                    },
+                    attrs: {
+                      type: "number",
+                      name: "credit_salry",
+                      placeholder: "Credit...",
+                    },
+                    domProps: { value: _vm.form.credit_without_salary },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.form,
+                          "credit_without_salary",
+                          $event.target.value
+                        )
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("HasError", {
+                    attrs: { form: _vm.form, field: "credit_without_salary" },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-md-4 mb-4" },
+                [
+                  _c("label", { attrs: { for: "" } }, [
+                    _vm._v("Total Credit for Time Leave"),
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.credit_time,
+                        expression: "form.credit_time",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    class: { "is-invalid": _vm.form.errors.has("credit_time") },
+                    attrs: {
+                      type: "number",
+                      name: "credit_time",
+                      placeholder: "Credit...",
+                    },
+                    domProps: { value: _vm.form.credit_time },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.form, "credit_time", $event.target.value)
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("HasError", {
+                    attrs: { form: _vm.form, field: "credit_time" },
+                  }),
                 ],
                 1
               ),

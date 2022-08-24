@@ -28,6 +28,7 @@
                         <HasError  :form="form" field="classId"/>
                     </div>
 
+
                     <div class="col-md-4 mb-4">
                         <label for="">Select section</label>
                         <multiselect :class="{'is-invalid': form.errors.has('sectionId')}" v-model="selectedSection" :options="sections" 
@@ -57,6 +58,24 @@
                         <label for="">Email <small>(optional)</small></label>
                         <input type="email" name="email" class="form-control" :class="{'is-invalid' : form.errors.has('email')}" v-model="form.email" placeholder="Email...">
                         <HasError :form="form" field="email" />
+                    </div>
+
+                    <div class="col-md-4 mb-4">
+                        <label for="">Salary</label>
+                        <input type="number" name="salary" class="form-control" :class="{'is-invalid' : form.errors.has('salary')}" v-model="form.salary" placeholder="Salary...">
+                        <HasError :form="form" field="salary" />
+                    </div>
+
+                    <div class="col-md-4 mb-4">
+                        <label for="">Total Credit for leave without salary</label>
+                        <input type="number" name="credit_salry" class="form-control" :class="{'is-invalid' : form.errors.has('credit_without_salary')}" v-model="form.credit_without_salary" placeholder="Credit...">
+                        <HasError :form="form" field="credit_without_salary" />
+                    </div>
+
+                    <div class="col-md-4 mb-4">
+                        <label for="">Total Credit for Time Leave</label>
+                        <input type="number" name="credit_time" class="form-control" :class="{'is-invalid' : form.errors.has('credit_time')}" v-model="form.credit_time" placeholder="Credit...">
+                        <HasError :form="form" field="credit_time" />
                     </div>
 
                     <div class="col-md-4 mb-4">
@@ -107,6 +126,9 @@ export default {
                 superVisors: null,
                 classId : null,
                 sectionId: null,
+                salary: "",
+                credit_without_salary: 1,
+                credit_time: 3,
             }),
             schools: [],
             supervisor: [],
@@ -147,6 +169,10 @@ export default {
                     this.form.schoolId = data.teacher.school_id;
                     this.form.classId = data.teacher.class_id;
                     this.form.sectionId = data.teacher.section_id;
+
+                    this.form.salary = data.teacher.salary;
+                    this.form.credit_without_salary = data.teacher.credit_without_salary;
+                    this.form.credit_time = data.teacher.credit_time;
 
                     if(data.teacher.photo_url != null)
                     {
