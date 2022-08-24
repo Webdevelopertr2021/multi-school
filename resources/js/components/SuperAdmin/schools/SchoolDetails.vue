@@ -33,7 +33,7 @@
       </div>
     </div>
     <div class="row mt-2">
-      <div class="col-md-5">
+      <!-- <div class="col-md-5">
         <div class="card">
           <div class="card-header d-flex justify-content-between">
             <h4>Super Visors List <i class="fas fa-list"></i></h4>
@@ -77,8 +77,9 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="col-md-7">
+      </div> -->
+
+      <div class="col-md-12">
         <div class="card">
           <div class="card-header d-flex justify-content-between">
             <h4>Teacher List <i class="fas fa-list"></i></h4>

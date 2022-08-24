@@ -39,7 +39,7 @@ class SalaryController extends Controller
                 $salaryData["paid"] = false;
             }
 
-            $salaryData["extra"] = Helper::getTeacherExtraSalary($user->id,$lastMonth);
+            $salaryData["extra"] = Helper::getTeacherExtraSalary($user->id,$lastMonth->format("m"));
 
             $salaryData["month"] = $lastMonth->format("F");
 
@@ -64,16 +64,23 @@ class SalaryController extends Controller
             "number" => "required"
         ]);
 
+        $user = User::find($req->teacherId);
+
         $payment = new Payments();
         $payment->teacher_id = $req->teacherId;
         $payment->bank_name = $req->bankName;
         $payment->reciept_number = $req->number;
-        $payment->amount = $req->amount;
         $payment->note = $req->note;
 
         $paidMonth = Carbon::parse("01-$req->month-".date("Y"));
 
         $payment->paid_month = $paidMonth;
+
+        $extraData  = Helper::getTeacherExtraSalary($req->teacherId,$req->month);
+
+        $amount = $user->salary + $extraData["salary_rating"] + $extraData["salary_no_leave"];
+
+        $payment->amount = $amount;
 
         if($req->hasFile("photo"))
         {
@@ -85,7 +92,7 @@ class SalaryController extends Controller
 
         $payment->save();
 
-        $user = User::find($req->teacherId);
+        
         $user->wallet += $req->amount;
         $user->save();
 
@@ -154,7 +161,7 @@ class SalaryController extends Controller
 
             $salaryData["base_salary"] = $user->salary;
 
-            $selectedMonth = Carbon::parse("01-$req->month-".date("Y"));
+            $selectedMonth = Carbon::parse(date("Y")."/$req->month/3");
 
             $payment = Payments::where("teacher_id",$user->id)->whereMonth("paid_month",$selectedMonth)->first();
 
@@ -167,13 +174,15 @@ class SalaryController extends Controller
                 $salaryData["paid"] = false;
             }
 
-            $salaryData["extra"] = Helper::getTeacherExtraSalary($user->id,$selectedMonth);
+
+            $salaryData["extra"] = Helper::getTeacherExtraSalary($user->id,$req->month);
 
             $salaryData["month"] = $selectedMonth->format("F");
 
             return [
                 "status" => "ok",
                 "salary_data" => $salaryData,
+                "s" => $payment,
             ];
         }
         else

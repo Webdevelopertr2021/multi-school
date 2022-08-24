@@ -34,7 +34,7 @@
                   <span class="text-success"><strong>{{ salaryData.extra.salary_rating }} $</strong></span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                  No leave in last 4 month Bonus
+                  No leave in last 4 month Bonus ({{ salaryData.extra.total_leaves }} Leave)
                   <span class="text-success"><strong>{{ salaryData.extra.salary_no_leave }} $</strong></span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -160,8 +160,9 @@ export default {
         return resp.data;
       }).then(data=>{
         if(data.status == 'ok'){
-          swal.fire("Success",data.msg,"success");
-          this.salaryPaid = true;
+          swal.fire("Success",data.msg,"success").then(()=>{
+            window.location.reload();
+          });
         }
       }).catch(err=>{
         console.error(err.response.data);

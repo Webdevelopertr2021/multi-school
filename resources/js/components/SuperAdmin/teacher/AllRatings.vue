@@ -40,8 +40,7 @@
     <div class="col-md-7">
       <div class="card">
         <div class="card-body">
-          <div class="d-flex justify-content-between">
-            <h4><i class="fas fa-money"></i> Salary : 100 $</h4>
+          <div class="d-flex justify-content-end">
             <router-link :to="{name: 'admin.pay-salary', params: {userId: teacherData.id}}" class="btn btn-primary">Pay Salary <i class="fas fa-arrow-right"></i></router-link>
           </div>
         </div>

@@ -2,13 +2,16 @@
 
 namespace App\Helper;
 
+use App\Models\LeaveRequest;
 use App\Models\TeacherRating;
 use App\Models\User;
+use Carbon\Carbon;
 
 class Helper {
     
     public static function getTeacherExtraSalary($teacherId,$month)
     {
+        $month = Carbon::parse(date("Y")."/$month/02");
         $ratings = TeacherRating::where("teacher_id",$teacherId)->whereMonth("created_at",$month)->get();
 
         $salaryRating = 0;
@@ -32,6 +35,24 @@ class Helper {
         {
             $salaryRating = 0;
         }
+
+        // Leaves
+        $from = Carbon::parse($month)->subMonth(4);
+        $to = $month;
+
+        $leaves = LeaveRequest::where("teacher_id",$teacherId)->whereMonth("created_at",">=",$from)
+        ->whereMonth("created_at","<=",$to)->where("status","approved")
+        ->where("approved_by_manager",1)->get();
+        
+        if(count($leaves) > 0)
+        {
+            $salaryNoLeave = 0;
+        }
+        else
+        {
+            $salaryNoLeave = 100;
+        }
+        // End
         
 
         return [
@@ -40,6 +61,8 @@ class Helper {
             "salary_no_leave" => $salaryNoLeave,
             "rating_stars" => 1,
             "star" => $star,
+            "total_leaves" => count($leaves),
+
         ];
     }
 

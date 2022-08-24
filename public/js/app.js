@@ -5781,8 +5781,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   return resp.data;
                 }).then(function (data) {
                   if (data.status == 'ok') {
-                    swal.fire("Success", data.msg, "success");
-                    _this2.salaryPaid = true;
+                    swal.fire("Success", data.msg, "success").then(function () {
+                      window.location.reload();
+                    });
                   }
                 })["catch"](function (err) {
                   console.error(err.response.data);
@@ -6569,6 +6570,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
 //
 //
 //
@@ -8530,7 +8532,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var vue_moments_ago__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-moments-ago */ "./node_modules/vue-moments-ago/src/main.js");
-//
 //
 //
 //
@@ -63944,7 +63945,9 @@ var render = function () {
                       },
                       [
                         _vm._v(
-                          "\n                No leave in last 4 month Bonus\n                "
+                          "\n                No leave in last 4 month Bonus (" +
+                            _vm._s(_vm.salaryData.extra.total_leaves) +
+                            " Leave)\n                "
                         ),
                         _c("span", { staticClass: "text-success" }, [
                           _c("strong", [
@@ -65751,141 +65754,13 @@ var render = function () {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row mt-2" }, [
-      _c("div", { staticClass: "col-md-5" }, [
+      _c("div", { staticClass: "col-md-12" }, [
         _c("div", { staticClass: "card" }, [
           _c(
             "div",
             { staticClass: "card-header d-flex justify-content-between" },
             [
               _vm._m(1),
-              _vm._v(" "),
-              _c(
-                "router-link",
-                {
-                  staticClass: "btn btn-sm btn-primary",
-                  attrs: {
-                    to: {
-                      name: "admin.add-supervisor",
-                      params: { schoolId: _vm.$route.params.schoolId },
-                    },
-                  },
-                },
-                [
-                  _c("i", { staticClass: "fas fa-user-plus" }),
-                  _vm._v(" Add Supervisor"),
-                ]
-              ),
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _vm.isLoading
-              ? _c(
-                  "div",
-                  { staticClass: "row" },
-                  _vm._l(5, function (n) {
-                    return _c(
-                      "div",
-                      { key: n, staticClass: "col-12 mb-2" },
-                      [
-                        _c("skeleton", {
-                          attrs: { width: "100%", height: "40px" },
-                        }),
-                      ],
-                      1
-                    )
-                  }),
-                  0
-                )
-              : _c("div", { staticClass: "table-responsive" }, [
-                  _c(
-                    "table",
-                    { staticClass: "table table-bordered table-striped" },
-                    [
-                      _vm._m(2),
-                      _vm._v(" "),
-                      _c(
-                        "tbody",
-                        [
-                          _vm.superVisors.length <= 0
-                            ? [_vm._m(3)]
-                            : _vm._l(_vm.superVisors, function (user, i) {
-                                return _c(
-                                  "tr",
-                                  { key: i, staticClass: "text-center" },
-                                  [
-                                    _c("td", [_vm._v(_vm._s(user.name))]),
-                                    _vm._v(" "),
-                                    _c("td", [_vm._v(_vm._s(user.phone))]),
-                                    _vm._v(" "),
-                                    _c("td", [_vm._v(_vm._s(user.email))]),
-                                    _vm._v(" "),
-                                    _c(
-                                      "td",
-                                      [
-                                        _c(
-                                          "router-link",
-                                          {
-                                            staticClass:
-                                              "btn btn-sm btn-warning",
-                                            attrs: {
-                                              to: {
-                                                name: "admin.edit-superv",
-                                                params: { userId: user.id },
-                                              },
-                                            },
-                                          },
-                                          [
-                                            _c("i", {
-                                              staticClass: "fas fa-edit",
-                                            }),
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "button",
-                                          {
-                                            staticClass:
-                                              "btn btn-sm btn-danger",
-                                            on: {
-                                              click: function ($event) {
-                                                return _vm.deleteSuperv(
-                                                  user.id,
-                                                  i
-                                                )
-                                              },
-                                            },
-                                          },
-                                          [
-                                            _c("i", {
-                                              staticClass: "fas fa-trash",
-                                            }),
-                                          ]
-                                        ),
-                                      ],
-                                      1
-                                    ),
-                                  ]
-                                )
-                              }),
-                        ],
-                        2
-                      ),
-                    ]
-                  ),
-                ]),
-          ]),
-        ]),
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-7" }, [
-        _c("div", { staticClass: "card" }, [
-          _c(
-            "div",
-            { staticClass: "card-header d-flex justify-content-between" },
-            [
-              _vm._m(4),
               _vm._v(" "),
               _c(
                 "router-link",
@@ -65934,13 +65809,13 @@ var render = function () {
                         "table table-bordered table-hover table-striped",
                     },
                     [
-                      _vm._m(5),
+                      _vm._m(2),
                       _vm._v(" "),
                       _c(
                         "tbody",
                         [
                           _vm.teachers.length <= 0
-                            ? [_vm._m(6)]
+                            ? [_vm._m(3)]
                             : _vm._l(_vm.teachers, function (teacher, i) {
                                 return _c(
                                   "tr",
@@ -66035,41 +65910,6 @@ var staticRenderFns = [
       { staticClass: "card-header d-flex justify-content-between" },
       [_c("h4", [_vm._v("School Details")])]
     )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h4", [
-      _vm._v("Super Visors List "),
-      _c("i", { staticClass: "fas fa-list" }),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", { staticClass: "text-center" }, [
-        _c("th", [_vm._v("Supervisor name")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Phone")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Email")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Action")]),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", { staticClass: "text-center" }, [
-      _c("td", { staticClass: "text-danger", attrs: { colspan: "4" } }, [
-        _c("span", [_vm._v("No records found")]),
-      ]),
-    ])
   },
   function () {
     var _vm = this
@@ -68759,10 +68599,8 @@ var render = function () {
         _c("div", { staticClass: "card-body" }, [
           _c(
             "div",
-            { staticClass: "d-flex justify-content-between" },
+            { staticClass: "d-flex justify-content-end" },
             [
-              _vm._m(0),
-              _vm._v(" "),
               _c(
                 "router-link",
                 {
@@ -68788,7 +68626,7 @@ var render = function () {
     _vm._v(" "),
     _c("div", { staticClass: "col-md-7" }, [
       _c("div", { staticClass: "card" }, [
-        _vm._m(1),
+        _vm._m(0),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
           _c(
@@ -68914,7 +68752,7 @@ var render = function () {
                 ),
               ]),
               _vm._v(" "),
-              _vm._m(2),
+              _vm._m(1),
             ]
           ),
           _vm._v(" "),
@@ -69251,15 +69089,6 @@ var render = function () {
   ])
 }
 var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h4", [
-      _c("i", { staticClass: "fas fa-money" }),
-      _vm._v(" Salary : 100 $"),
-    ])
-  },
   function () {
     var _vm = this
     var _h = _vm.$createElement
