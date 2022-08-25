@@ -22,6 +22,7 @@
                                         <th>Section</th>
                                         <th>Total Students</th>
                                         <th>Rating ({{ moment().format("MMMM") }})</th>
+                                        <th>Stars ({{ moment().format("MMMM") }})</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -64,6 +65,7 @@ export default {
                 { data: "section" },
                 { data: "total_students" },
                 { data: 'ratings' },
+                { data: 'stars' },
                 { data: 'action', name: 'action', orderable: false, searchable: false  }
             ],
             dom: 'Bfrtip',

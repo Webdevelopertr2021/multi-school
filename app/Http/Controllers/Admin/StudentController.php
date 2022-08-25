@@ -7,7 +7,7 @@ use App\Models\Classes;
 use App\Models\Section;
 use App\Models\Student;
 use Illuminate\Http\Request;
-use DataTables;
+use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
 use App\Imports\StudentImport;
 use App\Models\StudentReview;
@@ -269,29 +269,61 @@ class StudentController extends Controller
     {
         if($student = Student::with("school:id,name")->find($req->studentId,["id","name","school_id","photo","photo_url","class_id","section_id"]))
         {
-            $ratings = StudentReview::where("student_id",$student->id)->with("rater:id,name,photo,photo_url")->paginate(6);
-
-            $totalPoints = 0;
-            $i = 0;
-            foreach($ratings as $rate)
+            if($req->year == "" && $req->month == "")
             {
-                $i++;
-                $totalPoints += $rate->total;
-            }
+                $ratings = StudentReview::where("student_id",$student->id)->with("rater:id,name,photo,photo_url");
 
-            $final = 0;
-            if($totalPoints > 0)
+                $totalPoints = 0;
+                $i = 0;
+                foreach($ratings->get() as $rate)
+                {
+                    $i ++;
+                    $totalPoints += $rate->total;
+                }
+
+                $final = 0;
+                $totalCount = $ratings->count();
+                if($totalPoints > 0)
+                {
+                    $final = round($totalPoints/$i,1);
+                }
+
+                $ratings = $ratings->paginate(10);
+                return [
+                    "status" => "ok",
+                    "ratings" => $ratings,
+                    "teacherData" => $student,
+                    "totalPoint" => $final,
+                    "totalRatingCount" => $totalCount,
+                ];
+            }
+            else
             {
-                $final = round($totalPoints/$i,1);
-            }
+                $date = Carbon::parse($req->year."-".$req->month."-"."1");
+                $ratings = StudentReview::where("student_id",$student->id)
+                ->whereYear("created_at","=",$date)->whereMonth("created_at","=",$date)
+                ->with("rater:id,name,photo,photo_url")->get();
 
-            return [
-                "status" => "ok",
-                "ratings" => $ratings,
-                "teacherData" => $student,
-                "totalPoint" => $final,
-                "student" => $student
-            ];
+                $monthlyPoint = 0;
+                $i = 0;
+                foreach($ratings as $rate)
+                {
+                    $i++;
+                    $monthlyPoint += $rate->total;
+                }
+
+                if($i > 0)
+                {
+                    $monthlyPoint = round($monthlyPoint/$i,1);
+                }
+
+                return [
+                    "review" => $ratings,
+                    "monthlyPoint" => $monthlyPoint,
+                    "selectedMonth" => $date->format("F"),
+                    "selectedYear" => $date->format("Y"),
+                ];
+            }
         }
         else
         {

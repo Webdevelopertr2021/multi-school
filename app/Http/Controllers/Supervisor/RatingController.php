@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\SuperVisor;
 
+use App\Helper\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\TeacherRating;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class RatingController extends Controller
@@ -53,32 +55,70 @@ class RatingController extends Controller
     {
         if($teacher = User::with("school:id,name")->find($req->userId,["id","name","school_id","photo","photo_url"]))
         {
-            $ratings = TeacherRating::where("teacher_id",$teacher->id)->with("rater:id,name,photo,photo_url")->paginate(6);
-
-            $totalPoints = 0;
-            $totalRates = 0;
-            foreach($ratings as $rate)
+            if($req->year == "" && $req->month == "")
             {
-                $totalRates += 5;
-                $totalPoints += $rate->rate1;
-                $totalPoints += $rate->rate2;
-                $totalPoints += $rate->rate3;
-                $totalPoints += $rate->rate4;
-                $totalPoints += $rate->rate5;
-            }
-            
-            $final = 0;
-            if($totalPoints > 0)
-            {
-                $final = $totalPoints/$totalRates;
-            }
+                $ratings = TeacherRating::where("teacher_id",$teacher->id)->with("rater:id,name,photo,photo_url");
 
-            return [
-                "status" => "ok",
-                "ratings" => $ratings,
-                "teacherData" => $teacher,
-                "totalPoint" => $final,
-            ];
+                $reviewCount = $ratings->count();
+                $totalPoints = 0;
+                $i=0;
+                foreach($ratings->get() as $rate)
+                {
+                    $i++;
+                    $totalPoints += $rate->total;
+                }
+                
+                $final = 0;
+                $star = 0;
+                if($totalPoints > 0)
+                {
+                    $final = round($totalPoints/$i,1);
+                    $star = Helper::getStars($final);
+                }
+
+                $ratings = $ratings->paginate(10);
+
+                return [
+                    "status" => "ok",
+                    "ratings" => $ratings,
+                    "teacherData" => $teacher,
+                    "totalPoint" => $final,
+                    "reviewCount" => $reviewCount,
+                    "star" => $star,
+                ];
+            }
+            else
+            {
+                $date = $req->year."-".$req->month."-"."1";
+                $date = Carbon::parse($date);
+
+                $ratings = TeacherRating::whereYear("created_at","=",$date)->whereMonth("created_at","=",$date)
+                ->where("teacher_id",$teacher->id)->with("rater:id,name,photo,photo_url")->get();
+
+
+                $monthlyPoint = 0;
+                $i = 0;
+                $star = 0;
+                foreach($ratings as $rate)
+                {
+                    $i++;
+                    $monthlyPoint += $rate->total;
+                }
+
+                if($i > 0)
+                {
+                    $monthlyPoint = $monthlyPoint / $i;
+                    $star = Helper::getStars($monthlyPoint);
+                }
+
+                return [
+                    "status" => "ok",
+                    "ratings" => $ratings,
+                    "monthlyRate" => $monthlyPoint,
+                    "month" => $date->format("F"),
+                    "star" => $star,
+                ];
+            }
         }
         else
         {

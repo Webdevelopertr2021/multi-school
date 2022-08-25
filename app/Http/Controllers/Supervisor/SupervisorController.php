@@ -59,7 +59,7 @@ class SupervisorController extends Controller
                     $l++;
                     $lastRating += $rate->total;
                 }
-                $lastMonth = round($lastRating/$l,1);
+                $lastRating = round($lastRating/$l,1);
             }
 
             $ratingStat = "";

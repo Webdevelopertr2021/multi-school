@@ -8027,19 +8027,129 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     VueMomentsAgo: vue_moments_ago__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   data: function data() {
+    var start = 2022;
+    var end = moment().format("YYYY");
+    var years = [];
+
+    while (start <= end) {
+      years.push(start);
+      start++;
+    }
+
     return {
       isLoading: true,
       totalPoint: 0,
       isRatingLoading: true,
-      studentData: {},
+      studentData: null,
       ratingData: {},
-      rates: []
+      rates: [],
+      overallReviewCount: 0,
+      filterYear: moment().format("YYYY"),
+      filterMonth: "",
+      years: years,
+      filterMode: false,
+      filterRates: [],
+      selectedMonth: "",
+      selectedYear: "",
+      monthlyRate: 0,
+      moment: moment
     };
   },
   methods: {
@@ -8061,16 +8171,44 @@ __webpack_require__.r(__webpack_exports__);
           _this.isLoading = false;
           _this.ratingData = data.ratings;
           _this.rates = data.ratings.data;
-          _this.studentData = data.student;
+          _this.overallReviewCount = data.totalRatingCount;
           _this.isRatingLoading = false;
         } else {
           _this.$router.push({
-            name: 'teacher.student-list'
+            name: 'admin.student-list'
           });
         }
       })["catch"](function (err) {
         console.error(err.response.data);
       });
+    },
+    filterRatings: function filterRatings() {
+      var _this2 = this;
+
+      if (this.filterYear != "" && this.filterMonth != "") {
+        this.filterMode = true;
+        this.isRatingLoading = true;
+        axios.get("/admin/api/get-student-ratings", {
+          params: {
+            studentId: this.$route.params.studentId,
+            year: this.filterYear,
+            month: this.filterMonth
+          }
+        }).then(function (resp) {
+          return resp.data;
+        }).then(function (data) {
+          _this2.filterRates = data.review;
+          _this2.selectedMonth = data.selectedMonth;
+          _this2.selectedYear = data.selectedYear;
+          _this2.monthlyRate = data.monthlyPoint;
+          _this2.isRatingLoading = false;
+        })["catch"](function (err) {
+          console.error(err.response.data);
+        });
+      } else {
+        this.filterMode = false;
+        this.isRatingLoading = false;
+      }
     }
   },
   mounted: function mounted() {
@@ -8510,6 +8648,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -8544,6 +8683,8 @@ __webpack_require__.r(__webpack_exports__);
         data: "total_students"
       }, {
         data: 'ratings'
+      }, {
+        data: 'stars'
       }, {
         data: 'action',
         name: 'action',
@@ -10329,6 +10470,112 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var vue_moments_ago__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-moments-ago */ "./node_modules/vue-moments-ago/src/main.js");
+/* harmony import */ var _Partials_Stars_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Partials/Stars.vue */ "./resources/js/components/Partials/Stars.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -10442,18 +10689,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    VueMomentsAgo: vue_moments_ago__WEBPACK_IMPORTED_MODULE_0__["default"]
+    VueMomentsAgo: vue_moments_ago__WEBPACK_IMPORTED_MODULE_0__["default"],
+    "rating-star": _Partials_Stars_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
+    var start = 2022;
+    var end = moment().format("YYYY");
+    var years = [];
+
+    while (start <= end) {
+      years.push(start);
+      start++;
+    }
+
     return {
       isLoading: true,
       totalPoint: 0,
       isRatingLoading: true,
       teacherData: null,
       ratingData: {},
-      rates: []
+      rates: [],
+      filterMode: false,
+      filteredReview: [],
+      filterYear: moment().format("YYYY"),
+      filterMonth: "",
+      filteredStar: 0,
+      years: years,
+      monthlyRate: 0,
+      selectedMonth: "",
+      overallReviewCount: 0
     };
   },
   methods: {
@@ -10469,12 +10736,15 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (resp) {
         return resp.data;
       }).then(function (data) {
+        console.log(data);
+
         if (data.status == "ok") {
           _this.teacherData = data.teacherData;
           _this.totalPoint = data.totalPoint;
           _this.isLoading = false;
           _this.ratingData = data.ratings;
           _this.rates = data.ratings.data;
+          _this.overallReviewCount = data.reviewCount;
           _this.isRatingLoading = false;
         } else {
           _this.$router.push({
@@ -10484,6 +10754,38 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (err) {
         console.error(err.response.data);
       });
+    },
+    filterRatings: function filterRatings() {
+      var _this2 = this;
+
+      if (this.filterYear != "" && this.filterMonth != "") {
+        this.filterMode = true;
+        this.isRatingLoading = true;
+        axios.get("/supervisor/api/get-teacher-ratings", {
+          params: {
+            userId: this.$route.params.userId,
+            year: this.filterYear,
+            month: this.filterMonth
+          }
+        }).then(function (resp) {
+          return resp.data;
+        }).then(function (data) {
+          console.log(data);
+
+          if (data.status == "ok") {
+            _this2.filteredReview = data.ratings;
+            _this2.monthlyRate = data.monthlyRate;
+            _this2.selectedMonth = data.month;
+            _this2.filteredStar = data.star;
+            _this2.isRatingLoading = false;
+          }
+        })["catch"](function (err) {
+          console.error(err.response.data);
+        });
+      } else {
+        this.filterMode = false;
+        this.isRatingLoading = false;
+      }
     }
   },
   mounted: function mounted() {
@@ -68103,10 +68405,6 @@ var render = function () {
   return _c("div", { staticClass: "row justify-content-center" }, [
     _c("div", { staticClass: "col-md-7" }, [
       _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-header" }, [
-          _c("h4", [_vm._v("Ratings of " + _vm._s(_vm.studentData.name))]),
-        ]),
-        _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
           _vm.isLoading
             ? _c("div", { staticClass: "row" }, [
@@ -68181,6 +68479,9 @@ var render = function () {
                         _c("span", { staticClass: "text-warning" }, [
                           _vm._v(_vm._s(_vm.totalPoint)),
                         ]),
+                        _vm._v(
+                          " (" + _vm._s(_vm.overallReviewCount) + " Reviews)"
+                        ),
                       ]),
                     ]),
                   ]),
@@ -68195,6 +68496,133 @@ var render = function () {
         _vm._m(0),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
+          _c(
+            "form",
+            {
+              staticClass: "row mb-3",
+              on: {
+                submit: function ($event) {
+                  $event.preventDefault()
+                  return _vm.filterRatings.apply(null, arguments)
+                },
+              },
+            },
+            [
+              _c("div", { staticClass: "col-md-3 col-6" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.filterYear,
+                        expression: "filterYear",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    on: {
+                      change: function ($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function (o) {
+                            return o.selected
+                          })
+                          .map(function (o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.filterYear = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      },
+                    },
+                  },
+                  _vm._l(_vm.years, function (year) {
+                    return _c(
+                      "option",
+                      { key: year, domProps: { value: year } },
+                      [_vm._v(_vm._s(year))]
+                    )
+                  }),
+                  0
+                ),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3 col-6" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.filterMonth,
+                        expression: "filterMonth",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    on: {
+                      change: function ($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function (o) {
+                            return o.selected
+                          })
+                          .map(function (o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.filterMonth = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      },
+                    },
+                  },
+                  [
+                    _c("option", { attrs: { value: "" } }, [_vm._v("None")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "1" } }, [
+                      _vm._v("January"),
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "2" } }, [
+                      _vm._v("February"),
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "3" } }, [_vm._v("March")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "4" } }, [_vm._v("April")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "5" } }, [_vm._v("May")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "6" } }, [_vm._v("June")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "7" } }, [_vm._v("July")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "8" } }, [_vm._v("August")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "9" } }, [
+                      _vm._v("September"),
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "10" } }, [
+                      _vm._v("October"),
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "11" } }, [
+                      _vm._v("November"),
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "12" } }, [
+                      _vm._v("December"),
+                    ]),
+                  ]
+                ),
+              ]),
+              _vm._v(" "),
+              _vm._m(1),
+            ]
+          ),
+          _vm._v(" "),
           _vm.isRatingLoading
             ? _c(
                 "div",
@@ -68213,7 +68641,183 @@ var render = function () {
                 }),
                 0
               )
-            : _c(
+            : _vm._e(),
+          _vm._v(" "),
+          !_vm.isRatingLoading && _vm.filterMode
+            ? _c(
+                "div",
+                { staticClass: "row" },
+                [
+                  _c("div", { staticClass: "col-12 mt-3" }, [
+                    _c("hr"),
+                    _vm._v(" "),
+                    _c("h6", { staticClass: "text-success" }, [
+                      _vm._v("Reviews of - "),
+                      _c("strong", { staticClass: "text-muted" }, [
+                        _vm._v(
+                          _vm._s(_vm.selectedMonth) +
+                            ", " +
+                            _vm._s(_vm.selectedYear)
+                        ),
+                      ]),
+                      _vm._v(" : "),
+                      _c("span", { staticClass: "text-warning" }, [
+                        _vm._v("(" + _vm._s(_vm.monthlyRate) + ")"),
+                      ]),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.filterRates, function (rate, i) {
+                    return _c(
+                      "div",
+                      { key: i, staticClass: "col-md-12 border-top pt-3" },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "d-flex justify-content-between mb-1",
+                          },
+                          [
+                            _c("p", { staticClass: "text-muted" }, [
+                              _c("strong", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm
+                                      .moment(rate.created_at)
+                                      .format("DD MMMM YYYY")
+                                  )
+                                ),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "p",
+                              { staticClass: "text-muted text-end m-0" },
+                              [
+                                _c("vue-moments-ago", {
+                                  staticClass: "time",
+                                  attrs: {
+                                    prefix: "",
+                                    suffix: "ago",
+                                    date: rate.created_at,
+                                    lang: "en",
+                                  },
+                                }),
+                              ],
+                              1
+                            ),
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "d-flex" }, [
+                          _c("div", { staticClass: "text-center" }, [
+                            rate.rater.photo == null
+                              ? _c("img", {
+                                  staticClass: "user-thumb-40 border",
+                                  attrs: {
+                                    src: "/image/portrait-placeholder.png",
+                                    alt: "",
+                                  },
+                                })
+                              : _c("img", {
+                                  staticClass: "user-thumb-40 border",
+                                  attrs: { src: rate.rater.photo_url, alt: "" },
+                                }),
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "ml-3" }, [
+                            _c(
+                              "div",
+                              { staticClass: "d-flex justify-content-between" },
+                              [_c("h6", [_vm._v(_vm._s(rate.rater.name))])]
+                            ),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "m-0" }, [
+                              _vm._v(_vm._s(rate.feedback)),
+                            ]),
+                          ]),
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "row mt-3 justify-content-center" },
+                          [
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate1))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Performance"),
+                                ]),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate2))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Behaviour"),
+                                ]),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate3))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Subject knowledge"),
+                                ]),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate4))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Attitude"),
+                                ]),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate5))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Personality"),
+                                ]),
+                              ]),
+                            ]),
+                          ]
+                        ),
+                      ]
+                    )
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "col-md-12 d-flex justify-content-center mt-2",
+                    },
+                    [
+                      _c("pagination", {
+                        attrs: { data: _vm.ratingData },
+                        on: { "pagination-change-page": _vm.getStudentRating },
+                      }),
+                    ],
+                    1
+                  ),
+                ],
+                2
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          !_vm.isRatingLoading && !_vm.filterMode
+            ? _c(
                 "div",
                 { staticClass: "row" },
                 [
@@ -68223,20 +68827,40 @@ var render = function () {
                       { key: i, staticClass: "col-md-12 border-top pt-3" },
                       [
                         _c(
-                          "p",
-                          { staticClass: "text-muted text-right m-0" },
+                          "div",
+                          {
+                            staticClass: "d-flex justify-content-between mb-1",
+                          },
                           [
-                            _c("vue-moments-ago", {
-                              staticClass: "time",
-                              attrs: {
-                                prefix: "",
-                                suffix: "ago",
-                                date: rate.created_at,
-                                lang: "en",
-                              },
-                            }),
-                          ],
-                          1
+                            _c("p", { staticClass: "text-muted" }, [
+                              _c("strong", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm
+                                      .moment(rate.created_at)
+                                      .format("DD MMMM YYYY")
+                                  )
+                                ),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "p",
+                              { staticClass: "text-muted text-end m-0" },
+                              [
+                                _c("vue-moments-ago", {
+                                  staticClass: "time",
+                                  attrs: {
+                                    prefix: "",
+                                    suffix: "ago",
+                                    date: rate.created_at,
+                                    lang: "en",
+                                  },
+                                }),
+                              ],
+                              1
+                            ),
+                          ]
                         ),
                         _vm._v(" "),
                         _c("div", { staticClass: "d-flex" }, [
@@ -68353,7 +68977,8 @@ var render = function () {
                   ),
                 ],
                 2
-              ),
+              )
+            : _vm._e(),
         ]),
       ]),
     ]),
@@ -68366,6 +68991,18 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
       _c("h4", { staticClass: "text-muted" }, [_vm._v("Student ratings")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-3 col-6" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-success mt-1", attrs: { type: "submit" } },
+        [_vm._v("Filter")]
+      ),
     ])
   },
 ]
@@ -69187,6 +69824,14 @@ var render = function () {
                         _c("th", [
                           _vm._v(
                             "Rating (" +
+                              _vm._s(_vm.moment().format("MMMM")) +
+                              ")"
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("th", [
+                          _vm._v(
+                            "Stars (" +
                               _vm._s(_vm.moment().format("MMMM")) +
                               ")"
                           ),
@@ -71966,11 +72611,14 @@ var render = function () {
                       ]),
                       _vm._v(" "),
                       _c("p", { staticClass: "m-0" }, [
-                        _c("b", [_vm._v("Total Rating ")]),
+                        _c("b", [_vm._v("Overall Rating ")]),
                         _vm._v(":   "),
                         _c("span", { staticClass: "text-warning" }, [
                           _vm._v(_vm._s(_vm.totalPoint)),
                         ]),
+                        _vm._v(
+                          " (" + _vm._s(_vm.overallReviewCount) + " Reviews)"
+                        ),
                       ]),
                     ]),
                   ]),
@@ -71982,9 +72630,168 @@ var render = function () {
     _vm._v(" "),
     _c("div", { staticClass: "col-md-7" }, [
       _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-body" }, [
+          _c(
+            "div",
+            { staticClass: "d-flex justify-content-end" },
+            [
+              !_vm.isLoading
+                ? _c(
+                    "router-link",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: {
+                        to: {
+                          name: "admin.pay-salary",
+                          params: { userId: _vm.teacherData.id },
+                        },
+                      },
+                    },
+                    [
+                      _vm._v("Pay Salary "),
+                      _c("i", { staticClass: "fas fa-arrow-right" }),
+                    ]
+                  )
+                : _vm._e(),
+            ],
+            1
+          ),
+        ]),
+      ]),
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-md-7" }, [
+      _c("div", { staticClass: "card" }, [
         _vm._m(0),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
+          _c(
+            "form",
+            {
+              staticClass: "row mb-3",
+              on: {
+                submit: function ($event) {
+                  $event.preventDefault()
+                  return _vm.filterRatings.apply(null, arguments)
+                },
+              },
+            },
+            [
+              _c("div", { staticClass: "col-md-3 col-6" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.filterYear,
+                        expression: "filterYear",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    on: {
+                      change: function ($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function (o) {
+                            return o.selected
+                          })
+                          .map(function (o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.filterYear = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      },
+                    },
+                  },
+                  _vm._l(_vm.years, function (year) {
+                    return _c(
+                      "option",
+                      { key: year, domProps: { value: year } },
+                      [_vm._v(_vm._s(year))]
+                    )
+                  }),
+                  0
+                ),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3 col-6" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.filterMonth,
+                        expression: "filterMonth",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    on: {
+                      change: function ($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function (o) {
+                            return o.selected
+                          })
+                          .map(function (o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.filterMonth = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      },
+                    },
+                  },
+                  [
+                    _c("option", { attrs: { value: "" } }, [_vm._v("None")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "1" } }, [
+                      _vm._v("January"),
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "2" } }, [
+                      _vm._v("February"),
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "3" } }, [_vm._v("March")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "4" } }, [_vm._v("April")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "5" } }, [_vm._v("May")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "6" } }, [_vm._v("June")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "7" } }, [_vm._v("July")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "8" } }, [_vm._v("August")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "9" } }, [
+                      _vm._v("September"),
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "10" } }, [
+                      _vm._v("October"),
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "11" } }, [
+                      _vm._v("November"),
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "12" } }, [
+                      _vm._v("December"),
+                    ]),
+                  ]
+                ),
+              ]),
+              _vm._v(" "),
+              _vm._m(1),
+            ]
+          ),
+          _vm._v(" "),
           _vm.isRatingLoading
             ? _c(
                 "div",
@@ -72003,7 +72810,178 @@ var render = function () {
                 }),
                 0
               )
-            : _c(
+            : _vm._e(),
+          _vm._v(" "),
+          !_vm.isRatingLoading && _vm.filterMode
+            ? _c(
+                "div",
+                { staticClass: "row" },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "col-12 mt-3" },
+                    [
+                      _c("hr"),
+                      _vm._v(" "),
+                      _c("h6", { staticClass: "text-success" }, [
+                        _vm._v("Review in month : "),
+                        _c("strong", { staticClass: "text-muted" }, [
+                          _vm._v(_vm._s(_vm.selectedMonth)),
+                        ]),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "text-warning" }, [
+                          _vm._v("(" + _vm._s(_vm.monthlyRate) + ")"),
+                        ]),
+                      ]),
+                      _vm._v(" "),
+                      _c("rating-star", { attrs: { star: _vm.filteredStar } }),
+                      _vm._v(" "),
+                      _c("p", [
+                        _c("strong", [
+                          _vm._v(_vm._s(_vm.filteredStar) + " "),
+                          _c("i", { staticClass: "fas fa-star" }),
+                        ]),
+                      ]),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.filteredReview, function (rate, i) {
+                    return _c(
+                      "div",
+                      { key: i, staticClass: "col-md-12 border-top pt-3" },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "d-flex justify-content-between mb-1",
+                          },
+                          [
+                            _c("p", { staticClass: "text-muted" }, [
+                              _c("strong", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm
+                                      .moment(rate.created_at)
+                                      .format("DD MMMM YYYY")
+                                  )
+                                ),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "p",
+                              { staticClass: "text-muted text-end m-0" },
+                              [
+                                _c("vue-moments-ago", {
+                                  staticClass: "time",
+                                  attrs: {
+                                    prefix: "",
+                                    suffix: "ago",
+                                    date: rate.created_at,
+                                    lang: "en",
+                                  },
+                                }),
+                              ],
+                              1
+                            ),
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "d-flex" }, [
+                          _c("div", { staticClass: "text-center" }, [
+                            rate.photo == null
+                              ? _c("img", {
+                                  staticClass: "user-thumb-40",
+                                  attrs: {
+                                    src: "/image/portrait-placeholder.png",
+                                    alt: "",
+                                  },
+                                })
+                              : _c("img", {
+                                  staticClass: "user-thumb-40",
+                                  attrs: { src: rate.photo_url, alt: "" },
+                                }),
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "ml-3" }, [
+                            _c(
+                              "div",
+                              { staticClass: "d-flex justify-content-between" },
+                              [_c("h6", [_vm._v(_vm._s(rate.rater.name))])]
+                            ),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "m-0" }, [
+                              _vm._v(_vm._s(rate.feedback)),
+                            ]),
+                          ]),
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "row mt-3 justify-content-center" },
+                          [
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate1))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Performance"),
+                                ]),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate2))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Behaviour"),
+                                ]),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate3))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Subject knowledge"),
+                                ]),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate4))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Attitude"),
+                                ]),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate5))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Personality"),
+                                ]),
+                              ]),
+                            ]),
+                          ]
+                        ),
+                      ]
+                    )
+                  }),
+                ],
+                2
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          !_vm.isRatingLoading && !_vm.filterMode
+            ? _c(
                 "div",
                 { staticClass: "row" },
                 [
@@ -72153,7 +73131,8 @@ var render = function () {
                   ),
                 ],
                 2
-              ),
+              )
+            : _vm._e(),
         ]),
       ]),
     ]),
@@ -72166,6 +73145,18 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
       _c("h4", { staticClass: "text-muted" }, [_vm._v("Teacher ratings")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-3 col-6" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-success mt-1", attrs: { type: "submit" } },
+        [_vm._v("Filter")]
+      ),
     ])
   },
 ]
