@@ -20,7 +20,7 @@
                             <th>School</th>
                             <th>Class</th>
                             <th>Section</th>
-                            <th>Rating Points</th>
+                            <th>Rating ({{ moment().format("MMMM") }})</th>
                             <th>Action</th>
                           </tr>
                         </thead>
@@ -60,7 +60,7 @@ export default {
         { data: "school" },
         { data: "class" },
         { data: "section" },
-        {data: 'ratings'},
+        { data: 'ratings'},
         { data: 'action', name: 'action', orderable: false, searchable: false  }
       ],
       dom: 'Bfrtip',
@@ -100,7 +100,7 @@ export default {
     $(document).on("click","button[data-ratings]",function(){
       let studentId = $(this).data("ratings");
       _self.$router.push({
-        name: 'teacher.student-ratings',
+        name: 'manager.student-rating',
         params: {
           studentId : studentId
         }

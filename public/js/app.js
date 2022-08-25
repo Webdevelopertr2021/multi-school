@@ -2741,12 +2741,333 @@ __webpack_require__.r(__webpack_exports__);
       var studentId = $(this).data("ratings");
 
       _self.$router.push({
-        name: 'teacher.student-ratings',
+        name: 'manager.student-rating',
         params: {
           studentId: studentId
         }
       });
     });
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Manager/students/StudentRatings.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Manager/students/StudentRatings.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue_moments_ago__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-moments-ago */ "./node_modules/vue-moments-ago/src/main.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    VueMomentsAgo: vue_moments_ago__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    var start = 2022;
+    var end = moment().format("YYYY");
+    var years = [];
+
+    while (start <= end) {
+      years.push(start);
+      start++;
+    }
+
+    return {
+      isLoading: true,
+      totalPoint: 0,
+      isRatingLoading: true,
+      studentData: null,
+      ratingData: {},
+      rates: [],
+      overallReviewCount: 0,
+      filterYear: moment().format("YYYY"),
+      filterMonth: "",
+      years: years,
+      filterMode: false,
+      filterRates: [],
+      selectedMonth: "",
+      selectedYear: "",
+      monthlyRate: 0,
+      moment: moment
+    };
+  },
+  methods: {
+    getStudentRating: function getStudentRating() {
+      var _this = this;
+
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.get("/manager/api/get-student-ratings", {
+        params: {
+          page: page,
+          studentId: this.$route.params.studentId
+        }
+      }).then(function (resp) {
+        return resp.data;
+      }).then(function (data) {
+        if (data.status == "ok") {
+          _this.teacherData = data.teacherData;
+          _this.totalPoint = data.totalPoint;
+          _this.isLoading = false;
+          _this.ratingData = data.ratings;
+          _this.rates = data.ratings.data;
+          _this.overallReviewCount = data.totalRatingCount;
+          _this.isRatingLoading = false;
+        } else {
+          _this.$router.push({
+            name: 'admin.student-list'
+          });
+        }
+      })["catch"](function (err) {
+        console.error(err.response.data);
+      });
+    },
+    filterRatings: function filterRatings() {
+      var _this2 = this;
+
+      if (this.filterYear != "" && this.filterMonth != "") {
+        this.filterMode = true;
+        this.isRatingLoading = true;
+        axios.get("/manager/api/get-student-ratings", {
+          params: {
+            studentId: this.$route.params.studentId,
+            year: this.filterYear,
+            month: this.filterMonth
+          }
+        }).then(function (resp) {
+          return resp.data;
+        }).then(function (data) {
+          _this2.filterRates = data.review;
+          _this2.selectedMonth = data.selectedMonth;
+          _this2.selectedYear = data.selectedYear;
+          _this2.monthlyRate = data.monthlyPoint;
+          _this2.isRatingLoading = false;
+        })["catch"](function (err) {
+          console.error(err.response.data);
+        });
+      } else {
+        this.filterMode = false;
+        this.isRatingLoading = false;
+      }
+    }
+  },
+  mounted: function mounted() {
+    this.getStudentRating();
   }
 });
 
@@ -2950,9 +3271,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
-    return {};
+    return {
+      moment: moment
+    };
   },
   mounted: function mounted() {
     var _self = this;
@@ -2982,6 +3306,8 @@ __webpack_require__.r(__webpack_exports__);
         data: "total_students"
       }, {
         data: 'ratings'
+      }, {
+        data: 'stars'
       }, {
         data: 'action',
         name: 'action',
@@ -3065,6 +3391,341 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     });
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Manager/teacher/AllRatings.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Manager/teacher/AllRatings.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue_moments_ago__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-moments-ago */ "./node_modules/vue-moments-ago/src/main.js");
+/* harmony import */ var _Partials_Stars_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Partials/Stars.vue */ "./resources/js/components/Partials/Stars.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    VueMomentsAgo: vue_moments_ago__WEBPACK_IMPORTED_MODULE_0__["default"],
+    "rating-star": _Partials_Stars_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data: function data() {
+    var start = 2022;
+    var end = moment().format("YYYY");
+    var years = [];
+
+    while (start <= end) {
+      years.push(start);
+      start++;
+    }
+
+    return {
+      isLoading: true,
+      totalPoint: 0,
+      isRatingLoading: true,
+      teacherData: null,
+      ratingData: {},
+      rates: [],
+      filterMode: false,
+      filteredReview: [],
+      filterYear: moment().format("YYYY"),
+      filterMonth: "",
+      filteredStar: 0,
+      years: years,
+      monthlyRate: 0,
+      selectedMonth: "",
+      overallReviewCount: 0
+    };
+  },
+  methods: {
+    getTeacherRating: function getTeacherRating() {
+      var _this = this;
+
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.get("/manager/api/get-teacher-ratings", {
+        params: {
+          page: page,
+          userId: this.$route.params.teacherId
+        }
+      }).then(function (resp) {
+        return resp.data;
+      }).then(function (data) {
+        if (data.status == "ok") {
+          _this.teacherData = data.teacherData;
+          _this.totalPoint = data.totalPoint;
+          _this.isLoading = false;
+          _this.ratingData = data.ratings;
+          _this.rates = data.ratings.data;
+          _this.overallReviewCount = data.reviewCount;
+          _this.isRatingLoading = false;
+        } else {
+          _this.$router.push({
+            name: 'admin.all-teacher'
+          });
+        }
+      })["catch"](function (err) {
+        console.error(err.response.data);
+      });
+    },
+    filterRatings: function filterRatings() {
+      var _this2 = this;
+
+      if (this.filterYear != "" && this.filterMonth != "") {
+        this.filterMode = true;
+        this.isRatingLoading = true;
+        axios.get("/manager/api/get-teacher-ratings", {
+          params: {
+            userId: this.$route.params.teacherId,
+            year: this.filterYear,
+            month: this.filterMonth
+          }
+        }).then(function (resp) {
+          return resp.data;
+        }).then(function (data) {
+          console.log(data);
+
+          if (data.status == "ok") {
+            _this2.filteredReview = data.ratings;
+            _this2.monthlyRate = data.monthlyRate;
+            _this2.selectedMonth = data.month;
+            _this2.filteredStar = data.star;
+            _this2.isRatingLoading = false;
+          }
+        })["catch"](function (err) {
+          console.error(err.response.data);
+        });
+      } else {
+        this.filterMode = false;
+        this.isRatingLoading = false;
+      }
+    }
+  },
+  mounted: function mounted() {
+    this.getTeacherRating();
   }
 });
 
@@ -3240,7 +3901,7 @@ __webpack_require__.r(__webpack_exports__);
       var studentId = $(this).data("ratings");
 
       _self.$router.push({
-        name: 'teacher.student-ratings',
+        name: 'manager.student-rating',
         params: {
           studentId: studentId
         }
@@ -3262,7 +3923,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
 //
 //
 //
@@ -12921,9 +13581,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Manager_teacher_StudentListByTeacher_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/Manager/teacher/StudentListByTeacher.vue */ "./resources/js/components/Manager/teacher/StudentListByTeacher.vue");
 /* harmony import */ var _components_Manager_supervisor_Teachers_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/Manager/supervisor/Teachers.vue */ "./resources/js/components/Manager/supervisor/Teachers.vue");
 /* harmony import */ var _components_Manager_LeaveRequest_List_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/Manager/LeaveRequest/List.vue */ "./resources/js/components/Manager/LeaveRequest/List.vue");
+/* harmony import */ var _components_Manager_teacher_AllRatings_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/Manager/teacher/AllRatings.vue */ "./resources/js/components/Manager/teacher/AllRatings.vue");
+/* harmony import */ var _components_Manager_students_StudentRatings_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../components/Manager/students/StudentRatings.vue */ "./resources/js/components/Manager/students/StudentRatings.vue");
 
 
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]); // Components
+
+
 
 
 
@@ -12986,6 +13650,20 @@ var routes = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     component: _components_Manager_LeaveRequest_List_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
     meta: {
       title: "Leave request"
+    }
+  }, {
+    path: prefix + "teacher-ratings/:teacherId",
+    name: "manager.teacher-ratings",
+    component: _components_Manager_teacher_AllRatings_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
+    meta: {
+      title: "Teacher Rating"
+    }
+  }, {
+    path: prefix + "student-ratings/:studentId",
+    name: "manager.student-rating",
+    component: _components_Manager_students_StudentRatings_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
+    meta: {
+      title: "Student ratings"
     }
   }],
   scrollBehavior: function scrollBehavior(to, from, savedPos) {
@@ -55190,6 +55868,45 @@ component.options.__file = "resources/js/components/Manager/students/List.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/Manager/students/StudentRatings.vue":
+/*!*********************************************************************!*\
+  !*** ./resources/js/components/Manager/students/StudentRatings.vue ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _StudentRatings_vue_vue_type_template_id_abacd996___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./StudentRatings.vue?vue&type=template&id=abacd996& */ "./resources/js/components/Manager/students/StudentRatings.vue?vue&type=template&id=abacd996&");
+/* harmony import */ var _StudentRatings_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./StudentRatings.vue?vue&type=script&lang=js& */ "./resources/js/components/Manager/students/StudentRatings.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _StudentRatings_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _StudentRatings_vue_vue_type_template_id_abacd996___WEBPACK_IMPORTED_MODULE_0__.render,
+  _StudentRatings_vue_vue_type_template_id_abacd996___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Manager/students/StudentRatings.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/Manager/supervisor/List.vue":
 /*!*************************************************************!*\
   !*** ./resources/js/components/Manager/supervisor/List.vue ***!
@@ -55264,6 +55981,45 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 /* hot reload */
 if (false) { var api; }
 component.options.__file = "resources/js/components/Manager/supervisor/Teachers.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Manager/teacher/AllRatings.vue":
+/*!****************************************************************!*\
+  !*** ./resources/js/components/Manager/teacher/AllRatings.vue ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _AllRatings_vue_vue_type_template_id_357dd04f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AllRatings.vue?vue&type=template&id=357dd04f& */ "./resources/js/components/Manager/teacher/AllRatings.vue?vue&type=template&id=357dd04f&");
+/* harmony import */ var _AllRatings_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AllRatings.vue?vue&type=script&lang=js& */ "./resources/js/components/Manager/teacher/AllRatings.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _AllRatings_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _AllRatings_vue_vue_type_template_id_357dd04f___WEBPACK_IMPORTED_MODULE_0__.render,
+  _AllRatings_vue_vue_type_template_id_357dd04f___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Manager/teacher/AllRatings.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -57471,6 +58227,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Manager/students/StudentRatings.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/components/Manager/students/StudentRatings.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_StudentRatings_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./StudentRatings.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Manager/students/StudentRatings.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_StudentRatings_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/Manager/supervisor/List.vue?vue&type=script&lang=js&":
 /*!**************************************************************************************!*\
   !*** ./resources/js/components/Manager/supervisor/List.vue?vue&type=script&lang=js& ***!
@@ -57500,6 +58272,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Teachers_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Teachers.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Manager/supervisor/Teachers.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Teachers_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Manager/teacher/AllRatings.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/Manager/teacher/AllRatings.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AllRatings_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./AllRatings.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Manager/teacher/AllRatings.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AllRatings_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -58732,6 +59520,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Manager/students/StudentRatings.vue?vue&type=template&id=abacd996&":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/components/Manager/students/StudentRatings.vue?vue&type=template&id=abacd996& ***!
+  \****************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StudentRatings_vue_vue_type_template_id_abacd996___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StudentRatings_vue_vue_type_template_id_abacd996___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StudentRatings_vue_vue_type_template_id_abacd996___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./StudentRatings.vue?vue&type=template&id=abacd996& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Manager/students/StudentRatings.vue?vue&type=template&id=abacd996&");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/Manager/supervisor/List.vue?vue&type=template&id=23a4ba88&":
 /*!********************************************************************************************!*\
   !*** ./resources/js/components/Manager/supervisor/List.vue?vue&type=template&id=23a4ba88& ***!
@@ -58762,6 +59567,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Teachers_vue_vue_type_template_id_481e1f8a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Teachers_vue_vue_type_template_id_481e1f8a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Teachers.vue?vue&type=template&id=481e1f8a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Manager/supervisor/Teachers.vue?vue&type=template&id=481e1f8a&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Manager/teacher/AllRatings.vue?vue&type=template&id=357dd04f&":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/components/Manager/teacher/AllRatings.vue?vue&type=template&id=357dd04f& ***!
+  \***********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AllRatings_vue_vue_type_template_id_357dd04f___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AllRatings_vue_vue_type_template_id_357dd04f___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AllRatings_vue_vue_type_template_id_357dd04f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./AllRatings.vue?vue&type=template&id=357dd04f& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Manager/teacher/AllRatings.vue?vue&type=template&id=357dd04f&");
 
 
 /***/ }),
@@ -60287,66 +61109,698 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "row justify-content-center" }, [
+    _c("div", { staticClass: "col-md-12" }, [
+      _c("div", { staticClass: "card" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-12" }, [
+              _c("div", { staticClass: "table-responsive" }, [
+                _c(
+                  "table",
+                  {
+                    staticClass: "table table-striped table-bordered",
+                    attrs: { id: "datatable" },
+                  },
+                  [
+                    _c("thead", [
+                      _c("tr", { staticClass: "text-center" }, [
+                        _c("th", [_vm._v("ID")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Student name")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Phone")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Email")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Address")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("School")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Class")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Section")]),
+                        _vm._v(" "),
+                        _c("th", [
+                          _vm._v(
+                            "Rating (" +
+                              _vm._s(_vm.moment().format("MMMM")) +
+                              ")"
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Action")]),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("tbody"),
+                  ]
+                ),
+              ]),
+            ]),
+          ]),
+        ]),
+      ]),
+    ]),
+  ])
 }
 var staticRenderFns = [
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("div", { staticClass: "card" }, [
-          _c(
-            "div",
-            { staticClass: "card-header d-flex justify-content-between" },
-            [_c("h4", [_vm._v("All Students")])]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-12" }, [
-                _c("div", { staticClass: "table-responsive" }, [
+    return _c(
+      "div",
+      { staticClass: "card-header d-flex justify-content-between" },
+      [_c("h4", [_vm._v("All Students")])]
+    )
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Manager/students/StudentRatings.vue?vue&type=template&id=abacd996&":
+/*!*******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Manager/students/StudentRatings.vue?vue&type=template&id=abacd996& ***!
+  \*******************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row justify-content-center" }, [
+    _c("div", { staticClass: "col-md-7" }, [
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-body" }, [
+          _vm.isLoading
+            ? _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-12" }, [
                   _c(
-                    "table",
-                    {
-                      staticClass: "table table-striped table-bordered",
-                      attrs: { id: "datatable" },
-                    },
+                    "div",
+                    { staticClass: "d-flex" },
                     [
-                      _c("thead", [
-                        _c("tr", { staticClass: "text-center" }, [
-                          _c("th", [_vm._v("ID")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Student name")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Phone")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Email")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Address")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("School")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Class")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Section")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Rating Points")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Action")]),
-                        ]),
-                      ]),
+                      _c("skeleton", {
+                        staticClass: "user-thumb-100",
+                        attrs: { width: "100px", height: "100px" },
+                      }),
                       _vm._v(" "),
-                      _c("tbody"),
-                    ]
+                      _c(
+                        "div",
+                        { staticClass: "ml-3 pt-2" },
+                        [
+                          _c("skeleton", {
+                            attrs: { width: "200px", height: "30px" },
+                          }),
+                          _vm._v(" "),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c("skeleton", {
+                            attrs: { width: "200px", height: "20px" },
+                          }),
+                          _vm._v(" "),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c("skeleton", {
+                            attrs: { width: "200px", height: "20px" },
+                          }),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
                   ),
                 ]),
+              ])
+            : _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-12" }, [
+                  _c("div", { staticClass: "d-flex" }, [
+                    _c("div", { staticClass: "text-center" }, [
+                      _vm.teacherData.photo == null
+                        ? _c("img", {
+                            staticClass: "user-thumb-100",
+                            attrs: {
+                              src: "/image/portrait-placeholder.png",
+                              alt: "",
+                            },
+                          })
+                        : _c("img", {
+                            staticClass: "user-thumb-100",
+                            attrs: { src: _vm.teacherData.photo_url, alt: "" },
+                          }),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "ml-3 pt-2" }, [
+                      _c("h5", [_vm._v(_vm._s(_vm.teacherData.name))]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "m-0" }, [
+                        _c("strong", [_vm._v("School")]),
+                        _vm._v(" : " + _vm._s(_vm.teacherData.school.name)),
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "m-0" }, [
+                        _c("b", [_vm._v("Overall Rating ")]),
+                        _vm._v(":   "),
+                        _c("span", { staticClass: "text-warning" }, [
+                          _vm._v(_vm._s(_vm.totalPoint)),
+                        ]),
+                        _vm._v(
+                          " (" + _vm._s(_vm.overallReviewCount) + " Reviews)"
+                        ),
+                      ]),
+                    ]),
+                  ]),
+                ]),
               ]),
-            ]),
-          ]),
         ]),
       ]),
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-md-7" }, [
+      _c("div", { staticClass: "card" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c(
+            "form",
+            {
+              staticClass: "row mb-3",
+              on: {
+                submit: function ($event) {
+                  $event.preventDefault()
+                  return _vm.filterRatings.apply(null, arguments)
+                },
+              },
+            },
+            [
+              _c("div", { staticClass: "col-md-3 col-6" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.filterYear,
+                        expression: "filterYear",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    on: {
+                      change: function ($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function (o) {
+                            return o.selected
+                          })
+                          .map(function (o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.filterYear = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      },
+                    },
+                  },
+                  _vm._l(_vm.years, function (year) {
+                    return _c(
+                      "option",
+                      { key: year, domProps: { value: year } },
+                      [_vm._v(_vm._s(year))]
+                    )
+                  }),
+                  0
+                ),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3 col-6" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.filterMonth,
+                        expression: "filterMonth",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    on: {
+                      change: function ($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function (o) {
+                            return o.selected
+                          })
+                          .map(function (o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.filterMonth = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      },
+                    },
+                  },
+                  [
+                    _c("option", { attrs: { value: "" } }, [_vm._v("None")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "1" } }, [
+                      _vm._v("January"),
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "2" } }, [
+                      _vm._v("February"),
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "3" } }, [_vm._v("March")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "4" } }, [_vm._v("April")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "5" } }, [_vm._v("May")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "6" } }, [_vm._v("June")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "7" } }, [_vm._v("July")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "8" } }, [_vm._v("August")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "9" } }, [
+                      _vm._v("September"),
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "10" } }, [
+                      _vm._v("October"),
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "11" } }, [
+                      _vm._v("November"),
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "12" } }, [
+                      _vm._v("December"),
+                    ]),
+                  ]
+                ),
+              ]),
+              _vm._v(" "),
+              _vm._m(1),
+            ]
+          ),
+          _vm._v(" "),
+          _vm.isRatingLoading
+            ? _c(
+                "div",
+                { staticClass: "row" },
+                _vm._l(5, function (n) {
+                  return _c(
+                    "div",
+                    { key: n, staticClass: "col-md-12 mb-3" },
+                    [
+                      _c("skeleton", {
+                        attrs: { width: "100%", height: "300px" },
+                      }),
+                    ],
+                    1
+                  )
+                }),
+                0
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          !_vm.isRatingLoading && _vm.filterMode
+            ? _c(
+                "div",
+                { staticClass: "row" },
+                [
+                  _c("div", { staticClass: "col-12 mt-3" }, [
+                    _c("hr"),
+                    _vm._v(" "),
+                    _c("h6", { staticClass: "text-success" }, [
+                      _vm._v("Reviews of - "),
+                      _c("strong", { staticClass: "text-muted" }, [
+                        _vm._v(
+                          _vm._s(_vm.selectedMonth) +
+                            ", " +
+                            _vm._s(_vm.selectedYear)
+                        ),
+                      ]),
+                      _vm._v(" : "),
+                      _c("span", { staticClass: "text-warning" }, [
+                        _vm._v("(" + _vm._s(_vm.monthlyRate) + ")"),
+                      ]),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.filterRates, function (rate, i) {
+                    return _c(
+                      "div",
+                      { key: i, staticClass: "col-md-12 border-top pt-3" },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "d-flex justify-content-between mb-1",
+                          },
+                          [
+                            _c("p", { staticClass: "text-muted" }, [
+                              _c("strong", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm
+                                      .moment(rate.created_at)
+                                      .format("DD MMMM YYYY")
+                                  )
+                                ),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "p",
+                              { staticClass: "text-muted text-end m-0" },
+                              [
+                                _c("vue-moments-ago", {
+                                  staticClass: "time",
+                                  attrs: {
+                                    prefix: "",
+                                    suffix: "ago",
+                                    date: rate.created_at,
+                                    lang: "en",
+                                  },
+                                }),
+                              ],
+                              1
+                            ),
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "d-flex" }, [
+                          _c("div", { staticClass: "text-center" }, [
+                            rate.rater.photo == null
+                              ? _c("img", {
+                                  staticClass: "user-thumb-40 border",
+                                  attrs: {
+                                    src: "/image/portrait-placeholder.png",
+                                    alt: "",
+                                  },
+                                })
+                              : _c("img", {
+                                  staticClass: "user-thumb-40 border",
+                                  attrs: { src: rate.rater.photo_url, alt: "" },
+                                }),
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "ml-3" }, [
+                            _c(
+                              "div",
+                              { staticClass: "d-flex justify-content-between" },
+                              [_c("h6", [_vm._v(_vm._s(rate.rater.name))])]
+                            ),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "m-0" }, [
+                              _vm._v(_vm._s(rate.feedback)),
+                            ]),
+                          ]),
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "row mt-3 justify-content-center" },
+                          [
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate1))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Performance"),
+                                ]),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate2))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Behaviour"),
+                                ]),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate3))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Subject knowledge"),
+                                ]),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate4))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Attitude"),
+                                ]),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate5))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Personality"),
+                                ]),
+                              ]),
+                            ]),
+                          ]
+                        ),
+                      ]
+                    )
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "col-md-12 d-flex justify-content-center mt-2",
+                    },
+                    [
+                      _c("pagination", {
+                        attrs: { data: _vm.ratingData },
+                        on: { "pagination-change-page": _vm.getStudentRating },
+                      }),
+                    ],
+                    1
+                  ),
+                ],
+                2
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          !_vm.isRatingLoading && !_vm.filterMode
+            ? _c(
+                "div",
+                { staticClass: "row" },
+                [
+                  _vm._l(_vm.rates, function (rate, i) {
+                    return _c(
+                      "div",
+                      { key: i, staticClass: "col-md-12 border-top pt-3" },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "d-flex justify-content-between mb-1",
+                          },
+                          [
+                            _c("p", { staticClass: "text-muted" }, [
+                              _c("strong", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm
+                                      .moment(rate.created_at)
+                                      .format("DD MMMM YYYY")
+                                  )
+                                ),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "p",
+                              { staticClass: "text-muted text-end m-0" },
+                              [
+                                _c("vue-moments-ago", {
+                                  staticClass: "time",
+                                  attrs: {
+                                    prefix: "",
+                                    suffix: "ago",
+                                    date: rate.created_at,
+                                    lang: "en",
+                                  },
+                                }),
+                              ],
+                              1
+                            ),
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "d-flex" }, [
+                          _c("div", { staticClass: "text-center" }, [
+                            rate.rater.photo == null
+                              ? _c("img", {
+                                  staticClass: "user-thumb-40 border",
+                                  attrs: {
+                                    src: "/image/portrait-placeholder.png",
+                                    alt: "",
+                                  },
+                                })
+                              : _c("img", {
+                                  staticClass: "user-thumb-40 border",
+                                  attrs: { src: rate.rater.photo_url, alt: "" },
+                                }),
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "ml-3" }, [
+                            _c(
+                              "div",
+                              { staticClass: "d-flex justify-content-between" },
+                              [_c("h6", [_vm._v(_vm._s(rate.rater.name))])]
+                            ),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "m-0" }, [
+                              _vm._v(_vm._s(rate.feedback)),
+                            ]),
+                          ]),
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "row mt-3 justify-content-center" },
+                          [
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate1))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Attendance"),
+                                ]),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate2))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Fetch Syllabus"),
+                                ]),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate3))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Intercation with class"),
+                                ]),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate4))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Homework Solution"),
+                                ]),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate5))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Speed and accuracy of the solution"),
+                                ]),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate6))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Test Results"),
+                                ]),
+                              ]),
+                            ]),
+                          ]
+                        ),
+                      ]
+                    )
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "col-md-12 d-flex justify-content-center mt-2",
+                    },
+                    [
+                      _c("pagination", {
+                        attrs: { data: _vm.ratingData },
+                        on: { "pagination-change-page": _vm.getStudentRating },
+                      }),
+                    ],
+                    1
+                  ),
+                ],
+                2
+              )
+            : _vm._e(),
+        ]),
+      ]),
+    ]),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h4", { staticClass: "text-muted" }, [_vm._v("Student ratings")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-3 col-6" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-success mt-1", attrs: { type: "submit" } },
+        [_vm._v("Filter")]
+      ),
     ])
   },
 ]
@@ -60583,68 +62037,725 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "row justify-content-center" }, [
+    _c("div", { staticClass: "col-md-12" }, [
+      _c("div", { staticClass: "card" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-12" }, [
+              _c("div", { staticClass: "table-responsive" }, [
+                _c(
+                  "table",
+                  {
+                    staticClass: "table table-hover table-striped",
+                    attrs: { id: "datatable" },
+                  },
+                  [
+                    _c("thead", [
+                      _c("tr", { staticClass: "text-center" }, [
+                        _c("th", [_vm._v("ID")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Name")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Phone")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Email")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Supervisors")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("School")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Class")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Section")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Total Students")]),
+                        _vm._v(" "),
+                        _c("th", [
+                          _vm._v(
+                            "Ratings (" +
+                              _vm._s(_vm.moment().format("MMMM")) +
+                              ")"
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("th", [
+                          _vm._v(
+                            "Stars (" +
+                              _vm._s(_vm.moment().format("MMMM")) +
+                              ")"
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Actions")]),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("tbody"),
+                  ]
+                ),
+              ]),
+            ]),
+          ]),
+        ]),
+      ]),
+    ]),
+  ])
 }
 var staticRenderFns = [
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("div", { staticClass: "card" }, [
+    return _c(
+      "div",
+      { staticClass: "card-header d-flex justify-content-between" },
+      [_c("h4", [_vm._v("All Teachers")])]
+    )
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Manager/teacher/AllRatings.vue?vue&type=template&id=357dd04f&":
+/*!**************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Manager/teacher/AllRatings.vue?vue&type=template&id=357dd04f& ***!
+  \**************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row justify-content-center" }, [
+    _c("div", { staticClass: "col-md-7" }, [
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-body" }, [
+          _vm.isLoading
+            ? _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-12" }, [
+                  _c(
+                    "div",
+                    { staticClass: "d-flex" },
+                    [
+                      _c("skeleton", {
+                        staticClass: "user-thumb-100",
+                        attrs: { width: "100px", height: "100px" },
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "ml-3 pt-2" },
+                        [
+                          _c("skeleton", {
+                            attrs: { width: "200px", height: "30px" },
+                          }),
+                          _vm._v(" "),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c("skeleton", {
+                            attrs: { width: "200px", height: "20px" },
+                          }),
+                          _vm._v(" "),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c("skeleton", {
+                            attrs: { width: "200px", height: "20px" },
+                          }),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                ]),
+              ])
+            : _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-12" }, [
+                  _c("div", { staticClass: "d-flex" }, [
+                    _c("div", { staticClass: "text-center" }, [
+                      _vm.teacherData.photo == null
+                        ? _c("img", {
+                            staticClass: "user-thumb-100",
+                            attrs: {
+                              src: "/image/portrait-placeholder.png",
+                              alt: "",
+                            },
+                          })
+                        : _c("img", {
+                            staticClass: "user-thumb-100",
+                            attrs: { src: _vm.teacherData.photo_url, alt: "" },
+                          }),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "ml-3 pt-2" }, [
+                      _c("h5", [_vm._v(_vm._s(_vm.teacherData.name))]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "m-0" }, [
+                        _c("strong", [_vm._v("School")]),
+                        _vm._v(" : " + _vm._s(_vm.teacherData.school.name)),
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "m-0" }, [
+                        _c("b", [_vm._v("Overall Rating ")]),
+                        _vm._v(":   "),
+                        _c("span", { staticClass: "text-warning" }, [
+                          _vm._v(_vm._s(_vm.totalPoint)),
+                        ]),
+                        _vm._v(
+                          " (" + _vm._s(_vm.overallReviewCount) + " Reviews)"
+                        ),
+                      ]),
+                    ]),
+                  ]),
+                ]),
+              ]),
+        ]),
+      ]),
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-md-7" }, [
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-body" }, [
           _c(
             "div",
-            { staticClass: "card-header d-flex justify-content-between" },
-            [_c("h4", [_vm._v("All Teachers")])]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-12" }, [
-                _c("div", { staticClass: "table-responsive" }, [
-                  _c(
-                    "table",
+            { staticClass: "d-flex justify-content-end" },
+            [
+              !_vm.isLoading
+                ? _c(
+                    "router-link",
                     {
-                      staticClass: "table table-hover table-striped",
-                      attrs: { id: "datatable" },
+                      staticClass: "btn btn-primary",
+                      attrs: {
+                        to: {
+                          name: "admin.pay-salary",
+                          params: { userId: _vm.teacherData.id },
+                        },
+                      },
                     },
                     [
-                      _c("thead", [
-                        _c("tr", { staticClass: "text-center" }, [
-                          _c("th", [_vm._v("ID")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Name")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Phone")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Email")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Supervisors")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("School")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Class")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Section")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Total Students")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Ratings")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Actions")]),
+                      _vm._v("Pay Salary "),
+                      _c("i", { staticClass: "fas fa-arrow-right" }),
+                    ]
+                  )
+                : _vm._e(),
+            ],
+            1
+          ),
+        ]),
+      ]),
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-md-7" }, [
+      _c("div", { staticClass: "card" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c(
+            "form",
+            {
+              staticClass: "row mb-3",
+              on: {
+                submit: function ($event) {
+                  $event.preventDefault()
+                  return _vm.filterRatings.apply(null, arguments)
+                },
+              },
+            },
+            [
+              _c("div", { staticClass: "col-md-3 col-6" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.filterYear,
+                        expression: "filterYear",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    on: {
+                      change: function ($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function (o) {
+                            return o.selected
+                          })
+                          .map(function (o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.filterYear = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      },
+                    },
+                  },
+                  _vm._l(_vm.years, function (year) {
+                    return _c(
+                      "option",
+                      { key: year, domProps: { value: year } },
+                      [_vm._v(_vm._s(year))]
+                    )
+                  }),
+                  0
+                ),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3 col-6" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.filterMonth,
+                        expression: "filterMonth",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    on: {
+                      change: function ($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function (o) {
+                            return o.selected
+                          })
+                          .map(function (o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.filterMonth = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      },
+                    },
+                  },
+                  [
+                    _c("option", { attrs: { value: "" } }, [_vm._v("None")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "1" } }, [
+                      _vm._v("January"),
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "2" } }, [
+                      _vm._v("February"),
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "3" } }, [_vm._v("March")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "4" } }, [_vm._v("April")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "5" } }, [_vm._v("May")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "6" } }, [_vm._v("June")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "7" } }, [_vm._v("July")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "8" } }, [_vm._v("August")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "9" } }, [
+                      _vm._v("September"),
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "10" } }, [
+                      _vm._v("October"),
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "11" } }, [
+                      _vm._v("November"),
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "12" } }, [
+                      _vm._v("December"),
+                    ]),
+                  ]
+                ),
+              ]),
+              _vm._v(" "),
+              _vm._m(1),
+            ]
+          ),
+          _vm._v(" "),
+          _vm.isRatingLoading
+            ? _c(
+                "div",
+                { staticClass: "row" },
+                _vm._l(5, function (n) {
+                  return _c(
+                    "div",
+                    { key: n, staticClass: "col-md-12 mb-3" },
+                    [
+                      _c("skeleton", {
+                        attrs: { width: "100%", height: "300px" },
+                      }),
+                    ],
+                    1
+                  )
+                }),
+                0
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          !_vm.isRatingLoading && _vm.filterMode
+            ? _c(
+                "div",
+                { staticClass: "row" },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "col-12 mt-3" },
+                    [
+                      _c("hr"),
+                      _vm._v(" "),
+                      _c("h6", { staticClass: "text-success" }, [
+                        _vm._v("Review in month : "),
+                        _c("strong", { staticClass: "text-muted" }, [
+                          _vm._v(_vm._s(_vm.selectedMonth)),
+                        ]),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "text-warning" }, [
+                          _vm._v("(" + _vm._s(_vm.monthlyRate) + ")"),
                         ]),
                       ]),
                       _vm._v(" "),
-                      _c("tbody"),
-                    ]
+                      _c("rating-star", { attrs: { star: _vm.filteredStar } }),
+                      _vm._v(" "),
+                      _c("p", [
+                        _c("strong", [
+                          _vm._v(_vm._s(_vm.filteredStar) + " "),
+                          _c("i", { staticClass: "fas fa-star" }),
+                        ]),
+                      ]),
+                    ],
+                    1
                   ),
-                ]),
-              ]),
-            ]),
-          ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.filteredReview, function (rate, i) {
+                    return _c(
+                      "div",
+                      { key: i, staticClass: "col-md-12 border-top pt-3" },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "d-flex justify-content-between mb-1",
+                          },
+                          [
+                            _c("p", { staticClass: "text-muted" }, [
+                              _c("strong", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm
+                                      .moment(rate.created_at)
+                                      .format("DD MMMM YYYY")
+                                  )
+                                ),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "p",
+                              { staticClass: "text-muted text-end m-0" },
+                              [
+                                _c("vue-moments-ago", {
+                                  staticClass: "time",
+                                  attrs: {
+                                    prefix: "",
+                                    suffix: "ago",
+                                    date: rate.created_at,
+                                    lang: "en",
+                                  },
+                                }),
+                              ],
+                              1
+                            ),
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "d-flex" }, [
+                          _c("div", { staticClass: "text-center" }, [
+                            rate.photo == null
+                              ? _c("img", {
+                                  staticClass: "user-thumb-40",
+                                  attrs: {
+                                    src: "/image/portrait-placeholder.png",
+                                    alt: "",
+                                  },
+                                })
+                              : _c("img", {
+                                  staticClass: "user-thumb-40",
+                                  attrs: { src: rate.photo_url, alt: "" },
+                                }),
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "ml-3" }, [
+                            _c(
+                              "div",
+                              { staticClass: "d-flex justify-content-between" },
+                              [_c("h6", [_vm._v(_vm._s(rate.rater.name))])]
+                            ),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "m-0" }, [
+                              _vm._v(_vm._s(rate.feedback)),
+                            ]),
+                          ]),
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "row mt-3 justify-content-center" },
+                          [
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate1))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Performance"),
+                                ]),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate2))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Behaviour"),
+                                ]),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate3))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Subject knowledge"),
+                                ]),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate4))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Attitude"),
+                                ]),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate5))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Personality"),
+                                ]),
+                              ]),
+                            ]),
+                          ]
+                        ),
+                      ]
+                    )
+                  }),
+                ],
+                2
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          !_vm.isRatingLoading && !_vm.filterMode
+            ? _c(
+                "div",
+                { staticClass: "row" },
+                [
+                  _vm._l(_vm.rates, function (rate, i) {
+                    return _c(
+                      "div",
+                      { key: i, staticClass: "col-md-12 border-top pt-3" },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "d-flex justify-content-between mb-1",
+                          },
+                          [
+                            _c("p", { staticClass: "text-muted" }, [
+                              _c("strong", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm
+                                      .moment(rate.created_at)
+                                      .format("DD MMMM YYYY")
+                                  )
+                                ),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "p",
+                              { staticClass: "text-muted text-end m-0" },
+                              [
+                                _c("vue-moments-ago", {
+                                  staticClass: "time",
+                                  attrs: {
+                                    prefix: "",
+                                    suffix: "ago",
+                                    date: rate.created_at,
+                                    lang: "en",
+                                  },
+                                }),
+                              ],
+                              1
+                            ),
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "d-flex" }, [
+                          _c("div", { staticClass: "text-center" }, [
+                            rate.photo == null
+                              ? _c("img", {
+                                  staticClass: "user-thumb-40",
+                                  attrs: {
+                                    src: "/image/portrait-placeholder.png",
+                                    alt: "",
+                                  },
+                                })
+                              : _c("img", {
+                                  staticClass: "user-thumb-40",
+                                  attrs: { src: rate.photo_url, alt: "" },
+                                }),
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "ml-3" }, [
+                            _c(
+                              "div",
+                              { staticClass: "d-flex justify-content-between" },
+                              [_c("h6", [_vm._v(_vm._s(rate.rater.name))])]
+                            ),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "m-0" }, [
+                              _vm._v(_vm._s(rate.feedback)),
+                            ]),
+                          ]),
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "row mt-3 justify-content-center" },
+                          [
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate1))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Performance"),
+                                ]),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate2))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Behaviour"),
+                                ]),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate3))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Subject knowledge"),
+                                ]),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate4))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Attitude"),
+                                ]),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "rating-thumb" }, [
+                                _c("span", [_vm._v(_vm._s(rate.rate5))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v("Personality"),
+                                ]),
+                              ]),
+                            ]),
+                          ]
+                        ),
+                      ]
+                    )
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "col-md-12 d-flex justify-content-center mt-2",
+                    },
+                    [
+                      _c("pagination", {
+                        attrs: { data: _vm.ratingData },
+                        on: { "pagination-change-page": _vm.getTeacherRating },
+                      }),
+                    ],
+                    1
+                  ),
+                ],
+                2
+              )
+            : _vm._e(),
         ]),
       ]),
+    ]),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h4", { staticClass: "text-muted" }, [_vm._v("Teacher ratings")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-3 col-6" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-success mt-1", attrs: { type: "submit" } },
+        [_vm._v("Filter")]
+      ),
     ])
   },
 ]
@@ -60885,19 +62996,8 @@ var render = function () {
                                       _c("td", [
                                         _vm._v(
                                           "\n                                              " +
-                                            _vm._s(
-                                              _vm.calculateRating(
-                                                teacher.rating
-                                              )
-                                            ) +
-                                            " "
-                                        ),
-                                        _c("i", {
-                                          staticClass:
-                                            "fas fa-star text-warning",
-                                        }),
-                                        _vm._v(
-                                          " (" +
+                                            _vm._s(teacher.rate_point) +
+                                            " points (" +
                                             _vm._s(teacher.rating_count) +
                                             " Reviews)\n                                          "
                                         ),
@@ -60922,7 +63022,7 @@ var render = function () {
                                               },
                                               [
                                                 _vm._v(
-                                                  "\n                                                  Action\n                                                  "
+                                                  "\n                                                      Action\n                                                  "
                                                 ),
                                               ]
                                             ),
@@ -60938,9 +63038,9 @@ var render = function () {
                                                       "dropdown-item",
                                                     attrs: {
                                                       to: {
-                                                        name: "superv.teacher-ratings",
+                                                        name: "manager.teacher-ratings",
                                                         params: {
-                                                          userId: teacher.id,
+                                                          teacherId: teacher.id,
                                                         },
                                                       },
                                                     },
@@ -61025,7 +63125,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Supervisors")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Ratings")]),
+        _c("th", [_vm._v("Overall Ratings")]),
         _vm._v(" "),
         _c("th", [_vm._v("Actions")]),
       ]),

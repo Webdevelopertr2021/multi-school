@@ -80,7 +80,7 @@
             <span class="d-sm-none d-lg-inline-block"></span></a>
         <div class="dropdown-menu dropdown-menu-right pullDown">
           <div class="dropdown-title">Hello {{ auth("manager")->user()->name }}</div>
-          <router-link :to="{name : 'superv.my-profile'}" class="dropdown-item has-icon"> <i class="far
+          <router-link :to="{name : 'manager.my-profile'}" class="dropdown-item has-icon"> <i class="far
                                     fa-user"></i> My Profile
           </router-link>
           <div class="dropdown-divider"></div>

@@ -11,6 +11,8 @@ import TeacherList from "../components/Manager/teacher/TeacherList.vue";
 import StudentListByTeacher from "../components/Manager/teacher/StudentListByTeacher.vue";
 import TeacherListSuperv from "../components/Manager/supervisor/Teachers.vue";
 import LeaveRequest from "../components/Manager/LeaveRequest/List.vue";
+import TeacherRatings from "../components/Manager/teacher/AllRatings.vue";
+import StudentRatings from "../components/Manager/students/StudentRatings.vue";
 // End
 
 const prefix = "/manager/"
@@ -73,6 +75,22 @@ const routes = new VueRouter({
             component: LeaveRequest,
             meta: {
                 title: "Leave request",
+            }
+        },
+        {
+            path: prefix + "teacher-ratings/:teacherId",
+            name: "manager.teacher-ratings",
+            component: TeacherRatings,
+            meta: {
+                title: "Teacher Rating"
+            }
+        },
+        {
+            path: prefix + "student-ratings/:studentId",
+            name: "manager.student-rating",
+            component: StudentRatings,
+            meta: {
+                title: "Student ratings"
             }
         },
     ],

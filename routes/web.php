@@ -265,6 +265,10 @@ Route::group(["prefix" => "manager","middleware" => "auth:manager"],function(){
 
         Route::post("/update-application-status","Manager\LeaveRequestController@updateStatus");
 
+        Route::get("/get-teacher-ratings","Manager\TeacherController@getTeacherRating");
+
+        Route::get("/get-student-ratings","Manager\StudentController@getRatings");
+
     });
     
 });

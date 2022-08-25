@@ -22,7 +22,7 @@
                                         <th>Phone</th>
                                         <th>Email</th>
                                         <th>Supervisors</th>
-                                        <th>Ratings</th>
+                                        <th>Overall Ratings</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -45,16 +45,15 @@
                                                 <span v-for="(superv,s) in teacher.supervisor" :key="s" class="badge badge-pill badge-success ml-1 mb-3">{{ superv.user.name }}</span>
                                             </td>
                                             <td>
-                                                {{ calculateRating(teacher.rating) }} <i class="fas fa-star text-warning"></i> ({{ teacher.rating_count }} Reviews)
+                                                {{ teacher.rate_point }} points ({{ teacher.rating_count }} Reviews)
                                             </td>
                                             <td>
                                                 <div class="btn-group">
                                                     <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    Action
+                                                        Action
                                                     </button>
                                                     <div class="dropdown-menu">
-                                                        <router-link class="dropdown-item" :to="{name: 'superv.teacher-ratings', params: {userId: teacher.id}}"><i class="fas fa-star"></i> See ratings</router-link>
-                                                        <!-- <router-link :to="{name: 'superv.add-rating', params: {userId: teacher.id}}" class="dropdown-item"><i class="fas fa-star"></i> Add / Edit Review</router-link> -->
+                                                        <router-link class="dropdown-item" :to="{name: 'manager.teacher-ratings', params: {teacherId: teacher.id}}"><i class="fas fa-star"></i> See ratings</router-link>
                                                         <router-link :to="{name: 'manager.studentlist-by-teacher', params: {teacherId: teacher.id}}" class="dropdown-item"><i class="fas fa-users"></i> See Students</router-link>
                                                     </div>
                                                 </div>

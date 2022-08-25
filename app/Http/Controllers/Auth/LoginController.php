@@ -103,7 +103,7 @@ class LoginController extends Controller
     public function logout(Request $req)
     {
         $this->validate($req,[
-            "role" => "required|in:super,teacher,supervisor"
+            "role" => "required|in:super,teacher,supervisor,manager"
         ]);
 
         if($req->role == "super")
@@ -117,6 +117,10 @@ class LoginController extends Controller
         else if($req->role == "teacher")
         {
             Auth::guard("teacher")->logout();
+        }
+        else if($req->role == "manager")
+        {
+            Auth::guard("manager")->logout();
         }
 
         return redirect()->route("user-login");

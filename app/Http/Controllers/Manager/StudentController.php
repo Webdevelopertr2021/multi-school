@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Manager;
 use App\Http\Controllers\Controller;
 use App\Models\AssignedSupervisor;
 use App\Models\Student;
+use App\Models\StudentReview;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -51,31 +53,61 @@ class StudentController extends Controller
             return $row->section->name;
         })
         ->addColumn("ratings",function($row){
-            $ratings = $row->rating;
-
-            $ratings = $row->rating;
-
             $totalRating = 0;
-            if(count($ratings) > 0)
+            $lastMonthRating = 0;
+
+            $i = 0;
+            $l = 0;
+
+            $now = Carbon::now();
+            $last = Carbon::now()->subMonth(1);
+
+            $currentMonth = StudentReview::where("student_id",$row->id)->whereMonth("created_at",$now)->get();
+
+            $lastMonth = StudentReview::where("student_id",$row->id)->whereMonth("created_at",$last)->get();
+
+            // Current month
+            if(count($currentMonth) > 0)
             {
-                $total = 0;
-                $totalPoint = 0;
-                foreach($ratings as $rating)
+                foreach($currentMonth as $rate)
                 {
-                    $total += 5;
-                    $totalPoint += $rating->rate1;
-                    $totalPoint += $rating->rate2;
-                    $totalPoint += $rating->rate3;
-                    $totalPoint += $rating->rate4;
-                    $totalPoint += $rating->rate5;
+                    $i++;
+                    $totalRating += $rate->total;
                 }
-                $totalRating = $totalPoint/$total;
+                $totalRating = round($totalRating/$i,1);
             }
-            else
+            // End
+
+            // Last month
+            if(count($lastMonth) > 0)
             {
-                $totalRating = 0;
+                foreach($lastMonth as $rate)
+                {
+                    $l++;
+                    $lastMonthRating += $rate->total;
+                }
+                $lastMonthRating = round($lastMonthRating/$l,1);
             }
-            return $totalRating . "&nbsp; <i class='fas fa-star text-warning'></i>";
+            // End
+
+            $ratingStat = "";
+
+            if($lastMonthRating > 0)
+            {
+                if($totalRating > $lastMonthRating)
+                {
+                    $ratingStat = '<span title="Improved | Last month : '.$lastMonthRating.'" class="text-success"><i class="fas fa-arrow-up"></i></span>';
+                }
+                else if($totalRating < $lastMonthRating)
+                {
+                    $ratingStat = '<span title="Decreased | Last month : '.$lastMonthRating.'" class="text-danger"><i class="fas fa-arrow-down"></i></span>';
+                }
+                else if($totalRating == $lastMonthRating)
+                {
+                    $ratingStat = '<span title="Unchanged | Last month : '.$lastMonthRating.'" class="text-warning"><i class="fas fa-circle"></i></span>';
+                }
+            }
+            return $totalRating . " point &nbsp; &nbsp;" . $ratingStat;
         })
         ->addColumn("action",function($row){
             $html = '
@@ -86,5 +118,73 @@ class StudentController extends Controller
         ->rawColumns(["action","ratings"])
         ->make(true);
 
+    }
+
+    public function getRatings(Request $req)
+    {
+        if($student = Student::with("school:id,name")->find($req->studentId,["id","name","school_id","photo","photo_url","class_id","section_id"]))
+        {
+            if($req->year == "" && $req->month == "")
+            {
+                $ratings = StudentReview::where("student_id",$student->id)->with("rater:id,name,photo,photo_url");
+
+                $totalPoints = 0;
+                $i = 0;
+                foreach($ratings->get() as $rate)
+                {
+                    $i ++;
+                    $totalPoints += $rate->total;
+                }
+
+                $final = 0;
+                $totalCount = $ratings->count();
+                if($totalPoints > 0)
+                {
+                    $final = round($totalPoints/$i,1);
+                }
+
+                $ratings = $ratings->paginate(10);
+                return [
+                    "status" => "ok",
+                    "ratings" => $ratings,
+                    "teacherData" => $student,
+                    "totalPoint" => $final,
+                    "totalRatingCount" => $totalCount,
+                ];
+            }
+            else
+            {
+                $date = Carbon::parse($req->year."-".$req->month."-"."1");
+                $ratings = StudentReview::where("student_id",$student->id)
+                ->whereYear("created_at","=",$date)->whereMonth("created_at","=",$date)
+                ->with("rater:id,name,photo,photo_url")->get();
+
+                $monthlyPoint = 0;
+                $i = 0;
+                foreach($ratings as $rate)
+                {
+                    $i++;
+                    $monthlyPoint += $rate->total;
+                }
+
+                if($i > 0)
+                {
+                    $monthlyPoint = round($monthlyPoint/$i,1);
+                }
+
+                return [
+                    "review" => $ratings,
+                    "monthlyPoint" => $monthlyPoint,
+                    "selectedMonth" => $date->format("F"),
+                    "selectedYear" => $date->format("Y"),
+                ];
+            }
+        }
+        else
+        {
+            return [
+                "status" => "fail"
+            ];
+        }
     }
 }
