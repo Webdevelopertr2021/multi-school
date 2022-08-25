@@ -127,7 +127,7 @@ export default {
         $(document).on("click","button[data-ratings]",function(){
             let studentId = $(this).data("ratings");
             _self.$router.push({
-                name: 'teacher.student-ratings',
+                name: 'superv.student-ratings',
                 params: {
                 studentId : studentId
                 }

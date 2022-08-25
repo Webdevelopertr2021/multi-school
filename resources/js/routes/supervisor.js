@@ -12,6 +12,7 @@ import NotificationList from "../components/NotifcationList.vue";
 import AllRatings from "../components/Supervisor/teacher/AllRatings.vue";
 import MyProfile from "../components/Supervisor/dashboard/MyProfile.vue";
 import StudentListByTeacher from "../components/Supervisor/teacher/StudentListByTeacher.vue";
+import StudentRatings from "../components/Supervisor/student/AllRatings.vue";
 // End
 const prefix = "/supervisor/"
 const routes = new VueRouter({
@@ -82,7 +83,15 @@ const routes = new VueRouter({
             meta : {
                 title: "Students"
             }
-        }
+        },
+        {
+            path : prefix + "student-ratings/:studentId",
+            name: "superv.student-ratings",
+            component: StudentRatings,
+            meta: {
+                title: "Student Ratings"
+            }
+        },
     ],
     scrollBehavior(to, from, savedPos) {
         if (savedPos) {

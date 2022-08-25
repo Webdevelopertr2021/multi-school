@@ -203,6 +203,8 @@ Route::group(["prefix" => "supervisor", "middleware" => "auth:supervisor"],funct
 
         Route::get("/get-teachers-students","Supervisor\SuperVisorController@getStudentByTeacher");
 
+        Route::get("/get-student-ratings","Supervisor\StudentController@getRatings");
+
     });
 
 });
