@@ -13,6 +13,7 @@ import TeacherListSuperv from "../components/Manager/supervisor/Teachers.vue";
 import LeaveRequest from "../components/Manager/LeaveRequest/List.vue";
 import TeacherRatings from "../components/Manager/teacher/AllRatings.vue";
 import StudentRatings from "../components/Manager/students/StudentRatings.vue";
+import MyProfile from "../components/Manager/dashboard/MyProfile.vue";
 // End
 
 const prefix = "/manager/"
@@ -93,6 +94,14 @@ const routes = new VueRouter({
                 title: "Student ratings"
             }
         },
+        {
+            path: prefix + "my-profile",
+            name: "manager.my-profile",
+            component: MyProfile,
+            meta : {
+                title: "My profile"
+            }
+        }
     ],
     scrollBehavior(to, from, savedPos) {
         if (savedPos) {

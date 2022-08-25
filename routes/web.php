@@ -269,6 +269,10 @@ Route::group(["prefix" => "manager","middleware" => "auth:manager"],function(){
 
         Route::get("/get-student-ratings","Manager\StudentController@getRatings");
 
+        Route::get('/get-my-profile-data',"Manager\DashboardController@myProfile");
+
+        Route::post('/update-my-profile',"Manager\DashboardController@updateMyProfile");
+
     });
     
 });

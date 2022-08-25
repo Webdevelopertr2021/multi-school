@@ -6,6 +6,7 @@ use App\Helper\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\AssignedSupervisor;
 use App\Models\Student;
+use App\Models\StudentReview;
 use App\Models\TeacherRating;
 use App\Models\User;
 use Carbon\Carbon;
@@ -93,31 +94,61 @@ class TeacherController extends Controller
                 return $row->section->name;
             })
             ->addColumn("ratings",function($row){
-                $ratings = $row->rating;
-
-                $ratings = $row->rating;
-
                 $totalRating = 0;
-                if(count($ratings) > 0)
+                $lastMonthRating = 0;
+
+                $i = 0;
+                $l = 0;
+
+                $now = Carbon::now();
+                $last = Carbon::now()->subMonth(1);
+
+                $currentMonth = StudentReview::where("student_id",$row->id)->whereMonth("created_at",$now)->get();
+
+                $lastMonth = StudentReview::where("student_id",$row->id)->whereMonth("created_at",$last)->get();
+
+                // Current month
+                if(count($currentMonth) > 0)
                 {
-                    $total = 0;
-                    $totalPoint = 0;
-                    foreach($ratings as $rating)
+                    foreach($currentMonth as $rate)
                     {
-                        $total += 5;
-                        $totalPoint += $rating->rate1;
-                        $totalPoint += $rating->rate2;
-                        $totalPoint += $rating->rate3;
-                        $totalPoint += $rating->rate4;
-                        $totalPoint += $rating->rate5;
+                        $i++;
+                        $totalRating += $rate->total;
                     }
-                    $totalRating = $totalPoint/$total;
+                    $totalRating = round($totalRating/$i,1);
                 }
-                else
+                // End
+
+                // Last month
+                if(count($lastMonth) > 0)
                 {
-                    $totalRating = 0;
+                    foreach($lastMonth as $rate)
+                    {
+                        $l++;
+                        $lastMonthRating += $rate->total;
+                    }
+                    $lastMonthRating = round($lastMonthRating/$l,1);
                 }
-                return $totalRating . "&nbsp; <i class='fas fa-star text-warning'></i>";
+                // End
+
+                $ratingStat = "";
+
+                if($lastMonthRating > 0)
+                {
+                    if($totalRating > $lastMonthRating)
+                    {
+                        $ratingStat = '<span title="Improved | Last month : '.$lastMonthRating.'" class="text-success"><i class="fas fa-arrow-up"></i></span>';
+                    }
+                    else if($totalRating < $lastMonthRating)
+                    {
+                        $ratingStat = '<span title="Decreased | Last month : '.$lastMonthRating.'" class="text-danger"><i class="fas fa-arrow-down"></i></span>';
+                    }
+                    else if($totalRating == $lastMonthRating)
+                    {
+                        $ratingStat = '<span title="Unchanged | Last month : '.$lastMonthRating.'" class="text-warning"><i class="fas fa-circle"></i></span>';
+                    }
+                }
+                return $totalRating . " point &nbsp; &nbsp;" . $ratingStat;
             })
             ->addColumn("action",function($row){
                 $html = '
