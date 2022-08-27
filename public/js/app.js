@@ -4298,6 +4298,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.getNotifications();
+    $("#notCount").remove();
   }
 });
 
@@ -64284,9 +64285,11 @@ var render = function () {
         _c("i", { staticClass: "bell", attrs: { "data-feather": "bell" } }),
         _vm._v(" "),
         _vm.count > 0
-          ? _c("span", { staticClass: "dot-danger" }, [
-              _vm._v(_vm._s(_vm.count)),
-            ])
+          ? _c(
+              "span",
+              { staticClass: "dot-danger", attrs: { id: "notCount" } },
+              [_vm._v(_vm._s(_vm.count))]
+            )
           : _vm._e(),
       ]
     ),

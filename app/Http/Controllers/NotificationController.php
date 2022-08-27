@@ -44,6 +44,7 @@ class NotificationController extends Controller
             }
             else
             {
+                CustomNotification::where("user_id",$userId)->update(["is_seen"=>"seen"]);
                 $notifications = CustomNotification::where("user_id",$userId)->orderBy('id',"desc")->paginate(15);
                 return [
                     "status" => "ok",

@@ -1,7 +1,7 @@
 <template>
   <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
         class="nav-link notification-toggle nav-link-lg"><i data-feather="bell" class="bell"></i>
-        <span v-if="count > 0" class="dot-danger">{{ count }}</span>
+        <span id="notCount" v-if="count > 0" class="dot-danger">{{ count }}</span>
     </a>
     <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
         <div class="dropdown-header">
