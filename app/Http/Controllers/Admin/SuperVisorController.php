@@ -22,7 +22,6 @@ class SuperVisorController extends Controller
     public function addSupervisor(Request $req)
     {
         $this->validate($req,[
-            "school" => "required|numeric|exists:schools,id",
             "name" => "required",
             "email" => "nullable|unique:users,email",
             "phone" => "required|unique:users,phone",
@@ -299,7 +298,7 @@ class SuperVisorController extends Controller
         {
             $data->where("name","like","%$search%")->orWhere("phone",$search)->orWhere("email",$search);
         }
-        $data = $data->with("school:id,name")->paginate(15);
+        $data = $data->paginate(15);
 
         return response()->json($data);
     }

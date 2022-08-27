@@ -4,18 +4,9 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between">
                 <h4>Add super visor</h4>
-                <router-link class="btn btn-sm btn-primary" 
-                :to="{name: 'admin.school-details', params: {schoolId: form.school}}"><i class="fas fa-arrow-left"></i> Go back to school</router-link>
             </div>
             <div class="card-body">
                 <form @submit.prevent="addSupervisor" class="row">
-                    <div class="col-md-4 mb-4">
-                        <label for="">Select School</label>
-                        <select class="form-control" v-model="form.school" disabled>
-                            <option value="" selected hidden>Select School</option>
-                            <option v-for="(school,i) in schools" :key="i" :value="school.id">{{ school.name }}</option>
-                        </select>
-                    </div>
                     <div class="col-md-4 mb-4">
                         <label for="">Supervisor Name</label>
                         <input type="text" class="form-control" :class="{'is-invalid' : form.errors.has('name')}" v-model="form.name" placeholder="Supervisor name">
@@ -80,27 +71,13 @@ export default {
         }
     },
     methods: {
-        getSchools() {
-            axios.get("/admin/api/get-all-schools").then(resp=>{
-                return resp.data;
-            }).then(data=>{
-                this.schools = data;
-            }).catch(err=>{
-                console.error(err.response.data);
-            });
-        },
         async addSupervisor() {
             await this.form.post("/admin/api/add-supervisor").then(resp=>{
                 return resp.data;
             }).then(data=>{
                 if(data.status == "ok") {
                     swal.fire("Supervisor added",data.msg,"success").then(()=>{
-                        this.$router.push({
-                            name: 'admin.school-details',
-                            params: {
-                                schoolId: this.$route.params.schoolId
-                            }
-                        })
+                        this.form.reset();
                     })
                 }
             }).catch(err=>{
@@ -118,9 +95,6 @@ export default {
             }
         }
     },
-    mounted() {
-        this.getSchools();
-    }
 }
 </script>
 

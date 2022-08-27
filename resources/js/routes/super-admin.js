@@ -36,6 +36,7 @@ import StudentListByTeacher from "../components/SuperAdmin/teacher/StudentListBy
 import TeacherListSuperv from "../components/SuperAdmin/supervisor/Teachers.vue";
 import PaySalary from "../components/SuperAdmin/payments/PaySalary.vue";
 import PaymentList from "../components/SuperAdmin/payments/PaymentList.vue";
+import StaffTree from "../components/SuperAdmin/admins/StaffTree.vue";
 // End
 
 const prefix = "/admin/"
@@ -78,7 +79,7 @@ const routes = new VueRouter({
             }
         },
         {
-            path: prefix + "add-supervisor/school/:schoolId",
+            path: prefix + "add-supervisor",
             name: "admin.add-supervisor",
             component: AddSuperVisor,
             meta: {
@@ -299,6 +300,14 @@ const routes = new VueRouter({
             component: PaymentList,
             meta : {
                 title : "Payment list"
+            }
+        },
+        {
+            path: prefix + "staff-view",
+            name: "admin.staff-view",
+            component: StaffTree,
+            meta: {
+                title: "Staff Tree"
             }
         }
     ],

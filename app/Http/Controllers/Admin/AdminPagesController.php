@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AssignedSupervisor;
 use App\Models\School;
 use App\Models\Student;
 use App\Models\User;
@@ -354,6 +355,29 @@ class AdminPagesController extends Controller
             "status" => "ok",
             "msg" => "Manager updated"
         ];
+    }
+
+
+    public function getTreeData()
+    {
+        $managers = User::where("role","manager")->get(["id","name","photo","photo_url"]);
+
+        foreach($managers as $manager)
+        {
+            $supervisors = User::where("role","supervisor")->where("manager_id",$manager->id)
+            ->get(["id","name","photo","photo_url"]);
+
+            foreach($supervisors as $super)
+            {
+                $assigned = AssignedSupervisor::where("supervisor_id",$super->id)->pluck("teacher_id")->toArray();
+                $teachers = User::where("role","teacher")->whereIn("id",$assigned)->get(["id","name","photo","photo_url"]);
+                $super->teachers = $teachers;
+            }
+
+            $manager->supervisors = $supervisors;
+        }
+
+        return response()->json($managers);
     }
     
 }

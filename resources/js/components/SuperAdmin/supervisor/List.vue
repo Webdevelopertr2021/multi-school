@@ -27,7 +27,6 @@
                                         <th>Supervisor name</th>
                                         <th>Phone</th>
                                         <th>Email</th>
-                                        <th>School</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -40,7 +39,6 @@
                                         <td>{{ superv.name }}</td>
                                         <td>{{ superv.phone }}</td>
                                         <td>{{ superv.email }}</td>
-                                        <td>{{ superv.school.name }}</td>
                                         <td>
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

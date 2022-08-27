@@ -5693,6 +5693,118 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/SuperAdmin/admins/StaffTree.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/SuperAdmin/admins/StaffTree.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      isLoading: true,
+      treeData: []
+    };
+  },
+  methods: {
+    getTreeData: function getTreeData() {
+      var _this = this;
+
+      axios.get("/admin/api/get-tree-data").then(function (resp) {
+        return resp.data;
+      }).then(function (data) {
+        _this.treeData = data;
+        _this.isLoading = false;
+      })["catch"](function (err) {
+        console.error(err.response.data);
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.getTreeData();
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/SuperAdmin/class/CreateClass.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/SuperAdmin/class/CreateClass.vue?vue&type=script&lang=js& ***!
@@ -7026,15 +7138,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -7052,19 +7155,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   methods: {
-    getSchools: function getSchools() {
-      var _this = this;
-
-      axios.get("/admin/api/get-all-schools").then(function (resp) {
-        return resp.data;
-      }).then(function (data) {
-        _this.schools = data;
-      })["catch"](function (err) {
-        console.error(err.response.data);
-      });
-    },
     addSupervisor: function addSupervisor() {
-      var _this2 = this;
+      var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         return _regeneratorRuntime().wrap(function _callee$(_context) {
@@ -7072,17 +7164,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return _this2.form.post("/admin/api/add-supervisor").then(function (resp) {
+                return _this.form.post("/admin/api/add-supervisor").then(function (resp) {
                   return resp.data;
                 }).then(function (data) {
                   if (data.status == "ok") {
                     swal.fire("Supervisor added", data.msg, "success").then(function () {
-                      _this2.$router.push({
-                        name: 'admin.school-details',
-                        params: {
-                          schoolId: _this2.$route.params.schoolId
-                        }
-                      });
+                      _this.form.reset();
                     });
                   }
                 })["catch"](function (err) {
@@ -7107,9 +7194,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         this.form.pp = null;
       }
     }
-  },
-  mounted: function mounted() {
-    this.getSchools();
   }
 });
 
@@ -9280,8 +9364,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
-//
 //
 //
 //
@@ -13902,9 +13984,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_SuperAdmin_supervisor_Teachers_vue__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ../components/SuperAdmin/supervisor/Teachers.vue */ "./resources/js/components/SuperAdmin/supervisor/Teachers.vue");
 /* harmony import */ var _components_SuperAdmin_payments_PaySalary_vue__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ../components/SuperAdmin/payments/PaySalary.vue */ "./resources/js/components/SuperAdmin/payments/PaySalary.vue");
 /* harmony import */ var _components_SuperAdmin_payments_PaymentList_vue__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ../components/SuperAdmin/payments/PaymentList.vue */ "./resources/js/components/SuperAdmin/payments/PaymentList.vue");
+/* harmony import */ var _components_SuperAdmin_admins_StaffTree_vue__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ../components/SuperAdmin/admins/StaffTree.vue */ "./resources/js/components/SuperAdmin/admins/StaffTree.vue");
 
 
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]); // Components
+
 
 
 
@@ -13974,7 +14058,7 @@ var routes = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       title: "School details"
     }
   }, {
-    path: prefix + "add-supervisor/school/:schoolId",
+    path: prefix + "add-supervisor",
     name: "admin.add-supervisor",
     component: _components_SuperAdmin_schools_AddSuperVisor_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
     meta: {
@@ -14168,6 +14252,13 @@ var routes = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     component: _components_SuperAdmin_payments_PaymentList_vue__WEBPACK_IMPORTED_MODULE_33__["default"],
     meta: {
       title: "Payment list"
+    }
+  }, {
+    path: prefix + "staff-view",
+    name: "admin.staff-view",
+    component: _components_SuperAdmin_admins_StaffTree_vue__WEBPACK_IMPORTED_MODULE_34__["default"],
+    meta: {
+      title: "Staff Tree"
     }
   }],
   scrollBehavior: function scrollBehavior(to, from, savedPos) {
@@ -56779,6 +56870,45 @@ component.options.__file = "resources/js/components/SuperAdmin/admins/MyProfile.
 
 /***/ }),
 
+/***/ "./resources/js/components/SuperAdmin/admins/StaffTree.vue":
+/*!*****************************************************************!*\
+  !*** ./resources/js/components/SuperAdmin/admins/StaffTree.vue ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _StaffTree_vue_vue_type_template_id_03ff419a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./StaffTree.vue?vue&type=template&id=03ff419a& */ "./resources/js/components/SuperAdmin/admins/StaffTree.vue?vue&type=template&id=03ff419a&");
+/* harmony import */ var _StaffTree_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./StaffTree.vue?vue&type=script&lang=js& */ "./resources/js/components/SuperAdmin/admins/StaffTree.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _StaffTree_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _StaffTree_vue_vue_type_template_id_03ff419a___WEBPACK_IMPORTED_MODULE_0__.render,
+  _StaffTree_vue_vue_type_template_id_03ff419a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/SuperAdmin/admins/StaffTree.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/SuperAdmin/class/CreateClass.vue":
 /*!******************************************************************!*\
   !*** ./resources/js/components/SuperAdmin/class/CreateClass.vue ***!
@@ -58738,6 +58868,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/SuperAdmin/admins/StaffTree.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/SuperAdmin/admins/StaffTree.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_StaffTree_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./StaffTree.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/SuperAdmin/admins/StaffTree.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_StaffTree_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/SuperAdmin/class/CreateClass.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************!*\
   !*** ./resources/js/components/SuperAdmin/class/CreateClass.vue?vue&type=script&lang=js& ***!
@@ -60062,6 +60208,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MyProfile_vue_vue_type_template_id_5c82711c___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MyProfile_vue_vue_type_template_id_5c82711c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./MyProfile.vue?vue&type=template&id=5c82711c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/SuperAdmin/admins/MyProfile.vue?vue&type=template&id=5c82711c&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/SuperAdmin/admins/StaffTree.vue?vue&type=template&id=03ff419a&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/SuperAdmin/admins/StaffTree.vue?vue&type=template&id=03ff419a& ***!
+  \************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StaffTree_vue_vue_type_template_id_03ff419a___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StaffTree_vue_vue_type_template_id_03ff419a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StaffTree_vue_vue_type_template_id_03ff419a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./StaffTree.vue?vue&type=template&id=03ff419a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/SuperAdmin/admins/StaffTree.vue?vue&type=template&id=03ff419a&");
 
 
 /***/ }),
@@ -66330,6 +66493,284 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/SuperAdmin/admins/StaffTree.vue?vue&type=template&id=03ff419a&":
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/SuperAdmin/admins/StaffTree.vue?vue&type=template&id=03ff419a& ***!
+  \***************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "row" },
+    [
+      _vm._m(0),
+      _vm._v(" "),
+      _vm.isLoading
+        ? _vm._l(6, function (n) {
+            return _c(
+              "div",
+              { key: n, staticClass: "col-md-4 mb-4 tree-skeleton" },
+              [
+                _c("ul", [
+                  _c(
+                    "li",
+                    [
+                      _c("skeleton", {
+                        attrs: { width: "200px", height: "40px" },
+                      }),
+                      _vm._v(" "),
+                      _c("ul", [
+                        _c(
+                          "li",
+                          [
+                            _c("skeleton", {
+                              attrs: { width: "170px", height: "35px" },
+                            }),
+                            _vm._v(" "),
+                            _c("ul", [
+                              _c(
+                                "li",
+                                [
+                                  _c("skeleton", {
+                                    attrs: { width: "180px", height: "30px" },
+                                  }),
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "li",
+                                [
+                                  _c("skeleton", {
+                                    attrs: { width: "180px", height: "30px" },
+                                  }),
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "li",
+                                [
+                                  _c("skeleton", {
+                                    attrs: { width: "180px", height: "30px" },
+                                  }),
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "li",
+                                [
+                                  _c("skeleton", {
+                                    attrs: { width: "180px", height: "30px" },
+                                  }),
+                                ],
+                                1
+                              ),
+                            ]),
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "li",
+                          [
+                            _c("skeleton", {
+                              attrs: { width: "170px", height: "35px" },
+                            }),
+                            _vm._v(" "),
+                            _c("ul", [
+                              _c(
+                                "li",
+                                [
+                                  _c("skeleton", {
+                                    attrs: { width: "180px", height: "30px" },
+                                  }),
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "li",
+                                [
+                                  _c("skeleton", {
+                                    attrs: { width: "180px", height: "30px" },
+                                  }),
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "li",
+                                [
+                                  _c("skeleton", {
+                                    attrs: { width: "180px", height: "30px" },
+                                  }),
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "li",
+                                [
+                                  _c("skeleton", {
+                                    attrs: { width: "180px", height: "30px" },
+                                  }),
+                                ],
+                                1
+                              ),
+                            ]),
+                          ],
+                          1
+                        ),
+                      ]),
+                    ],
+                    1
+                  ),
+                ]),
+              ]
+            )
+          })
+        : _vm._l(_vm.treeData, function (manager, i) {
+            return _c("div", { key: i, staticClass: "col-md-4" }, [
+              _c("div", { staticClass: "tree", attrs: { id: "test" } }, [
+                _c("ul", [
+                  _c("li", { staticClass: "parent_li" }, [
+                    _c(
+                      "span",
+                      {
+                        staticClass: "manager-tag",
+                        attrs: { title: "Manager" },
+                      },
+                      [
+                        manager.photo == null
+                          ? _c("img", {
+                              staticClass: "thumb-30",
+                              attrs: {
+                                src: "/image/portrait-placeholder.png",
+                                alt: "",
+                              },
+                            })
+                          : _c("img", {
+                              staticClass: "thumb-30",
+                              attrs: { src: manager.photo_url },
+                            }),
+                        _vm._v(
+                          "\n                          " +
+                            _vm._s(manager.name) +
+                            "\n                      "
+                        ),
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "ul",
+                      _vm._l(manager.supervisors, function (superv, j) {
+                        return _c("li", { key: j, staticClass: "parent_li" }, [
+                          _c(
+                            "span",
+                            {
+                              staticClass: "superv-tag",
+                              attrs: { title: "Supervisor" },
+                            },
+                            [
+                              superv.photo == null
+                                ? _c("img", {
+                                    staticClass: "thumb-30",
+                                    attrs: {
+                                      src: "/image/portrait-placeholder.png",
+                                      alt: "",
+                                    },
+                                  })
+                                : _c("img", {
+                                    staticClass: "thumb-30",
+                                    attrs: { src: superv.photo_url },
+                                  }),
+                              _vm._v(
+                                "\n                                  " +
+                                  _vm._s(superv.name) +
+                                  "\n                              "
+                              ),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "ul",
+                            _vm._l(superv.teachers, function (teacher, t) {
+                              return _c(
+                                "li",
+                                { key: t, staticClass: "parent_li" },
+                                [
+                                  _c(
+                                    "span",
+                                    {
+                                      staticClass: "teacher-tag",
+                                      attrs: { title: "Teacher" },
+                                    },
+                                    [
+                                      teacher.photo == null
+                                        ? _c("img", {
+                                            staticClass: "thumb-30",
+                                            attrs: {
+                                              src: "/image/portrait-placeholder.png",
+                                              alt: "",
+                                            },
+                                          })
+                                        : _c("img", {
+                                            staticClass: "thumb-30",
+                                            attrs: { src: teacher.photo_url },
+                                          }),
+                                      _vm._v(
+                                        "\n                                          " +
+                                          _vm._s(teacher.name) +
+                                          "\n                                      "
+                                      ),
+                                    ]
+                                  ),
+                                ]
+                              )
+                            }),
+                            0
+                          ),
+                        ])
+                      }),
+                      0
+                    ),
+                  ]),
+                ]),
+              ]),
+            ])
+          }),
+    ],
+    2
+  )
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12 text-center mb-2" }, [
+      _c("h1", [_vm._v("All Staffs")]),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/SuperAdmin/class/CreateClass.vue?vue&type=template&id=604397d5&":
 /*!****************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/SuperAdmin/class/CreateClass.vue?vue&type=template&id=604397d5& ***!
@@ -68551,31 +68992,7 @@ var render = function () {
   return _c("div", { staticClass: "row justify-content-center" }, [
     _c("div", { staticClass: "col-md-12" }, [
       _c("div", { staticClass: "card" }, [
-        _c(
-          "div",
-          { staticClass: "card-header d-flex justify-content-between" },
-          [
-            _c("h4", [_vm._v("Add super visor")]),
-            _vm._v(" "),
-            _c(
-              "router-link",
-              {
-                staticClass: "btn btn-sm btn-primary",
-                attrs: {
-                  to: {
-                    name: "admin.school-details",
-                    params: { schoolId: _vm.form.school },
-                  },
-                },
-              },
-              [
-                _c("i", { staticClass: "fas fa-arrow-left" }),
-                _vm._v(" Go back to school"),
-              ]
-            ),
-          ],
-          1
-        ),
+        _vm._m(0),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
           _c(
@@ -68590,61 +69007,6 @@ var render = function () {
               },
             },
             [
-              _c("div", { staticClass: "col-md-4 mb-4" }, [
-                _c("label", { attrs: { for: "" } }, [_vm._v("Select School")]),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.form.school,
-                        expression: "form.school",
-                      },
-                    ],
-                    staticClass: "form-control",
-                    attrs: { disabled: "" },
-                    on: {
-                      change: function ($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function (o) {
-                            return o.selected
-                          })
-                          .map(function (o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.form,
-                          "school",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      },
-                    },
-                  },
-                  [
-                    _c(
-                      "option",
-                      { attrs: { value: "", selected: "", hidden: "" } },
-                      [_vm._v("Select School")]
-                    ),
-                    _vm._v(" "),
-                    _vm._l(_vm.schools, function (school, i) {
-                      return _c(
-                        "option",
-                        { key: i, domProps: { value: school.id } },
-                        [_vm._v(_vm._s(school.name))]
-                      )
-                    }),
-                  ],
-                  2
-                ),
-              ]),
-              _vm._v(" "),
               _c(
                 "div",
                 { staticClass: "col-md-4 mb-4" },
@@ -68719,7 +69081,7 @@ var render = function () {
                 "div",
                 { staticClass: "col-md-4 mb-4" },
                 [
-                  _vm._m(0),
+                  _vm._m(1),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -68793,7 +69155,7 @@ var render = function () {
                 "div",
                 { staticClass: "col-md-4 mb-4" },
                 [
-                  _vm._m(1),
+                  _vm._m(2),
                   _vm._v(" "),
                   _c("input", {
                     staticClass: "form-control-file",
@@ -68880,6 +69242,16 @@ var render = function () {
   ])
 }
 var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "card-header d-flex justify-content-between" },
+      [_c("h4", [_vm._v("Add super visor")])]
+    )
+  },
   function () {
     var _vm = this
     var _h = _vm.$createElement
@@ -72604,8 +72976,6 @@ var render = function () {
                               _vm._v(" "),
                               _c("td", [_vm._v(_vm._s(superv.email))]),
                               _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(superv.school.name))]),
-                              _vm._v(" "),
                               _c("td", [
                                 _c("div", { staticClass: "btn-group" }, [
                                   _c(
@@ -72742,8 +73112,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("Phone")]),
         _vm._v(" "),
         _c("th", [_vm._v("Email")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("School")]),
         _vm._v(" "),
         _c("th", [_vm._v("Action")]),
       ]),

@@ -169,6 +169,9 @@ Route::group(["prefix"=>"admin","middleware"=>"auth"],function(){
         Route::get("/filter-salary-data","Admin\SalaryController@filterSalaryData");
         // End
 
+        // Tree data
+        Route::get("/get-tree-data","Admin\AdminPagesController@getTreeData");
+
 
     });
 });

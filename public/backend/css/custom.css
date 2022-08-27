@@ -79,3 +79,110 @@ input.form-control{
     font-size: 25px;
     color: #ffca68;
 }
+
+.tree {
+    min-height:20px;
+    padding:19px;
+    margin-bottom:20px;
+}
+.tree li {
+    list-style-type:none;
+    margin:0;
+    padding:10px 5px 0 5px;
+    position:relative
+}
+.tree li::before, .tree li::after {
+    content:'';
+    left:-20px;
+    position:absolute;
+    right:auto
+}
+.tree li::before {
+    border-left:1px solid #999;
+    bottom:50px;
+    height:142%;
+    top:0;
+    width:1px
+}
+.tree li::after {
+    border-top:1px solid #999;
+    height:20px;
+    top:78px;
+    width:25px
+}
+.tree li span:not(.glyphicon) {
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
+    display:inline-block;
+    padding:4px 9px;
+    text-decoration:none
+}
+.tree li.parent_li>span:not(.glyphicon) {
+    cursor:pointer
+}
+.tree>ul>li::before, .tree>ul>li::after {
+    border:0
+}
+.tree li:last-child::before {
+    height:78px
+}
+.tree li.parent_li>span:not(.glyphicon):hover, .tree li.parent_li>span:not(.glyphicon):hover+ul li span:not(.glyphicon) {
+    background:#eee;
+    border:1px solid #999;
+    padding:3px 8px;
+    color:#000
+}
+.manager-tag{
+    background-color: #2d48ad;
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    color: white;
+}
+
+.manager-tag:hover{
+    background-color: #2d48ad !important;
+    color: white !important;
+}
+
+.superv-tag{
+    background-color: #c7b700;
+    margin-top: 50px;
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+    color: white;
+}
+.superv-tag:hover{
+    background-color: #c7b700 !important;
+    color: white !important;
+}
+
+.teacher-tag{
+    background-color: #00a943;
+    color: white;
+    margin-top: 49px;
+}
+
+.thumb-30{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 8px;
+}
+
+.thumb-20{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 8px;
+}
+.tree-skeleton ul {
+    list-style: none;
+}
+.tree-skeleton ul li{
+    margin-top: 15px;
+}

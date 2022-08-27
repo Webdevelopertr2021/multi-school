@@ -20,8 +20,15 @@
         </li>
 
         <li class="dropdown">
+          <router-link :to="{name: 'admin.add-supervisor'}" class="nav-link"><i data-feather="users"></i><span>Add Supervisor</span></router-link>
+        </li>
+        
+        <li class="dropdown">
           <router-link :to="{name: 'admin.supervisor-list'}" class="nav-link"><i data-feather="users"></i><span>All Supervisors</span></router-link>
         </li>
+
+            
+
 
         <li class="dropdown">
           <a href="#" class="menu-toggle nav-link has-dropdown"><i
@@ -54,6 +61,10 @@
             <span>Payments</span></router-link>
         </li>
         
+        <li class="dropdown">
+          <router-link :to="{name: 'admin.staff-view'}" class="nav-link"><i data-feather="dollar-sign"></i>
+            <span>Staff Tree</span></router-link>
+        </li>
 
       </ul>
     </aside>
