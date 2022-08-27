@@ -66,6 +66,11 @@
             <span>Staff Tree</span></router-link>
         </li>
 
+        <li class="dropdown">
+          <router-link :to="{name: 'admin.settings'}" class="nav-link"><i data-feather="settings"></i>
+            <span>Settings</span></router-link>
+        </li>
+
       </ul>
     </aside>
   </div>

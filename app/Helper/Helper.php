@@ -6,11 +6,15 @@ use App\Models\LeaveRequest;
 use App\Models\TeacherRating;
 use App\Models\User;
 use Carbon\Carbon;
+use App\Models\GeneralSetting;
 
 class Helper {
     
+    
     public static function getTeacherExtraSalary($teacherId,$month)
     {
+        $setting = GeneralSetting::find(1);
+
         $month = Carbon::parse(date("Y")."/$month/02");
         $ratings = TeacherRating::where("teacher_id",$teacherId)->whereMonth("created_at",$month)->get();
 
@@ -29,7 +33,7 @@ class Helper {
             }
             $total = round($total/$i);
             $star = self::getStars($total);
-            $salaryRating = $star * 10;
+            $salaryRating = $star * $setting->bonus_per_star;
         }
         else
         {
@@ -50,7 +54,7 @@ class Helper {
         }
         else
         {
-            $salaryNoLeave = 100;
+            $salaryNoLeave = $setting->bonus_no_leave;
         }
         // End
         

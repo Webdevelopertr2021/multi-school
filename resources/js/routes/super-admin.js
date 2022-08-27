@@ -37,6 +37,7 @@ import TeacherListSuperv from "../components/SuperAdmin/supervisor/Teachers.vue"
 import PaySalary from "../components/SuperAdmin/payments/PaySalary.vue";
 import PaymentList from "../components/SuperAdmin/payments/PaymentList.vue";
 import StaffTree from "../components/SuperAdmin/admins/StaffTree.vue";
+import Settings from "../components/SuperAdmin/admins/Settings.vue";
 // End
 
 const prefix = "/admin/"
@@ -308,6 +309,14 @@ const routes = new VueRouter({
             component: StaffTree,
             meta: {
                 title: "Staff Tree"
+            }
+        },
+        {
+            path: prefix + "site-settings",
+            name: "admin.settings",
+            component: Settings,
+            meta: {
+                title : "Site settings"
             }
         }
     ],

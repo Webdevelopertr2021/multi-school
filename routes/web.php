@@ -172,6 +172,11 @@ Route::group(["prefix"=>"admin","middleware"=>"auth"],function(){
         // Tree data
         Route::get("/get-tree-data","Admin\AdminPagesController@getTreeData");
 
+        // Setting Data
+        Route::get("/get-setting-data","Admin\SettingsController@getSettingData");
+
+        Route::post('/update-setting',"Admin\SettingsController@updateData");
+
 
     });
 });
