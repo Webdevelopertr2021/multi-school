@@ -13,6 +13,12 @@
                         <HasError :form="form" field="name" />
                     </div>
                     <div class="col-md-4 mb-4">
+                      <label for="">Select Manager</label>
+                      <multiselect :class="{'is-invalid': form.errors.has('manager')}" v-model="selectedManager" :options="managers" 
+                      :preserve-search="true" placeholder="Select manager" label="name" track-by="id"></multiselect>
+                      <HasError  :form="form" field="manager"/>
+                    </div>
+                    <div class="col-md-4 mb-4">
                         <label for="">Phone number</label>
                         <input type="tel" class="form-control" :class="{'is-invalid' : form.errors.has('phone')}" v-model="form.phone" placeholder="Phone number...">
                         <HasError :form="form" field="phone" />
@@ -54,7 +60,11 @@
 </template>
 
 <script>
+import Multiselect from "vue-multiselect";
 export default {
+    components: {
+        "multiselect" : Multiselect,
+    },
     data() {
         return {
             form : new Form({
@@ -66,12 +76,24 @@ export default {
                 password: 'school2022',
                 pp: null,
                 accessToLeave: false,
+                manager: "",
             }),
-            schools: [],
+            selectedManager: [],
+            managers: [],
         }
     },
     methods: {
+        getManagerList() {
+            axios.get("/admin/api/get-manager-list").then(resp=>{
+                return resp.data;
+            }).then(data=>{
+                this.managers = data;
+            }).catch(err=>{
+                console.error(err.response.data);
+            })
+        },
         async addSupervisor() {
+            this.manager = this.selectedManager.id;
             await this.form.post("/admin/api/add-supervisor").then(resp=>{
                 return resp.data;
             }).then(data=>{
@@ -95,6 +117,9 @@ export default {
             }
         }
     },
+    mounted() {
+        this.getManagerList();
+    }
 }
 </script>
 

@@ -27,6 +27,7 @@ class SuperVisorController extends Controller
             "phone" => "required|unique:users,phone",
             "password" => "required|min:8",
             "pp" => "nullable|mimes:jpg,jpeg,png,JPG,JPEG,PNG",
+            "manager" => "required|exists:users,id",
         ]);
 
         $user = new User();
@@ -36,6 +37,7 @@ class SuperVisorController extends Controller
         $user->role = $req->role;
         $user->school_id = $req->school;
         $user->password = bcrypt($req->password);
+        $user->manager_id = $req->manager;
         if($req->accessToLeave == true)
         {
             $user->teacher_application_permission = 1;
