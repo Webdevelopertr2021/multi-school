@@ -38,7 +38,13 @@ import PaySalary from "../components/SuperAdmin/payments/PaySalary.vue";
 import PaymentList from "../components/SuperAdmin/payments/PaymentList.vue";
 import StaffTree from "../components/SuperAdmin/admins/StaffTree.vue";
 import Settings from "../components/SuperAdmin/admins/Settings.vue";
+import ExamList from "../components/SuperAdmin/exam/ExamList.vue";
+import Questions from "../components/SuperAdmin/exam/Questions.vue";
 // End
+
+// Exams
+import AddExam from "../components/SuperAdmin/exam/CreateExam.vue";
+// end
 
 const prefix = "/admin/"
 const routes = new VueRouter({
@@ -317,6 +323,30 @@ const routes = new VueRouter({
             component: Settings,
             meta: {
                 title : "Site settings"
+            }
+        },
+        {
+            path: prefix + "create-exam",
+            name: "admin.add-exam",
+            component: AddExam,
+            meta: {
+                title: "Add exam"
+            }
+        },
+        {
+            path: prefix + "exam-list",
+            name: "admin.exam-list",
+            component: ExamList,
+            meta: {
+                title: "Exam List"
+            }
+        },
+        {
+            path: prefix+ "exam/:examId/questions",
+            name: "admin.exam-questions",
+            component: Questions,
+            meta: {
+                title : "Questions"
             }
         }
     ],

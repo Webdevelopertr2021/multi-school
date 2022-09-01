@@ -176,6 +176,17 @@ Route::group(["prefix"=>"admin","middleware"=>"auth"],function(){
         Route::get("/get-setting-data","Admin\SettingsController@getSettingData");
 
         Route::post('/update-setting',"Admin\SettingsController@updateData");
+        // 
+
+        // Exam 
+
+        Route::get("/get-exam-categories","Admin\ExamCategoryController@getCategory");
+
+        Route::post('/save-exam',"Admin\ExamController@saveExam");
+
+        Route::get("/get-exam-list","Admin\ExamController@getExamList");
+
+        // End
 
 
     });

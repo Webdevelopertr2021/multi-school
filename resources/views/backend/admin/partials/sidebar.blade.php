@@ -71,6 +71,16 @@
             <span>Settings</span></router-link>
         </li>
 
+        <li class="dropdown">
+          <a href="#" class="menu-toggle nav-link has-dropdown"><i
+              data-feather="layers"></i><span>Question Bank</span></a>
+          <ul class="dropdown-menu">
+            <li><router-link :to="{name: 'admin.add-exam'}" class="nav-link">Add Exam</router-link></li>
+            <li><router-link :to="{name: 'admin.exam-list'}" class="nav-link">Exam List</router-link></li>
+            <li><router-link :to="{name : 'admin.school-list'}" class="nav-link">Exam Category</router-link></li>
+          </ul>
+        </li>
+
       </ul>
     </aside>
   </div>

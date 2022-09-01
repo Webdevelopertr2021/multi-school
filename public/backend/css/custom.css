@@ -186,3 +186,14 @@ input.form-control{
 .tree-skeleton ul li{
     margin-top: 15px;
 }
+
+.q-card{
+    width: 100%;
+    border: 3px solid rgb(36, 0, 0);
+    padding: 10px 5px;
+    text-align: right;
+}
+.q-card p{
+    font-size: 20px;
+    font-weight: bold;
+}
