@@ -14,6 +14,12 @@
                         </div>
 
                         <div class="col-md-12 mb-4">
+                            <label for="">Formla</label>
+                            <input type="text" :class="{'is-invalid' : form.errors.has('formla')}" class="form-control" placeholder="Exam formla" v-model="form.formla">
+                            <HasError :form="form" field="formla" />
+                        </div>
+
+                        <div class="col-md-12 mb-4">
                             <label for="">Exam Category</label>
                             <select :class="{'is-invalid' : form.errors.has('category')}" class="form-control" v-model="form.category">
                                 <option value="" hidden selected>Select Exam Category</option>
@@ -86,6 +92,7 @@ export default {
                 classId: "",
                 sectionId: "",
                 category: "",
+                formla: "",
             }),
 
             schools: [],
@@ -170,7 +177,12 @@ export default {
             }).then(data=>{
                 if(data.status == "ok") {
                     swal.fire("Success",data.msg,"success").then(()=>{
-                        
+                        this.$router.push({
+                            name: "admin.exam-questions",
+                            params: {
+                                examId: data.examId
+                            }
+                        })
                     });
                 }
             }).catch(err=>{

@@ -25,6 +25,7 @@ return new class extends Migration
             $table->integer("user_id");
             $table->string("created_by");
             $table->string("status")->default("draft");
+            $table->text("formla")->nullable();
             $table->timestamps();
         });
     }

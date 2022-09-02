@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Exam;
+use App\Models\Question;
 use Illuminate\Http\Request;
 
 class ExamController extends Controller
@@ -21,7 +22,8 @@ class ExamController extends Controller
             "schoolId" => "required",
             "classId" => "required",
             "sectionId" => "required",
-            "category" => "required"
+            "category" => "required",
+            "formla" => "required",
         ]);
 
         $exam = new Exam();
@@ -34,6 +36,7 @@ class ExamController extends Controller
         $exam->category_id = $req->category;
         $exam->user_id = auth()->user()->id;
         $exam->created_by = auth()->user()->name;
+        $exam->formla = $req->formla;
         $exam->save();
 
         return [
@@ -50,6 +53,27 @@ class ExamController extends Controller
         ->with("section:id,name")
         ->paginate(15);
         return response()->json($exams);
+    }
+
+    public function getExamData(Request $req)
+    {
+        if($exam = Exam::with("school:id,name")->with("classes:id,name")
+        ->with("section:id,name")->find($req->examId))
+        {
+            $questions = Question::where("exam_id",$exam->id)->orderBy("id","asc")->get();
+
+            return [
+                "status" => "ok",
+                "examData" => $exam,
+                "questions" => $questions,
+            ];
+        }
+        else
+        {
+            return [
+                "status" => "fail"
+            ];
+        }
     }
 
 }

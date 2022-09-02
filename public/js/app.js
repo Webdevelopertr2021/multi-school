@@ -6640,6 +6640,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -6654,7 +6660,8 @@ __webpack_require__.r(__webpack_exports__);
         schoolId: "",
         classId: "",
         sectionId: "",
-        category: ""
+        category: "",
+        formla: ""
       }),
       schools: [],
       classes: [],
@@ -6723,6 +6730,8 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     addExam: function addExam() {
+      var _this5 = this;
+
       if (this.selectedSchool != null) {
         this.form.schoolId = this.selectedSchool.id;
       }
@@ -6739,7 +6748,14 @@ __webpack_require__.r(__webpack_exports__);
         return resp.data;
       }).then(function (data) {
         if (data.status == "ok") {
-          swal.fire("Success", data.msg, "success").then(function () {});
+          swal.fire("Success", data.msg, "success").then(function () {
+            _this5.$router.push({
+              name: "admin.exam-questions",
+              params: {
+                examId: data.examId
+              }
+            });
+          });
         }
       })["catch"](function (err) {
         console.error(err.response.data);
@@ -6865,6 +6881,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return generator._invoke = function (innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; }(innerFn, self, context), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; this._invoke = function (method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); }; } function maybeInvokeDelegate(delegate, context) { var method = delegate.iterator[context.method]; if (undefined === method) { if (context.delegate = null, "throw" === context.method) { if (delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method)) return ContinueSentinel; context.method = "throw", context.arg = new TypeError("The iterator does not provide a 'throw' method"); } return ContinueSentinel; } var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) { if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; } return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, define(Gp, "constructor", GeneratorFunctionPrototype), define(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (object) { var keys = []; for (var key in object) { keys.push(key); } return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) { "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); } }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -6903,7 +6927,197 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      qForm: new Form({
+        examId: this.$route.params.examId,
+        body: "",
+        marks: "",
+        correctAns: "",
+        ansFile: null
+      }),
+      examData: {},
+      isLoading: true,
+      addQuestionMode: false,
+      allQuestions: [],
+      moment: moment
+    };
+  },
+  methods: {
+    getExamData: function getExamData() {
+      var _this = this;
+
+      axios.get("/admin/api/get-exam-data?examId=" + this.$route.params.examId).then(function (resp) {
+        return resp.data;
+      }).then(function (data) {
+        if (data.status == "ok") {
+          _this.examData = data.examData;
+          _this.allQuestions = data.questions;
+          _this.isLoading = false;
+        } else {
+          _this.$router.push({
+            name: "admin.exam-list"
+          });
+        }
+      })["catch"](function (err) {
+        console.error(err.response.data);
+
+        _this.$router.push({
+          name: "admin.exam-list"
+        });
+      });
+    },
+    addQuestion: function addQuestion() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return _this2.qForm.post("/admin/api/store-question").then(function (resp) {
+                  return resp.data;
+                }).then(function (data) {
+                  if (data.status == "ok") {
+                    swal.fire("Question added", data.msg, "success");
+
+                    _this2.allQuestions.push(data.question);
+
+                    _this2.qForm.reset();
+
+                    $("#ansFile").val("");
+                  }
+                })["catch"](function (err) {
+                  console.error(err.response.data);
+                });
+
+              case 2:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    fileChange: function fileChange(e) {
+      var file = e.target.files[0];
+
+      if (file) {
+        this.qForm.ansFile = file;
+      } else {
+        this.qForm.ansFile = null;
+      }
+    },
+    removeQuestion: function removeQuestion(id, index) {
+      var _this3 = this;
+
+      swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          axios.post("/admin/api/delete-question", {
+            questionId: id
+          }).then(function (resp) {
+            return resp.data;
+          }).then(function (data) {
+            if (data.status == "ok") {
+              swal.fire("Removed", data.msg, "success");
+
+              _this3.allQuestions.splice(index, 1);
+            }
+          })["catch"](function (err) {
+            toastr.error("Failed to delete", "Internal Server error");
+            console.error(err.response.data);
+          });
+        }
+      }); //swal
+    }
+  },
+  mounted: function mounted() {
+    this.getExamData();
+  }
+});
 
 /***/ }),
 
@@ -68945,6 +69159,42 @@ var render = function () {
                 "div",
                 { staticClass: "col-md-12 mb-4" },
                 [
+                  _c("label", { attrs: { for: "" } }, [_vm._v("Formla")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.formla,
+                        expression: "form.formla",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    class: { "is-invalid": _vm.form.errors.has("formla") },
+                    attrs: { type: "text", placeholder: "Exam formla" },
+                    domProps: { value: _vm.form.formla },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.form, "formla", $event.target.value)
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("HasError", {
+                    attrs: { form: _vm.form, field: "formla" },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-md-12 mb-4" },
+                [
                   _c("label", { attrs: { for: "" } }, [
                     _vm._v("Exam Category"),
                   ]),
@@ -69436,61 +69686,438 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "row justify-content-center" }, [
+    _c("div", { staticClass: "col-md-12 mb-2" }, [
+      _c("div", { staticClass: "card" }, [
+        _c(
+          "div",
+          { staticClass: "card-header d-flex justify-content-between" },
+          [
+            _c("h4", [_vm._v("Exam : " + _vm._s(_vm.examData.title))]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-sm btn-primary",
+                on: {
+                  click: function ($event) {
+                    _vm.addQuestionMode = true
+                  },
+                },
+              },
+              [_vm._v("Make question")]
+            ),
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("p", { staticClass: "text-muted" }, [
+            _vm._v(_vm._s(_vm.examData.formla)),
+          ]),
+          _vm._v(" "),
+          _vm.isLoading
+            ? _c("ul", [
+                _c(
+                  "li",
+                  [
+                    _c("skeleton", {
+                      attrs: { width: "200px", height: "20px" },
+                    }),
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "li",
+                  [
+                    _c("skeleton", {
+                      attrs: { width: "200px", height: "20px" },
+                    }),
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "li",
+                  [
+                    _c("skeleton", {
+                      attrs: { width: "200px", height: "20px" },
+                    }),
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "li",
+                  [
+                    _c("skeleton", {
+                      attrs: { width: "200px", height: "20px" },
+                    }),
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "li",
+                  [
+                    _c("skeleton", {
+                      attrs: { width: "200px", height: "20px" },
+                    }),
+                  ],
+                  1
+                ),
+              ])
+            : _c("ul", [
+                _c("li", [
+                  _vm._v("Exam start time : "),
+                  _c("strong", [
+                    _vm._v(
+                      _vm._s(
+                        _vm
+                          .moment(_vm.examData.start_time)
+                          .format("DD MMM YYYY, h:m A")
+                      )
+                    ),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("li", [
+                  _vm._v("Exam end time : "),
+                  _c("strong", [
+                    _vm._v(
+                      _vm._s(
+                        _vm
+                          .moment(_vm.examData.end_time)
+                          .format("DD MMM YYYY, h:m A")
+                      )
+                    ),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("li", [
+                  _vm._v("School : "),
+                  _c("strong", [_vm._v(_vm._s(_vm.examData.school.name))]),
+                ]),
+                _vm._v(" "),
+                _c("li", [
+                  _vm._v("Class : "),
+                  _c("strong", [_vm._v(_vm._s(_vm.examData.classes.name))]),
+                ]),
+                _vm._v(" "),
+                _c("li", [
+                  _vm._v("Section : "),
+                  _c("strong", [_vm._v(_vm._s(_vm.examData.section.name))]),
+                ]),
+              ]),
+        ]),
+      ]),
+    ]),
+    _vm._v(" "),
+    _vm.addQuestionMode
+      ? _c("div", { staticClass: "col-md-12 mb-2" }, [
+          _c("div", { staticClass: "card" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body" }, [
+              _c(
+                "form",
+                {
+                  staticClass: "row",
+                  on: {
+                    submit: function ($event) {
+                      $event.preventDefault()
+                      return _vm.addQuestion.apply(null, arguments)
+                    },
+                  },
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "col-md-4 mb-4" },
+                    [
+                      _c("label", { attrs: { for: "" } }, [
+                        _vm._v("Question Body"),
+                      ]),
+                      _vm._v(" "),
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.qForm.body,
+                            expression: "qForm.body",
+                          },
+                        ],
+                        staticClass: "form-control",
+                        class: { "is-invalid": _vm.qForm.errors.has("body") },
+                        attrs: {
+                          placeholder: "Write your question body here...",
+                        },
+                        domProps: { value: _vm.qForm.body },
+                        on: {
+                          input: function ($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.qForm, "body", $event.target.value)
+                          },
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c("HasError", {
+                        attrs: { form: _vm.qForm, field: "body" },
+                      }),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "col-md-4 mb-4" },
+                    [
+                      _c("label", { attrs: { for: "" } }, [_vm._v("Mark")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.qForm.marks,
+                            expression: "qForm.marks",
+                          },
+                        ],
+                        staticClass: "form-control",
+                        class: { "is-invalid": _vm.qForm.errors.has("marks") },
+                        attrs: { type: "number", placeholder: "Marks" },
+                        domProps: { value: _vm.qForm.marks },
+                        on: {
+                          input: function ($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.qForm, "marks", $event.target.value)
+                          },
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c("HasError", {
+                        attrs: { form: _vm.qForm, field: "marks" },
+                      }),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "col-md-4 mb-4" },
+                    [
+                      _c("label", { attrs: { for: "" } }, [
+                        _vm._v("Correct Answer"),
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.qForm.correctAns,
+                            expression: "qForm.correctAns",
+                          },
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.qForm.errors.has("correctAns"),
+                        },
+                        attrs: {
+                          type: "number",
+                          placeholder: "Write your correct answer...",
+                        },
+                        domProps: { value: _vm.qForm.correctAns },
+                        on: {
+                          input: function ($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.qForm,
+                              "correctAns",
+                              $event.target.value
+                            )
+                          },
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c("HasError", {
+                        attrs: { form: _vm.qForm, field: "correctAns" },
+                      }),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-4 mb-4" }, [
+                    _c("label", { attrs: { for: "" } }, [
+                      _vm._v("Answer image"),
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      staticClass: "form-control-file",
+                      attrs: { type: "file", id: "ansFile" },
+                      on: { change: _vm.fileChange },
+                    }),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-1 mb-4" }, [
+                    _c("div", { staticClass: "q-card" }, [
+                      _vm._m(2),
+                      _vm._v(" "),
+                      _c("p", [_vm._v(_vm._s(_vm.qForm.body))]),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "col-md-12 mb-4" },
+                    [
+                      _c(
+                        "Button",
+                        {
+                          staticClass: "btn btn-sm btn-success",
+                          attrs: { form: _vm.qForm, type: "submit" },
+                        },
+                        [_vm._v("Add question")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-sm btn-danger",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function ($event) {
+                              _vm.addQuestionMode = false
+                            },
+                          },
+                        },
+                        [_vm._v("Cancel")]
+                      ),
+                    ],
+                    1
+                  ),
+                ]
+              ),
+            ]),
+          ]),
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-md-12" }, [
+      _c("div", { staticClass: "card" }, [
+        _c(
+          "div",
+          { staticClass: "card-header d-flex justify-content-between" },
+          [
+            _c("h4", [
+              _vm._v("Questions | Total : " + _vm._s(_vm.allQuestions.length)),
+            ]),
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _vm.isLoading
+            ? _c(
+                "div",
+                { staticClass: "row" },
+                _vm._l(12, function (n) {
+                  return _c(
+                    "div",
+                    {
+                      key: n,
+                      staticClass: "col-lg-1 col-md-2 col-sm-3 col-6 mb-3",
+                    },
+                    [
+                      _c("skeleton", {
+                        attrs: { width: "100%", height: "300px" },
+                      }),
+                    ],
+                    1
+                  )
+                }),
+                0
+              )
+            : _c(
+                "div",
+                { staticClass: "row" },
+                _vm._l(_vm.allQuestions, function (question, i) {
+                  return _c(
+                    "div",
+                    {
+                      key: i,
+                      staticClass: "col-lg-1 col-md-2 col-sm-3 col-6 mb-3",
+                    },
+                    [
+                      _c("div", { staticClass: "q-card" }, [
+                        _c("div", { staticClass: "title" }, [
+                          _c("h6", [_vm._v("Q. " + _vm._s(i + 1))]),
+                        ]),
+                        _vm._v(" "),
+                        _c("p", [_vm._v(_vm._s(question.body))]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "footer" }, [
+                          _vm._m(3, true),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-sm btn-danger",
+                              on: {
+                                click: function ($event) {
+                                  return _vm.removeQuestion(question.id, i)
+                                },
+                              },
+                            },
+                            [_c("i", { staticClass: "fas fa-trash" })]
+                          ),
+                        ]),
+                      ]),
+                    ]
+                  )
+                }),
+                0
+              ),
+        ]),
+      ]),
+    ]),
+  ])
 }
 var staticRenderFns = [
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-12 mb-2" }, [
-        _c("div", { staticClass: "card" }, [
-          _c(
-            "div",
-            { staticClass: "card-header d-flex justify-content-between" },
-            [
-              _c("h4", [_vm._v("Exam : Basic Exam")]),
-              _vm._v(" "),
-              _c("button", { staticClass: "btn btn-sm btn-primary" }, [
-                _vm._v("Make question"),
-              ]),
-            ]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("ul", [
-              _c("li", [_vm._v("Exam start time : ")]),
-              _vm._v(" "),
-              _c("li", [_vm._v("Exam end time : ")]),
-              _vm._v(" "),
-              _c("li", [_vm._v("School : ")]),
-              _vm._v(" "),
-              _c("li", [_vm._v("Class : ")]),
-              _vm._v(" "),
-              _c("li", [_vm._v("Section : ")]),
-            ]),
-          ]),
-        ]),
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("div", { staticClass: "card" }, [
-          _c(
-            "div",
-            { staticClass: "card-header d-flex justify-content-between" },
-            [_c("h4", [_vm._v("Questions")])]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-2" }, [
-                _c("div", { staticClass: "q-card" }, [_c("p", [_vm._v("6")])]),
-              ]),
-            ]),
-          ]),
-        ]),
-      ]),
+    return _c("h6", [_c("strong", [_c("u", [_vm._v("Formla : ")])])])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h4", [_vm._v("Make question")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "title" }, [_c("h6", [_vm._v("Preview")])])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", { staticClass: "btn btn-sm btn-warning" }, [
+      _c("i", { staticClass: "fas fa-edit" }),
     ])
   },
 ]
