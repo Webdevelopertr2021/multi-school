@@ -96,7 +96,7 @@
                       </div>
                       <p>{{ question.body }}</p>
                         <div class="footer">
-                          <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                          <router-link :to="{name: 'admin.edit-question', params: {qstnId: question.id}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></router-link>
                           <button @click="removeQuestion(question.id,i)" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
                         </div>
                     </div>

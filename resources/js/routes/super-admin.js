@@ -41,6 +41,7 @@ import Settings from "../components/SuperAdmin/admins/Settings.vue";
 import ExamList from "../components/SuperAdmin/exam/ExamList.vue";
 import Questions from "../components/SuperAdmin/exam/Questions.vue";
 import EditExam from "../components/SuperAdmin/exam/EditExam.vue";
+import EditQuestion from "../components/SuperAdmin/exam/EditQuestion.vue";
 // End
 
 // Exams
@@ -356,6 +357,15 @@ const routes = new VueRouter({
             component: EditExam,
             meta: {
                 title: "Edit Exam"
+            }
+        },
+
+        {
+            path: prefix + "edit-question/:qstnId",
+            name: "admin.edit-question",
+            component: EditQuestion,
+            meta: {
+                title: "Edit Question"
             }
         },
     ],

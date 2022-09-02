@@ -192,11 +192,15 @@ Route::group(["prefix"=>"admin","middleware"=>"auth"],function(){
 
         Route::post("/store-question","Admin\QuestionController@storeQuestion");
 
+        Route::post('//update-question',"Admin\QuestionController@update");
+
         Route::get("/get-exam-data","Admin\ExamController@getExamData");
 
         Route::post("/delete-question","Admin\QuestionController@delete");
 
         Route::get('/check-exam-data',"Admin\ExamController@checkExamData");
+
+        Route::get("/get-question-data","Admin\QuestionController@getData");
 
         // End
 
