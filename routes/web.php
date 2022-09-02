@@ -184,6 +184,10 @@ Route::group(["prefix"=>"admin","middleware"=>"auth"],function(){
 
         Route::post('/save-exam',"Admin\ExamController@saveExam");
 
+        Route::post("/update-exam","Admin\ExamController@update");
+
+        Route::post("/delete-exam","Admin\ExamController@deleteExam");
+
         Route::get("/get-exam-list","Admin\ExamController@getExamList");
 
         Route::post("/store-question","Admin\QuestionController@storeQuestion");
@@ -191,6 +195,8 @@ Route::group(["prefix"=>"admin","middleware"=>"auth"],function(){
         Route::get("/get-exam-data","Admin\ExamController@getExamData");
 
         Route::post("/delete-question","Admin\QuestionController@delete");
+
+        Route::get('/check-exam-data',"Admin\ExamController@checkExamData");
 
         // End
 

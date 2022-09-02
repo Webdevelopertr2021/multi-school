@@ -2,8 +2,9 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header d-flex justify-content-between">
                     <h4>All Exam lists</h4>
+                    <router-link class="btn btn-sm btn-primary" :to="{name: 'admin.add-exam'}">Add exam</router-link>
                 </div>
                 <div class="card-body">
                     <div class="row" v-if="isLoading">
@@ -39,11 +40,11 @@
                                             <td>{{ exam.created_by }}</td>
                                             <td>{{ moment(exam.created_at).format("DD MMM, YYYY - h:mm a") }}</td>
                                             <td>{{ exam.status }}</td>
-                                            <td>15</td>
+                                            <td>{{ exam.question_count }}</td>
                                             <td>
                                                 <router-link :to="{name: 'admin.exam-questions', params: {examId: exam.id}}" class="btn btn-sm btn-secondary" title="Add question"><i class="fas fa-plus"></i></router-link>
-                                                <button class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></button>
-                                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                                <router-link :to="{name: 'admin.edit-exam', params: { examId: exam.id }}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></router-link>
+                                                <button @click="deleteExam(exam.id,i)" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -77,6 +78,34 @@ export default {
             }).catch(err=>{
                 console.error(err.response.data);
             })
+        },
+        deleteExam(id,index) {
+            swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                axios.post("/admin/api/delete-exam",{
+                    examId: id,
+                }).then(resp=>{
+                    return resp.data;
+                }).then(data=>{
+                    if(data.status == "ok")
+                    {
+                    swal.fire("Removed",data.msg,"success");
+                    this.exams.splice(index,1);
+                    }
+                }).catch(err=>{
+                    toastr.error("Failed to delete","Internal Server error");
+                    console.error(err.response.data);
+                })
+                }
+            }); //swal
         }
     },
     mounted() {

@@ -40,6 +40,7 @@ import StaffTree from "../components/SuperAdmin/admins/StaffTree.vue";
 import Settings from "../components/SuperAdmin/admins/Settings.vue";
 import ExamList from "../components/SuperAdmin/exam/ExamList.vue";
 import Questions from "../components/SuperAdmin/exam/Questions.vue";
+import EditExam from "../components/SuperAdmin/exam/EditExam.vue";
 // End
 
 // Exams
@@ -348,7 +349,15 @@ const routes = new VueRouter({
             meta: {
                 title : "Questions"
             }
-        }
+        },
+        {
+            path: prefix + "edit-exam/:examId",
+            name: "admin.edit-exam",
+            component: EditExam,
+            meta: {
+                title: "Edit Exam"
+            }
+        },
     ],
     scrollBehavior(to, from, savedPos) {
         if (savedPos) {
