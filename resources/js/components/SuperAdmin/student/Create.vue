@@ -49,6 +49,14 @@
                        placeholder="Student email..." v-model="form.stdEmail">
                        <HasError  :form="form" field="stdEmail"/>
                   </div>
+
+                  <div class="col-md-4 mb-4">
+                      <label for="">Set Password</label>
+                      <input type="text" class="form-control" :class="{'is-invalid': form.errors.has('password')}"
+                       placeholder="Set password.." v-model="form.password">
+                       <HasError  :form="form" field="password"/>
+                  </div>
+
                   <div class="col-md-7 mb-4">
                     <label for="">Address</label>
                     <textarea class="form-control" :class="{'is-invalid': form.errors.has('address')}"
@@ -90,6 +98,7 @@ export default {
         classId: "",
         sectionId: "",
         photo: null,
+        password: "school2022",
 
       }),
       schools: [],
@@ -150,9 +159,22 @@ export default {
       })
     },
     async addStudent() {
-      this.form.schoolId = this.selectedSchool.id;
-      this.form.classId = this.selectedClass.id;
-      this.form.sectionId = this.selectedSection.id;
+
+      if(this.selectedSchool != null)
+      {
+        this.form.schoolId = this.selectedSchool.id;
+      }
+
+      if(this.selectedClass != null)
+      {
+        this.form.classId = this.selectedClass.id;
+      }
+
+      if(this.selectedSection != null)
+      {
+        this.form.sectionId = this.selectedSection.id;  
+      }
+      
       await this.form.post('/admin/api/create-new-student').then(resp=>{
         return resp.data;
       }).then(data=>{

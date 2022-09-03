@@ -30,17 +30,19 @@ class StudentController extends Controller
             "email" => "nullable|unique:students,email",
             "schoolId" => "required|exists:schools,id",
             "classId" => "required|exists:classes,id",
-            "sectionId" => "required|exists:sections,id"
+            "sectionId" => "required|exists:sections,id",
+            "password" => "required|min:6",
         ]);
 
         $student = new Student();
         $student->name = $req->name;
         $student->phone = $req->phone;
-        $student->email = $req->email;
+        $student->email = $req->stdEmail;
         $student->school_id = $req->schoolId;
         $student->class_id = $req->classId;
         $student->section_id = $req->sectionId;
         $student->address = $req->address;
+        $student->password = bcrypt($req->password);
 
         if($req->hasFile("photo"))
         {

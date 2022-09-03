@@ -9432,6 +9432,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -9449,7 +9457,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         schoolId: "",
         classId: "",
         sectionId: "",
-        photo: null
+        photo: null,
+        password: "school2022"
       }),
       schools: [],
       classes: [],
@@ -9519,9 +9528,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this4.form.schoolId = _this4.selectedSchool.id;
-                _this4.form.classId = _this4.selectedClass.id;
-                _this4.form.sectionId = _this4.selectedSection.id;
+                if (_this4.selectedSchool != null) {
+                  _this4.form.schoolId = _this4.selectedSchool.id;
+                }
+
+                if (_this4.selectedClass != null) {
+                  _this4.form.classId = _this4.selectedClass.id;
+                }
+
+                if (_this4.selectedSection != null) {
+                  _this4.form.sectionId = _this4.selectedSection.id;
+                }
+
                 _context.next = 5;
                 return _this4.form.post('/admin/api/create-new-student').then(function (resp) {
                   return resp.data;
@@ -75302,6 +75320,42 @@ var render = function () {
                   _vm._v(" "),
                   _c("HasError", {
                     attrs: { form: _vm.form, field: "stdEmail" },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-md-4 mb-4" },
+                [
+                  _c("label", { attrs: { for: "" } }, [_vm._v("Set Password")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.password,
+                        expression: "form.password",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    class: { "is-invalid": _vm.form.errors.has("password") },
+                    attrs: { type: "text", placeholder: "Set password.." },
+                    domProps: { value: _vm.form.password },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.form, "password", $event.target.value)
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("HasError", {
+                    attrs: { form: _vm.form, field: "password" },
                   }),
                 ],
                 1
