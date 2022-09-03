@@ -192,7 +192,7 @@ Route::group(["prefix"=>"admin","middleware"=>"auth"],function(){
 
         Route::post("/store-question","Admin\QuestionController@storeQuestion");
 
-        Route::post('//update-question',"Admin\QuestionController@update");
+        Route::post('/update-question',"Admin\QuestionController@update");
 
         Route::get("/get-exam-data","Admin\ExamController@getExamData");
 
@@ -201,6 +201,12 @@ Route::group(["prefix"=>"admin","middleware"=>"auth"],function(){
         Route::get('/check-exam-data',"Admin\ExamController@checkExamData");
 
         Route::get("/get-question-data","Admin\QuestionController@getData");
+
+        Route::post('/save-exam-cat',"Admin\ExamCategoryController@save");
+
+        Route::post('/update-exam-cat',"Admin\ExamCategoryController@update");
+
+        Route::post("/delete-exam-cat","Admin\ExamCategoryController@delete");
 
         // End
 
