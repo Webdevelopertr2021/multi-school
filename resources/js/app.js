@@ -20,12 +20,16 @@ import SuperAdminRouter from "./routes/super-admin";
 import SuperVisorRouter from "./routes/supervisor";
 import TeacherRouter from "./routes/teacher";
 import ManagerRouter from "./routes/manager";
+import StudentRouter from "./routes/student";
 
 import Swal from "sweetalert2";
 
 import moment from "moment";
 
 // 
+
+import vueAwesomeCountdown from 'vue-awesome-countdown';
+Vue.use(vueAwesomeCountdown, 'vac');
 
 
 // Moment
@@ -91,14 +95,17 @@ if(document.getElementById("loginForm"))
                     email: "",
                     password: "",
                     remember: false,
+                    loginType: null,
                 })
             }
         },
         methods: {
-            userLogin(){
+            userLogin(loginType = null){
+                this.loginForm.loginType = loginType;
                 this.loginForm.post("/attemp-login").then(resp=>{
                     return resp.data;
                 }).then(data=>{
+                    console.log(data);
                     if(data.status == "ok")
                     {
                         toastr.success("Login scuccess")
@@ -148,5 +155,13 @@ if(document.getElementById("manager_app"))
     const managerApp = new Vue({
         el: "#manager_app",
         router: ManagerRouter,
+    })
+}
+
+if(document.getElementById("student_app"))
+{
+    const studentApp = new Vue({
+        el: "#student_app",
+        router: StudentRouter,
     })
 }

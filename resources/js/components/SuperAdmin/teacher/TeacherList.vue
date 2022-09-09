@@ -15,7 +15,6 @@
                                         <th>ID</th>
                                         <th>Name</th>
                                         <th>Phone</th>
-                                        <th>Email</th>
                                         <th>Supervisors</th>
                                         <th>School</th>
                                         <th>Class</th>
@@ -23,6 +22,8 @@
                                         <th>Total Students</th>
                                         <th>Rating ({{ moment().format("MMMM") }})</th>
                                         <th>Stars ({{ moment().format("MMMM") }})</th>
+                                        <th>Salary</th>
+                                        <th>Bonus Money</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -58,7 +59,6 @@ export default {
                 {data: "id"},
                 { data: "name" },
                 { data: "phone" },
-                { data: "email" },
                 { data: "supervisors" },
                 { data: "school" },
                 { data: "class" },
@@ -66,6 +66,8 @@ export default {
                 { data: "total_students" },
                 { data: 'ratings' },
                 { data: 'stars' },
+                { data: 'salary' },
+                { data: 'bonus_money' },
                 { data: 'action', name: 'action', orderable: false, searchable: false  }
             ],
             dom: 'Bfrtip',

@@ -25,7 +25,7 @@
                                     <td><vue-moments-ago class="time" prefix="" suffix="ago" :date="not.created_at" lang="en"></vue-moments-ago></td>
                                 </template>
 
-                                <template v-if="not.type=='application_reject'">
+                                <template v-if="not.type=='application_rejected'">
                                     <td><span class="icon-40 bg-danger text-white"> <i class="fas fa-times-circle"></i></span> </td>
                                     <td>
                                         <p class="m-0"><b>Leave request rejected</b></p>

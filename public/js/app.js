@@ -2552,6 +2552,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2584,7 +2585,7 @@ __webpack_require__.r(__webpack_exports__);
     actionModal: function actionModal(data, index) {
       swal.fire({
         title: data.leave.subject,
-        html: "\n          <hr>\n          <div class=\"col-12 mb-4\">\n            <p class=\"text-left\">".concat(data.leave.desc, "</p>\n          </div>\n          <hr>\n          <div class=\"col-12 mb-4\">\n            <label class=\"text-left\"><b>Choose action</b></label>\n            <select id=\"actionStatus\" class=\"form-control\">\n              <option value=\"pending\" ").concat(data.approved_by_manager == 0 ? 'selected' : '', ">Pending</option>\n              <option value=\"approved\" ").concat(data.approved_by_manager == 1 ? 'selected' : '', ">Approve</option>\n            </select>\n          </div>\n          <div class=\"col-12 mb-4\">\n            <label class=\"text-left\"><b>Write feedback message</b></label>\n            <textarea class=\"form-control\" id=\"actionText\" placeholder=\"Feedback message...\"></textarea>\n          </div>\n          "),
+        html: "\n          <hr>\n          <div class=\"col-12 mb-4\">\n            <p class=\"text-left\">".concat(data.leave.desc, "</p>\n          </div>\n          <hr>\n          <div class=\"col-12 mb-4\">\n            <label class=\"text-left\"><b>Choose action</b></label>\n            <select id=\"actionStatus\" class=\"form-control\">\n              <option value=\"approved\" ").concat(data.approved_by_manager == 1 ? 'selected' : '', ">Approve</option>\n              <option value=\"rejected\" ").concat(data.approved_by_manager == 0 ? 'selected' : '', ">Reject</option>\n            </select>\n          </div>\n          <div class=\"col-12 mb-4\">\n            <label class=\"text-left\"><b>Write feedback message</b></label>\n            <textarea class=\"form-control\" id=\"actionText\" placeholder=\"Feedback message...\"></textarea>\n          </div>\n          "),
         confirmButtonText: 'Submit',
         focusConfirm: false,
         preConfirm: function preConfirm() {
@@ -4559,6 +4560,329 @@ __webpack_require__.r(__webpack_exports__);
   props: ['star'],
   data: function data() {
     return {};
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Student/dashboard/Dashboard.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Student/dashboard/Dashboard.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Student/exam/AttendExam.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Student/exam/AttendExam.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      examData: {},
+      questions: [],
+      selectedQuestion: null,
+      selectedQuestionIndex: null,
+      answerForm: new Form({
+        answerId: "",
+        nowAns: "",
+        tries: 0,
+        timer: 0,
+        isLast: false
+      }),
+      attempt: 1,
+      stopWatch: null,
+      isCorrectNow: false,
+      isLast: false
+    };
+  },
+  methods: {
+    attendExam: function attendExam() {
+      var _this = this;
+
+      if (this.selectedQuestionIndex == this.questions.length - 1) {
+        this.answerForm.isLast = true;
+      }
+
+      axios.get("/student/api/attend-exam?examId=" + this.$route.params.examId).then(function (resp) {
+        return resp.data;
+      }).then(function (data) {
+        console.log(data);
+
+        if (data.status == "ok") {
+          _this.examData = data.examData;
+          _this.questions = data.questions;
+
+          _this.questionSelector(0);
+
+          _this.startTimer();
+
+          if (_this.answerForm.isLast) {
+            _this.isLast = true;
+          }
+
+          if (_this.isLast == true) {
+            swal.fire("Exam finished", "You have finished your exam. See your report", "success");
+          }
+        } else {
+          toastr.error("Failed", data.msg);
+
+          _this.$router.push({
+            name: "student.upcoming-exam"
+          });
+        }
+      })["catch"](function (err) {
+        _this.$router.push({
+          name: "student.upcoming-exam"
+        });
+
+        console.error(err.response.data);
+      });
+    },
+    questionSelector: function questionSelector(index) {
+      if (index > this.questions.length - 1) {
+        this.selectedQuestion = this.questions[0];
+        this.selectedQuestionIndex = 0;
+        this.answerForm.timer = this.selectedQuestion.total_time_to_ans;
+        this.answerForm.tries = this.selectedQuestion.total_tries;
+        this.answerForm.nowAns = this.selectedQuestion.answer;
+      } else {
+        if (this.questions[index].status == "not_submited") {
+          this.selectedQuestion = this.questions[index];
+          this.selectedQuestionIndex = index;
+          this.answerForm.timer = this.selectedQuestion.total_time_to_ans;
+          this.answerForm.tries = this.selectedQuestion.total_tries;
+          this.answerForm.nowAns = this.selectedQuestion.answer;
+        } else {
+          this.questionSelector(index + 1);
+        }
+      }
+    },
+    startTimer: function startTimer() {
+      var _this2 = this;
+
+      this.stopWatch = setInterval(function () {
+        _this2.answerForm.timer += 1;
+      }, 1000);
+    },
+    submitAnswer: function submitAnswer() {
+      var _this3 = this;
+
+      this.answerForm.answerId = this.selectedQuestion.id;
+      this.answerForm.post("/student/api/submit-answer").then(function (resp) {
+        return resp.data;
+      }).then(function (data) {
+        console.log(data);
+
+        if (data.status == "correct") {
+          toastr.success("Great!", data.msg);
+          _this3.isCorrectNow = true;
+        } else if (data.status == "incorrect") {
+          _this3.answerForm.tries += 1;
+          toastr.error("X", data.msg);
+        }
+      })["catch"](function (err) {
+        console.error(err.response.data);
+      });
+    },
+    nextQuestion: function nextQuestion() {
+      this.isCorrectNow = false;
+      this.questionSelector(this.selectedQuestionIndex + 1);
+    }
+  },
+  mounted: function mounted() {
+    this.attendExam();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Student/exam/UpcomingExam.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Student/exam/UpcomingExam.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      exams: [],
+      isLoading: false
+    };
+  },
+  methods: {
+    getUpcomingExam: function getUpcomingExam() {
+      var _this = this;
+
+      axios.get("/student/api/get-upcoming-exams").then(function (resp) {
+        return resp.data;
+      }).then(function (data) {
+        _this.exams = data;
+        _this.isLoading = false;
+      })["catch"](function (err) {
+        console.error(err.response.data);
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.getUpcomingExam();
   }
 });
 
@@ -11909,6 +12233,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -11930,8 +12255,6 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         data: "phone"
       }, {
-        data: "email"
-      }, {
         data: "supervisors"
       }, {
         data: "school"
@@ -11945,6 +12268,10 @@ __webpack_require__.r(__webpack_exports__);
         data: 'ratings'
       }, {
         data: 'stars'
+      }, {
+        data: 'salary'
+      }, {
+        data: 'bonus_money'
       }, {
         data: 'action',
         name: 'action',
@@ -13753,12 +14080,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       isLoading: true,
       paginateData: {},
-      moment: moment
+      moment: moment,
+      credit_salary: 0,
+      credit_time: 0
     };
   },
   methods: {
@@ -13770,7 +14106,9 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("/teacher/api/get-leave-data?page=" + page).then(function (resp) {
         return resp.data;
       }).then(function (data) {
-        _this.paginateData = data;
+        _this.paginateData = data.data;
+        _this.credit_salary = data.credit_without_salary;
+        _this.credit_time = data.credit_time;
         _this.isLoading = false;
         setTimeout(function () {
           $('[data-toggle="popover"]').popover({
@@ -13856,7 +14194,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       form: new Form({
         fromDate: "",
-        toDate: "",
+        toDate: 1,
         subject: "",
         desc: "",
         reason: ""
@@ -15003,7 +15341,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vform/src/components/bootstrap4 */ "./node_modules/vform/src/components/bootstrap4/index.js");
 /* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vform */ "./node_modules/vform/dist/vform.es.js");
 /* harmony import */ var vue_toastr_2__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-toastr-2 */ "./node_modules/vue-toastr-2/dist/vue-toastr-2.common.js");
@@ -15015,10 +15353,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _routes_supervisor__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./routes/supervisor */ "./resources/js/routes/supervisor.js");
 /* harmony import */ var _routes_teacher__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./routes/teacher */ "./resources/js/routes/teacher.js");
 /* harmony import */ var _routes_manager__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./routes/manager */ "./resources/js/routes/manager.js");
-/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
-/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _routes_student__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./routes/student */ "./resources/js/routes/student.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var vue_awesome_countdown__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! vue-awesome-countdown */ "./node_modules/vue-awesome-countdown/dist/vue-awesome-countdown.common.js");
+/* harmony import */ var vue_awesome_countdown__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(vue_awesome_countdown__WEBPACK_IMPORTED_MODULE_12__);
 // All Imports
 
 
@@ -15031,36 +15372,39 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
- // 
-// Moment
 
-window.moment = (moment__WEBPACK_IMPORTED_MODULE_10___default()); // 
+ // 
+
+
+vue__WEBPACK_IMPORTED_MODULE_13__["default"].use((vue_awesome_countdown__WEBPACK_IMPORTED_MODULE_12___default()), 'vac'); // Moment
+
+window.moment = (moment__WEBPACK_IMPORTED_MODULE_11___default()); // 
 // Pagination
 
-vue__WEBPACK_IMPORTED_MODULE_11__["default"].component("pagination", __webpack_require__(/*! laravel-vue-pagination */ "./node_modules/laravel-vue-pagination/dist/laravel-vue-pagination.common.js")); // 
+vue__WEBPACK_IMPORTED_MODULE_13__["default"].component("pagination", __webpack_require__(/*! laravel-vue-pagination */ "./node_modules/laravel-vue-pagination/dist/laravel-vue-pagination.common.js")); // 
 // Skeleton
 
-vue__WEBPACK_IMPORTED_MODULE_11__["default"].component('skeleton', (__webpack_require__(/*! ./components/Partials/CustomSkeleton.vue */ "./resources/js/components/Partials/CustomSkeleton.vue")["default"])); // End
+vue__WEBPACK_IMPORTED_MODULE_13__["default"].component('skeleton', (__webpack_require__(/*! ./components/Partials/CustomSkeleton.vue */ "./resources/js/components/Partials/CustomSkeleton.vue")["default"])); // End
 // Notification
 
-vue__WEBPACK_IMPORTED_MODULE_11__["default"].component('notification', (__webpack_require__(/*! ./components/Partials/Notification.vue */ "./resources/js/components/Partials/Notification.vue")["default"])); // 
+vue__WEBPACK_IMPORTED_MODULE_13__["default"].component('notification', (__webpack_require__(/*! ./components/Partials/Notification.vue */ "./resources/js/components/Partials/Notification.vue")["default"])); // 
 // Sweet alert
 
-window.swal = (sweetalert2__WEBPACK_IMPORTED_MODULE_9___default()); // 
+window.swal = (sweetalert2__WEBPACK_IMPORTED_MODULE_10___default()); // 
 // Progress bar
 
-vue__WEBPACK_IMPORTED_MODULE_11__["default"].use((vue_progressbar__WEBPACK_IMPORTED_MODULE_4___default()), {
+vue__WEBPACK_IMPORTED_MODULE_13__["default"].use((vue_progressbar__WEBPACK_IMPORTED_MODULE_4___default()), {
   color: '#0015b5',
   failedColor: 'red',
   thickness: '5px'
 }); // End
 // Vue
 
-window.Vue = vue__WEBPACK_IMPORTED_MODULE_11__["default"]; // 
+window.Vue = vue__WEBPACK_IMPORTED_MODULE_13__["default"]; // 
 // Toastr
 
 window.toastr = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
-vue__WEBPACK_IMPORTED_MODULE_11__["default"].use((vue_toastr_2__WEBPACK_IMPORTED_MODULE_2___default())); // End
+vue__WEBPACK_IMPORTED_MODULE_13__["default"].use((vue_toastr_2__WEBPACK_IMPORTED_MODULE_2___default())); // End
 // Axios
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
@@ -15068,30 +15412,35 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'; // 
 // Vform
 
 window.Form = vform__WEBPACK_IMPORTED_MODULE_1__["default"];
-vue__WEBPACK_IMPORTED_MODULE_11__["default"].component(vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_0__.Button.name, vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_0__.Button);
-vue__WEBPACK_IMPORTED_MODULE_11__["default"].component(vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_0__.HasError.name, vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_0__.HasError);
-vue__WEBPACK_IMPORTED_MODULE_11__["default"].component(vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_0__.AlertError.name, vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_0__.AlertError);
-vue__WEBPACK_IMPORTED_MODULE_11__["default"].component(vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_0__.AlertErrors.name, vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_0__.AlertErrors);
-vue__WEBPACK_IMPORTED_MODULE_11__["default"].component(vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_0__.AlertSuccess.name, vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_0__.AlertSuccess); // End
+vue__WEBPACK_IMPORTED_MODULE_13__["default"].component(vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_0__.Button.name, vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_0__.Button);
+vue__WEBPACK_IMPORTED_MODULE_13__["default"].component(vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_0__.HasError.name, vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_0__.HasError);
+vue__WEBPACK_IMPORTED_MODULE_13__["default"].component(vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_0__.AlertError.name, vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_0__.AlertError);
+vue__WEBPACK_IMPORTED_MODULE_13__["default"].component(vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_0__.AlertErrors.name, vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_0__.AlertErrors);
+vue__WEBPACK_IMPORTED_MODULE_13__["default"].component(vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_0__.AlertSuccess.name, vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_0__.AlertSuccess); // End
 // Login
 
 if (document.getElementById("loginForm")) {
-  var login = new vue__WEBPACK_IMPORTED_MODULE_11__["default"]({
+  var login = new vue__WEBPACK_IMPORTED_MODULE_13__["default"]({
     el: "#loginForm",
     data: function data() {
       return {
         loginForm: new vform__WEBPACK_IMPORTED_MODULE_1__["default"]({
           email: "",
           password: "",
-          remember: false
+          remember: false,
+          loginType: null
         })
       };
     },
     methods: {
       userLogin: function userLogin() {
+        var loginType = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+        this.loginForm.loginType = loginType;
         this.loginForm.post("/attemp-login").then(function (resp) {
           return resp.data;
         }).then(function (data) {
+          console.log(data);
+
           if (data.status == "ok") {
             toastr.success("Login scuccess");
             window.location.href = data.redirect_url;
@@ -15109,30 +15458,37 @@ if (document.getElementById("loginForm")) {
 
 
 if (document.getElementById("super_app")) {
-  var superAdmin = new vue__WEBPACK_IMPORTED_MODULE_11__["default"]({
+  var superAdmin = new vue__WEBPACK_IMPORTED_MODULE_13__["default"]({
     el: "#super_app",
     router: _routes_super_admin__WEBPACK_IMPORTED_MODULE_5__["default"]
   });
 }
 
 if (document.getElementById('supervisor_app')) {
-  var superVisor = new vue__WEBPACK_IMPORTED_MODULE_11__["default"]({
+  var superVisor = new vue__WEBPACK_IMPORTED_MODULE_13__["default"]({
     el: "#supervisor_app",
     router: _routes_supervisor__WEBPACK_IMPORTED_MODULE_6__["default"]
   });
 }
 
 if (document.getElementById("teacher_app")) {
-  var teacherApp = new vue__WEBPACK_IMPORTED_MODULE_11__["default"]({
+  var teacherApp = new vue__WEBPACK_IMPORTED_MODULE_13__["default"]({
     el: "#teacher_app",
     router: _routes_teacher__WEBPACK_IMPORTED_MODULE_7__["default"]
   });
 }
 
 if (document.getElementById("manager_app")) {
-  var managerApp = new vue__WEBPACK_IMPORTED_MODULE_11__["default"]({
+  var managerApp = new vue__WEBPACK_IMPORTED_MODULE_13__["default"]({
     el: "#manager_app",
     router: _routes_manager__WEBPACK_IMPORTED_MODULE_8__["default"]
+  });
+}
+
+if (document.getElementById("student_app")) {
+  var studentApp = new vue__WEBPACK_IMPORTED_MODULE_13__["default"]({
+    el: "#student_app",
+    router: _routes_student__WEBPACK_IMPORTED_MODULE_9__["default"]
   });
 }
 
@@ -15250,6 +15606,80 @@ var routes = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     component: _components_Manager_dashboard_MyProfile_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
     meta: {
       title: "My profile"
+    }
+  }],
+  scrollBehavior: function scrollBehavior(to, from, savedPos) {
+    if (savedPos) {
+      return savedPos;
+    } else {
+      return {
+        x: 0,
+        y: 0
+      };
+    }
+  }
+});
+routes.beforeEach(function (to, from, next) {
+  document.title = to.meta.title || "Dashboard";
+  vue__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.$Progress.start();
+  next();
+});
+routes.afterEach(function () {
+  vue__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.$Progress.finish();
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (routes);
+
+/***/ }),
+
+/***/ "./resources/js/routes/student.js":
+/*!****************************************!*\
+  !*** ./resources/js/routes/student.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var _components_Student_dashboard_Dashboard_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Student/dashboard/Dashboard.vue */ "./resources/js/components/Student/dashboard/Dashboard.vue");
+/* harmony import */ var _components_Student_exam_UpcomingExam_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/Student/exam/UpcomingExam.vue */ "./resources/js/components/Student/exam/UpcomingExam.vue");
+/* harmony import */ var _components_Student_exam_AttendExam_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/Student/exam/AttendExam.vue */ "./resources/js/components/Student/exam/AttendExam.vue");
+
+
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]); // Components
+
+
+
+ // End
+
+var prefix = "/student/";
+var routes = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
+  mode: "history",
+  linkExactActiveClass: "active",
+  linkActiveClass: "active",
+  routes: [{
+    path: prefix + "dashboard",
+    name: "student.dashboard",
+    component: _components_Student_dashboard_Dashboard_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    meta: {
+      title: "Student Dashboard"
+    }
+  }, {
+    path: prefix + "upcoming-exams",
+    name: "student.upcoming-exam",
+    component: _components_Student_exam_UpcomingExam_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    meta: {
+      title: "Upcoming exams"
+    }
+  }, {
+    path: prefix + "attend-exam/exam/:examId",
+    name: "student.attend",
+    component: _components_Student_exam_AttendExam_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+    meta: {
+      title: "Exam"
     }
   }],
   scrollBehavior: function scrollBehavior(to, from, savedPos) {
@@ -56986,6 +57416,609 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/vue-awesome-countdown/dist/vue-awesome-countdown.common.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/vue-awesome-countdown/dist/vue-awesome-countdown.common.js ***!
+  \*********************************************************************************/
+/***/ ((module) => {
+
+module.exports =
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __nested_webpack_require_187__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __nested_webpack_require_187__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__nested_webpack_require_187__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__nested_webpack_require_187__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__nested_webpack_require_187__.d = function(exports, name, getter) {
+/******/ 		if(!__nested_webpack_require_187__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__nested_webpack_require_187__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__nested_webpack_require_187__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __nested_webpack_require_187__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__nested_webpack_require_187__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __nested_webpack_require_187__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__nested_webpack_require_187__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__nested_webpack_require_187__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__nested_webpack_require_187__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__nested_webpack_require_187__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __nested_webpack_require_187__(__nested_webpack_require_187__.s = "9896");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "79e4":
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// addapted from the document.currentScript polyfill by Adam Miller
+// MIT license
+// source: https://github.com/amiller-gh/currentScript-polyfill
+
+// added support for Firefox https://bugzilla.mozilla.org/show_bug.cgi?id=1620505
+
+(function (root, factory) {
+  if (true) {
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+  } else {}
+}(typeof self !== 'undefined' ? self : this, function () {
+  function getCurrentScript () {
+    var descriptor = Object.getOwnPropertyDescriptor(document, 'currentScript')
+    // for chrome
+    if (!descriptor && 'currentScript' in document && document.currentScript) {
+      return document.currentScript
+    }
+
+    // for other browsers with native support for currentScript
+    if (descriptor && descriptor.get !== getCurrentScript && document.currentScript) {
+      return document.currentScript
+    }
+  
+    // IE 8-10 support script readyState
+    // IE 11+ & Firefox support stack trace
+    try {
+      throw new Error();
+    }
+    catch (err) {
+      // Find the second match for the "at" string to get file src url from stack.
+      var ieStackRegExp = /.*at [^(]*\((.*):(.+):(.+)\)$/ig,
+        ffStackRegExp = /@([^@]*):(\d+):(\d+)\s*$/ig,
+        stackDetails = ieStackRegExp.exec(err.stack) || ffStackRegExp.exec(err.stack),
+        scriptLocation = (stackDetails && stackDetails[1]) || false,
+        line = (stackDetails && stackDetails[2]) || false,
+        currentLocation = document.location.href.replace(document.location.hash, ''),
+        pageSource,
+        inlineScriptSourceRegExp,
+        inlineScriptSource,
+        scripts = document.getElementsByTagName('script'); // Live NodeList collection
+  
+      if (scriptLocation === currentLocation) {
+        pageSource = document.documentElement.outerHTML;
+        inlineScriptSourceRegExp = new RegExp('(?:[^\\n]+?\\n){0,' + (line - 2) + '}[^<]*<script>([\\d\\D]*?)<\\/script>[\\d\\D]*', 'i');
+        inlineScriptSource = pageSource.replace(inlineScriptSourceRegExp, '$1').trim();
+      }
+  
+      for (var i = 0; i < scripts.length; i++) {
+        // If ready state is interactive, return the script tag
+        if (scripts[i].readyState === 'interactive') {
+          return scripts[i];
+        }
+  
+        // If src matches, return the script tag
+        if (scripts[i].src === scriptLocation) {
+          return scripts[i];
+        }
+  
+        // If inline source matches, return the script tag
+        if (
+          scriptLocation === currentLocation &&
+          scripts[i].innerHTML &&
+          scripts[i].innerHTML.trim() === inlineScriptSource
+        ) {
+          return scripts[i];
+        }
+      }
+  
+      // If no match, return null
+      return null;
+    }
+  };
+
+  return getCurrentScript
+}));
+
+
+/***/ }),
+
+/***/ "9896":
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_6925__) {
+
+"use strict";
+// ESM COMPAT FLAG
+__nested_webpack_require_6925__.r(__webpack_exports__);
+
+// CONCATENATED MODULE: ./node_modules/_@vue_cli-service@4.4.6@@vue/cli-service/lib/commands/build/setPublicPath.js
+// This file is imported into lib/wc client bundles.
+
+if (typeof window !== 'undefined') {
+  var currentScript = window.document.currentScript
+  if (true) {
+    var getCurrentScript = __nested_webpack_require_6925__("79e4")
+    currentScript = getCurrentScript()
+
+    // for backward compatibility, because previously we directly included the polyfill
+    if (!('currentScript' in document)) {
+      Object.defineProperty(document, 'currentScript', { get: getCurrentScript })
+    }
+  }
+
+  var src = currentScript && currentScript.src.match(/(.+\/)[^/]+\.js(\?.*)?$/)
+  if (src) {
+    __nested_webpack_require_6925__.p = src[1] // eslint-disable-line
+  }
+}
+
+// Indicate to webpack that this file can be concatenated
+/* harmony default export */ var setPublicPath = (null);
+
+// CONCATENATED MODULE: ./node_modules/_cache-loader@4.1.0@cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"883de7d0-vue-loader-template"}!./node_modules/_vue-loader@15.9.3@vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/_cache-loader@4.1.0@cache-loader/dist/cjs.js??ref--0-0!./node_modules/_vue-loader@15.9.3@vue-loader/lib??vue-loader-options!./src/vue-awesome-countdown.vue?vue&type=template&id=f6ff4b48&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.tag,_vm._g(_vm._b({tag:"components"},'components',_vm.attrs,false),_vm.$listeners),[_vm._t("prev",null,null,this._self),(_vm.state === 'beforeStart')?_vm._t("before",null,null,this._self):_vm._e(),(_vm.state === 'preheat')?_vm._t("preheat",null,null,this._self):_vm._e(),(_vm.state === 'process' || _vm.state === 'stopped' || _vm.state === 'paused')?_vm._t("process",null,null,this._self):_vm._e(),(_vm.state === 'finished')?_vm._t("finish",null,null,this._self):_vm._e(),_vm._t("default",null,null,this._self)],2)}
+var staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/vue-awesome-countdown.vue?vue&type=template&id=f6ff4b48&
+
+// CONCATENATED MODULE: ./node_modules/_cache-loader@4.1.0@cache-loader/dist/cjs.js??ref--0-0!./node_modules/_vue-loader@15.9.3@vue-loader/lib??vue-loader-options!./src/vue-awesome-countdown.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ var vue_awesome_countdownvue_type_script_lang_js_ = ({
+  name: 'vue-awesome-countdown',
+  props: {
+    startTime: {
+      type: [String, Number, Date],
+      default: null,
+      validator: function(value) {
+        return new Date(value).toString() !== 'Invalid Date'
+      }
+    },
+    endTime: {
+      type: [String, Number, Date],
+      default: null,
+      validator: function(value) {
+        return new Date(value).toString() !== 'Invalid Date'
+      }
+    },
+    leftTime: {
+      type: Number,
+      default: 0
+    },
+    autoStart: {
+      type: Boolean,
+      default: true
+    },
+    speed: {
+      type: Number,
+      default: 1000,
+      validator: function(value) {
+        return value >= 0
+      }
+    },
+    tag: {
+      type: String,
+      default: 'span'
+    }
+  },
+  computed: {
+    thousandSpeed() {
+      return this.speed > 0 && this.speed % 1000 === 0
+    }
+  },
+  data: function() {
+    return {
+      state: 'beforeStart', //beforeStart, stopped, process, finished
+      attrs: {},
+      actualStartTime: null,
+      actualEndTime: null,
+      timeObj: {},
+      countdownTimer: null,
+      runTimes: 0,
+      usedTime: 0,
+      remainingTime: 0
+    }
+  },
+  watch: {
+    speed(curSpeed, oldSpeed) {
+      const vm = this
+      if (curSpeed < 0) {
+        curSpeed = 0
+      }
+      if (curSpeed !== oldSpeed) {
+        clearTimeout(vm.countdownTimer)
+        const now = new Date().getTime()
+        const runTimes = Math.floor((now - vm.actualStartTime) / curSpeed)
+        const nextTime = now % curSpeed
+        vm.runTimes = runTimes
+        vm.$nextTick(() => {
+          vm.countdownTimer = setTimeout(vm.doCountdown, nextTime)
+        })
+      }
+    }
+  },
+  created() {
+    const vm = this
+    const startTime = (vm.startTime && new Date(vm.startTime).getTime()) || 0
+    const firstTime = (startTime && startTime - new Date().getTime()) || 0
+    if (vm.autoStart) {
+      vm.state = 'preheat'
+      setTimeout(() => {
+        vm.startCountdown(true)
+      }, firstTime)
+    }
+  },
+  methods: {
+    startCountdown(restart) {
+      const vm = this
+      if (vm.state !== 'beforeStart' && vm.state !== 'stopped' && vm.state !== 'paused' && !restart) {
+        return
+      }
+      if (restart) {
+        Object.assign(vm.$data, vm.$options.data.call(vm))
+      }
+      if (vm.state === 'stopped') {
+        vm.remainingTime = vm.actualEndTime - new Date().getTime()
+      }
+      if (!vm.actualEndTime) {
+        vm.actualEndTime = vm.endTime || (new Date().getTime() + (vm.remainingTime || vm.leftTime))
+      }
+      if (vm.state === 'paused') {
+        vm.actualEndTime = new Date().getTime() + vm.remainingTime
+      }
+      vm.$emit('start', vm)
+      vm.state = 'process'
+      vm.doCountdown()
+    },
+    stopCountdown() {
+      const vm = this
+      if (vm.state !== 'process') {
+        return
+      }
+      clearTimeout(vm.countdownTimer)
+      vm.$emit('stop', vm)
+      vm.state = 'stopped'
+    },
+    pauseCountdown() {
+      const vm = this
+      if (vm.state !== 'process') {
+        return
+      }
+      clearTimeout(vm.countdownTimer)
+      vm.remainingTime = vm.actualEndTime - new Date().getTime()
+      vm.$emit('paused', vm)
+      vm.state = 'paused'
+    },
+    switchCountdown() {
+      const vm = this
+      if (vm.state === 'stopped' || vm.state === 'beforeStart') {
+        return vm.startCountdown()
+      }
+      if (vm.state === 'process') {
+        return vm.stopCountdown()
+      }
+    },
+    finishCountdown() {
+      const vm = this
+      vm.state = 'finished'
+      vm.timeObj = {}
+      vm.usedTime = new Date().getTime() - vm.actualStartTime
+      vm.$emit('finish', vm)
+    },
+    doCountdown() {
+      const vm = this
+      if (vm.state !== 'process') {
+        return
+      }
+      if (!vm.actualStartTime) {
+        vm.actualStartTime = new Date().getTime()
+      }
+      let leftTime = new Date(vm.actualEndTime).getTime() - new Date().getTime()
+      if (leftTime > 0) {
+        const t = {}
+        let leftSeconds = leftTime / 1000
+
+        let ms = leftTime % 1000
+
+        if (vm.thousandSpeed && ms > 990) {
+          leftSeconds = Math.ceil(leftSeconds)
+          ms = 0
+        }
+
+        const org = {
+          d: leftSeconds / 60 / 60 / 24,
+          h: (leftSeconds / 60 / 60) % 24,
+          m: (leftSeconds / 60) % 60,
+          s: leftSeconds % 60,
+          ms: ms
+        }
+
+        const txt = {
+          d: parseInt(org.d, 10).toString(),
+          h: parseInt(org.h, 10)
+            .toString()
+            .padStart(2, 0),
+          m: parseInt(org.m, 10)
+            .toString()
+            .padStart(2, 0),
+          s: parseInt(org.s, 10)
+            .toString()
+            .padStart(2, 0),
+          ms: org.ms.toString().padStart(3, 0)
+        }
+
+        const ceil = {
+          d: parseInt(Math.ceil(leftSeconds / 60 / 60 / 24), 10),
+          h: parseInt(Math.ceil(leftSeconds / 60 / 60), 10),
+          m: parseInt(Math.ceil(leftSeconds / 60), 10),
+          s: parseInt(Math.ceil(leftSeconds), 10)
+        }
+
+        t.endTime = vm.actualEndTime
+        t.speed = vm.speed
+        vm.usedTime = new Date().getTime() - vm.actualStartTime
+        t.leftTime = leftTime
+        vm.remainingTime = leftTime
+        vm.timeObj = Object.assign({}, t, txt, {
+          org,
+          ceil
+        })
+        vm.timeObj.org = org
+        vm.timeObj.ceil = ceil
+        vm.$emit('process', vm)
+      } else {
+        vm.finishCountdown()
+        return
+      }
+
+      let nextSpeed =
+        vm.speed +
+        (vm.actualStartTime + vm.runTimes++ * vm.speed - new Date().getTime())
+      if (nextSpeed < 0) {
+        nextSpeed = nextSpeed + vm.speed
+      }
+      if (leftTime < vm.speed) {
+        nextSpeed = leftTime
+      }
+      vm.countdownTimer = setTimeout(vm.doCountdown, nextSpeed)
+    }
+  }
+});
+
+// CONCATENATED MODULE: ./src/vue-awesome-countdown.vue?vue&type=script&lang=js&
+ /* harmony default export */ var src_vue_awesome_countdownvue_type_script_lang_js_ = (vue_awesome_countdownvue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./node_modules/_vue-loader@15.9.3@vue-loader/lib/runtime/componentNormalizer.js
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier, /* server only */
+  shadowMode /* vue-cli only */
+) {
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = 'data-v-' + scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = shadowMode
+      ? function () {
+        injectStyles.call(
+          this,
+          (options.functional ? this.parent : this).$root.$options.shadowRoot
+        )
+      }
+      : injectStyles
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functional component in vue file
+      var originalRender = options.render
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return originalRender(h, context)
+      }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    }
+  }
+
+  return {
+    exports: scriptExports,
+    options: options
+  }
+}
+
+// CONCATENATED MODULE: ./src/vue-awesome-countdown.vue
+
+
+
+
+
+/* normalize component */
+
+var component = normalizeComponent(
+  src_vue_awesome_countdownvue_type_script_lang_js_,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* harmony default export */ var vue_awesome_countdown = (component.exports);
+// CONCATENATED MODULE: ./src/vue-awesome-countdown.js
+
+
+const vac = {
+  install: function (Vue, options) {
+    const name = options || 'vac'
+    Vue.component(name, vue_awesome_countdown)
+    Vue.component('countdown', vue_awesome_countdown)
+  }
+}
+
+if (typeof window !== "undefined" && window.Vue) {
+  window.Vue.use(vac)
+}
+
+/* harmony default export */ var src_vue_awesome_countdown = (vac);
+// CONCATENATED MODULE: ./node_modules/_@vue_cli-service@4.4.6@@vue/cli-service/lib/commands/build/entry-lib.js
+
+
+/* harmony default export */ var entry_lib = __webpack_exports__["default"] = (src_vue_awesome_countdown);
+
+
+
+/***/ })
+
+/******/ });
+//# sourceMappingURL=vue-awesome-countdown.common.js.map
+
+/***/ }),
+
 /***/ "./node_modules/vform/src/components/bootstrap4/AlertError.vue":
 /*!*********************************************************************!*\
   !*** ./node_modules/vform/src/components/bootstrap4/AlertError.vue ***!
@@ -58063,6 +59096,123 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 /* hot reload */
 if (false) { var api; }
 component.options.__file = "resources/js/components/Partials/Stars.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Student/dashboard/Dashboard.vue":
+/*!*****************************************************************!*\
+  !*** ./resources/js/components/Student/dashboard/Dashboard.vue ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Dashboard_vue_vue_type_template_id_c7586d6c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Dashboard.vue?vue&type=template&id=c7586d6c& */ "./resources/js/components/Student/dashboard/Dashboard.vue?vue&type=template&id=c7586d6c&");
+/* harmony import */ var _Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Dashboard.vue?vue&type=script&lang=js& */ "./resources/js/components/Student/dashboard/Dashboard.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Dashboard_vue_vue_type_template_id_c7586d6c___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Dashboard_vue_vue_type_template_id_c7586d6c___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Student/dashboard/Dashboard.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Student/exam/AttendExam.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/Student/exam/AttendExam.vue ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _AttendExam_vue_vue_type_template_id_03d18efa___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AttendExam.vue?vue&type=template&id=03d18efa& */ "./resources/js/components/Student/exam/AttendExam.vue?vue&type=template&id=03d18efa&");
+/* harmony import */ var _AttendExam_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AttendExam.vue?vue&type=script&lang=js& */ "./resources/js/components/Student/exam/AttendExam.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _AttendExam_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _AttendExam_vue_vue_type_template_id_03d18efa___WEBPACK_IMPORTED_MODULE_0__.render,
+  _AttendExam_vue_vue_type_template_id_03d18efa___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Student/exam/AttendExam.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Student/exam/UpcomingExam.vue":
+/*!***************************************************************!*\
+  !*** ./resources/js/components/Student/exam/UpcomingExam.vue ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _UpcomingExam_vue_vue_type_template_id_46aed93c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UpcomingExam.vue?vue&type=template&id=46aed93c& */ "./resources/js/components/Student/exam/UpcomingExam.vue?vue&type=template&id=46aed93c&");
+/* harmony import */ var _UpcomingExam_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UpcomingExam.vue?vue&type=script&lang=js& */ "./resources/js/components/Student/exam/UpcomingExam.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _UpcomingExam_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _UpcomingExam_vue_vue_type_template_id_46aed93c___WEBPACK_IMPORTED_MODULE_0__.render,
+  _UpcomingExam_vue_vue_type_template_id_46aed93c___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Student/exam/UpcomingExam.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -60530,6 +61680,54 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Student/dashboard/Dashboard.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/Student/dashboard/Dashboard.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Dashboard.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Student/dashboard/Dashboard.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Student/exam/AttendExam.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/Student/exam/AttendExam.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AttendExam_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./AttendExam.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Student/exam/AttendExam.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AttendExam_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Student/exam/UpcomingExam.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/Student/exam/UpcomingExam.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UpcomingExam_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./UpcomingExam.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Student/exam/UpcomingExam.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UpcomingExam_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/SuperAdmin/LeaveRequest/List.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************!*\
   !*** ./resources/js/components/SuperAdmin/LeaveRequest/List.vue?vue&type=script&lang=js& ***!
@@ -62004,6 +63202,57 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Student/dashboard/Dashboard.vue?vue&type=template&id=c7586d6c&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/Student/dashboard/Dashboard.vue?vue&type=template&id=c7586d6c& ***!
+  \************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_c7586d6c___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_c7586d6c___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_c7586d6c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Dashboard.vue?vue&type=template&id=c7586d6c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Student/dashboard/Dashboard.vue?vue&type=template&id=c7586d6c&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Student/exam/AttendExam.vue?vue&type=template&id=03d18efa&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/Student/exam/AttendExam.vue?vue&type=template&id=03d18efa& ***!
+  \********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AttendExam_vue_vue_type_template_id_03d18efa___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AttendExam_vue_vue_type_template_id_03d18efa___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AttendExam_vue_vue_type_template_id_03d18efa___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./AttendExam.vue?vue&type=template&id=03d18efa& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Student/exam/AttendExam.vue?vue&type=template&id=03d18efa&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Student/exam/UpcomingExam.vue?vue&type=template&id=46aed93c&":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/components/Student/exam/UpcomingExam.vue?vue&type=template&id=46aed93c& ***!
+  \**********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UpcomingExam_vue_vue_type_template_id_46aed93c___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UpcomingExam_vue_vue_type_template_id_46aed93c___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UpcomingExam_vue_vue_type_template_id_46aed93c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./UpcomingExam.vue?vue&type=template&id=46aed93c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Student/exam/UpcomingExam.vue?vue&type=template&id=46aed93c&");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/SuperAdmin/LeaveRequest/List.vue?vue&type=template&id=ec4526b6&":
 /*!*************************************************************************************************!*\
   !*** ./resources/js/components/SuperAdmin/LeaveRequest/List.vue?vue&type=template&id=ec4526b6& ***!
@@ -63428,6 +64677,15 @@ var render = function () {
                                                 "badge badge-pill badge-success",
                                             },
                                             [_vm._v("Approved")]
+                                          )
+                                        : req.leave.approved_by_manager == 2
+                                        ? _c(
+                                            "span",
+                                            {
+                                              staticClass:
+                                                "badge badge-pill badge-danger",
+                                            },
+                                            [_vm._v("Rejected")]
                                           )
                                         : _c(
                                             "span",
@@ -65926,7 +67184,7 @@ var render = function () {
                                 ]
                               : _vm._e(),
                             _vm._v(" "),
-                            not.type == "application_reject"
+                            not.type == "application_rejected"
                               ? [
                                   _vm._m(3, true),
                                   _vm._v(" "),
@@ -66192,7 +67450,7 @@ var render = function () {
                         1
                       ),
                     ]
-                  : not.type == "application_reject"
+                  : not.type == "application_rejected"
                   ? [
                       _vm._m(2, true),
                       _vm._v(" "),
@@ -66834,6 +68092,492 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("li", [_c("i", { staticClass: "fas fa-star" })])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Student/dashboard/Dashboard.vue?vue&type=template&id=c7586d6c&":
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Student/dashboard/Dashboard.vue?vue&type=template&id=c7586d6c& ***!
+  \***************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "card" }, [
+          _c(
+            "div",
+            { staticClass: "card-header d-flex justify-content-between" },
+            [_c("h4")]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _vm._v("\n              Dashboard\n          "),
+          ]),
+        ]),
+      ]),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Student/exam/AttendExam.vue?vue&type=template&id=03d18efa&":
+/*!***********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Student/exam/AttendExam.vue?vue&type=template&id=03d18efa& ***!
+  \***********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row justify-content-center" }, [
+    _c("div", { staticClass: "col-md-12" }, [
+      _c("div", { staticClass: "card" }, [
+        _c(
+          "div",
+          { staticClass: "card-header d-flex justify-content-between" },
+          [_c("h4", [_vm._v(_vm._s(_vm.examData.title))])]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-7 mb-4" }, [
+              _vm.selectedQuestion != null
+                ? _c(
+                    "form",
+                    {
+                      staticClass: "row",
+                      on: {
+                        submit: function ($event) {
+                          $event.preventDefault()
+                          return _vm.submitAnswer.apply(null, arguments)
+                        },
+                      },
+                    },
+                    [
+                      _c(
+                        "div",
+                        { staticClass: "col-md-12 d-flex justify-content-end" },
+                        [
+                          _vm.selectedQuestion.status == "not_submited"
+                            ? [
+                                _c("h6", { staticClass: "text-warning mr-5" }, [
+                                  _vm._v(
+                                    "Attempt : " + _vm._s(_vm.answerForm.tries)
+                                  ),
+                                ]),
+                                _vm._v(" "),
+                                _c("h6", [
+                                  _vm._v(
+                                    "Time : " +
+                                      _vm._s(_vm.answerForm.timer) +
+                                      "s"
+                                  ),
+                                ]),
+                              ]
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.selectedQuestion.status == "submited"
+                            ? [
+                                _c("h6", { staticClass: "text-warning mr-5" }, [
+                                  _vm._v(
+                                    "Attempt : " +
+                                      _vm._s(_vm.selectedQuestion.total_tries)
+                                  ),
+                                ]),
+                                _vm._v(" "),
+                                _c("h6", { staticClass: "mr-5" }, [
+                                  _vm._v(
+                                    "Time taken : " +
+                                      _vm._s(
+                                        _vm.selectedQuestion.total_time_to_ans
+                                      ) +
+                                      "s"
+                                  ),
+                                ]),
+                                _vm._v(" "),
+                                (_vm.selectedQuestion.is_correct = 1)
+                                  ? _c("h6", { staticClass: "text-success" }, [
+                                      _vm._v("Correct "),
+                                      _c("i", {
+                                        staticClass: "fas fa-check-circle",
+                                      }),
+                                    ])
+                                  : _vm._e(),
+                              ]
+                            : _vm._e(),
+                        ],
+                        2
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-lg-2 mb-3" }, [
+                        _c("h4", { staticClass: "text-muted" }, [
+                          _vm._v(
+                            "Question " + _vm._s(_vm.selectedQuestionIndex + 1)
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "student-question mt-3" }, [
+                          _c("div", { staticClass: "body" }, [
+                            _vm._v(_vm._s(_vm.selectedQuestion.qstn.body)),
+                          ]),
+                        ]),
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-lg-7 d-flex align-self-end" },
+                        [
+                          _c("div", { staticClass: "w-100" }, [
+                            _c(
+                              "div",
+                              { staticClass: "form-group" },
+                              [
+                                _c("label", { attrs: { for: "" } }, [
+                                  _vm._v("Write your answer"),
+                                ]),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.answerForm.nowAns,
+                                      expression: "answerForm.nowAns",
+                                    },
+                                  ],
+                                  staticClass: "form-control",
+                                  class: {
+                                    "is-invalid":
+                                      _vm.answerForm.errors.has("nowAns"),
+                                    "is-valid":
+                                      _vm.selectedQuestion.is_correct == 1
+                                        ? true
+                                        : false,
+                                  },
+                                  attrs: {
+                                    type: "text",
+                                    placeholder: "Write your answer here...",
+                                    disabled:
+                                      _vm.selectedQuestion.status == "submited"
+                                        ? true
+                                        : false,
+                                  },
+                                  domProps: { value: _vm.answerForm.nowAns },
+                                  on: {
+                                    input: function ($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.answerForm,
+                                        "nowAns",
+                                        $event.target.value
+                                      )
+                                    },
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _c("HasError", {
+                                  attrs: {
+                                    form: _vm.answerForm,
+                                    field: "nowAns",
+                                  },
+                                }),
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _vm.selectedQuestion.status == "not_submited" &&
+                            !_vm.isCorrectNow
+                              ? _c(
+                                  "div",
+                                  { staticClass: "form-group text-right" },
+                                  [
+                                    _c(
+                                      "Button",
+                                      {
+                                        staticClass: "btn btn-primary",
+                                        attrs: {
+                                          form: _vm.answerForm,
+                                          type: "submit",
+                                        },
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm.selectedQuestionIndex ==
+                                              _vm.questions.length - 1
+                                              ? "Finish"
+                                              : "Submit Answer"
+                                          ) + " "
+                                        ),
+                                        _c("i", {
+                                          staticClass: "fas fa-arrow-right",
+                                        }),
+                                      ]
+                                    ),
+                                  ],
+                                  1
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.isCorrectNow
+                              ? _c(
+                                  "div",
+                                  { staticClass: "form-group text-right" },
+                                  [
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass: "btn btn-warning",
+                                        attrs: { type: "button" },
+                                        on: { click: _vm.nextQuestion },
+                                      },
+                                      [
+                                        _vm._v("Next Question"),
+                                        _c("i", {
+                                          staticClass: "fas fa-arrow-right",
+                                        }),
+                                      ]
+                                    ),
+                                  ]
+                                )
+                              : _vm._e(),
+                          ]),
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _vm.isCorrectNow
+                        ? _c("div", { staticClass: "col-md-12 mt-5" }, [
+                            _vm._m(0),
+                          ])
+                        : _vm._e(),
+                    ]
+                  )
+                : _vm._e(),
+            ]),
+            _vm._v(" "),
+            _vm._m(1),
+          ]),
+        ]),
+      ]),
+    ]),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "alert alert-success", attrs: { role: "alert" } },
+      [
+        _c("h4", { staticClass: "alert-heading" }, [_vm._v("Well done!")]),
+        _vm._v(" "),
+        _c("p", { staticClass: "text-white" }, [
+          _vm._v("Your answer was correct. Go to next question"),
+        ]),
+        _vm._v(" "),
+        _c("hr"),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-5 mb-4" }, [
+      _c("div", { staticClass: "teacher-img" }, [
+        _c("img", { attrs: { src: "/image/teacher.png", alt: "" } }),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "text-center" }, [
+        _c("h4", [_vm._v("Question will appear one by one.")]),
+        _vm._v(" "),
+        _c("p", { staticClass: "text-success" }, [
+          _vm._v(
+            "Keep answering. Your time and number of tries will be count for each question"
+          ),
+        ]),
+      ]),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Student/exam/UpcomingExam.vue?vue&type=template&id=46aed93c&":
+/*!*************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Student/exam/UpcomingExam.vue?vue&type=template&id=46aed93c& ***!
+  \*************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "row" },
+    [
+      _vm._m(0),
+      _vm._v(" "),
+      _vm.isLoading
+        ? [
+            _c(
+              "div",
+              { staticClass: "col-12 col-md-6 col-lg-4" },
+              [_c("skeleton", { attrs: { height: "300px" } })],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-12 col-md-6 col-lg-4" },
+              [_c("skeleton", { attrs: { height: "300px" } })],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-12 col-md-6 col-lg-4" },
+              [_c("skeleton", { attrs: { height: "300px" } })],
+              1
+            ),
+          ]
+        : _vm._l(_vm.exams, function (exam, i) {
+            return _c(
+              "div",
+              { key: i, staticClass: "col-12 col-md-6 col-lg-4" },
+              [
+                _c("div", { staticClass: "card card-warning" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "card-header d-flex justify-content-between",
+                    },
+                    [
+                      _c("h4", [_vm._v(_vm._s(exam.title))]),
+                      _vm._v(" "),
+                      _c("h6", [_vm._v("Starts - " + _vm._s(exam.start_text))]),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("ul", [
+                      _c("li", { staticClass: "text-muted" }, [
+                        _vm._v("Total question : "),
+                        _c("strong", [_vm._v(_vm._s(exam.question_count))]),
+                      ]),
+                      _vm._v(" "),
+                      _c("li", { staticClass: "text-muted" }, [
+                        _vm._v("Total Time : "),
+                        _c("strong", [_vm._v(_vm._s(exam.total_time))]),
+                      ]),
+                      _vm._v(" "),
+                      _c("li", { staticClass: "text-muted" }, [
+                        _vm._v("Total Marks : "),
+                        _c("strong", [
+                          _vm._v(_vm._s(exam.total_marks) + " Points"),
+                        ]),
+                      ]),
+                      _vm._v(" "),
+                      _c("li", { staticClass: "text-muted" }, [
+                        _vm._v("Exam By : "),
+                        _c("strong", [_vm._v(_vm._s(exam.created_by))]),
+                      ]),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "card-footer text-right" },
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "btn btn-sm btn-primary",
+                          attrs: {
+                            to: {
+                              name: "student.attend",
+                              params: { examId: exam.id },
+                            },
+                          },
+                        },
+                        [
+                          _vm._v("Attend Exam "),
+                          _c("i", { staticClass: "fas fa-arrow-right" }),
+                        ]
+                      ),
+                    ],
+                    1
+                  ),
+                ]),
+              ]
+            )
+          }),
+    ],
+    2
+  )
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12 mb-2" }, [
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-body" }, [
+          _c("h4", { staticClass: "text-center" }, [
+            _c("i", { staticClass: "fas fa-clock" }),
+            _vm._v(" Upcoming Exams"),
+          ]),
+        ]),
+      ]),
+    ])
   },
 ]
 render._withStripped = true
@@ -78927,8 +80671,6 @@ var render = function () {
                         _vm._v(" "),
                         _c("th", [_vm._v("Phone")]),
                         _vm._v(" "),
-                        _c("th", [_vm._v("Email")]),
-                        _vm._v(" "),
                         _c("th", [_vm._v("Supervisors")]),
                         _vm._v(" "),
                         _c("th", [_vm._v("School")]),
@@ -78954,6 +80696,10 @@ var render = function () {
                               ")"
                           ),
                         ]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Salary")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Bonus Money")]),
                         _vm._v(" "),
                         _c("th", [_vm._v("Actions")]),
                       ]),
@@ -81900,6 +83646,20 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row justify-content-center" }, [
+    _c("div", { staticClass: "col-md-8 mb-4" }, [
+      _c("ul", [
+        _c("li", [
+          _c("strong", [_vm._v("Credit without salary : ")]),
+          _vm._v(" " + _vm._s(_vm.credit_salary)),
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("strong", [_vm._v("Credit Time : ")]),
+          _vm._v(" " + _vm._s(_vm.credit_time)),
+        ]),
+      ]),
+    ]),
+    _vm._v(" "),
     _c(
       "div",
       { staticClass: "col-md-8 mb-4 d-flex justify-content-between" },
@@ -82303,7 +84063,9 @@ var render = function () {
                 "div",
                 { staticClass: "col-md-6 mb-4" },
                 [
-                  _c("label", { attrs: { for: "" } }, [_vm._v("To")]),
+                  _c("label", { attrs: { for: "" } }, [
+                    _vm._v("Number of days"),
+                  ]),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -82316,7 +84078,7 @@ var render = function () {
                     ],
                     staticClass: "form-control",
                     class: { "is-invalid": _vm.form.errors.has("toDate") },
-                    attrs: { type: "date" },
+                    attrs: { type: "number" },
                     domProps: { value: _vm.form.toDate },
                     on: {
                       input: function ($event) {

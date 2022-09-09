@@ -14,8 +14,8 @@
                         <HasError :form="form" field="fromDate" />
                     </div>
                     <div class="col-md-6 mb-4">
-                        <label for="">To</label>
-                        <input type="date" class="form-control" :class="{'is-invalid':form.errors.has('toDate')}" v-model="form.toDate">
+                        <label for="">Number of days</label>
+                        <input type="number" class="form-control" :class="{'is-invalid':form.errors.has('toDate')}" v-model="form.toDate">
                         <HasError :form="form" field="toDate" />
                     </div>
                     <div class="col-md-12 mb-4">
@@ -55,7 +55,7 @@ export default {
         return {
             form: new Form({
                 fromDate: "",
-                toDate: "",
+                toDate: 1,
                 subject: "",
                 desc: "",
                 reason: "",

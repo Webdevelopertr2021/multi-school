@@ -1,5 +1,12 @@
 <template>
   <div class="row justify-content-center">
+    <div class="col-md-8 mb-4">
+      <ul>
+        <li><strong>Credit without salary : </strong> {{ credit_salary }}</li>
+        <li><strong>Credit Time : </strong> {{ credit_time }}</li>
+      </ul>
+    </div>
+
     <div class="col-md-8 mb-4 d-flex justify-content-between">
       <h3>My Leave Requests</h3>
       <router-link :to="{name: 'teacher.leave-make'}" class="btn btn-primary"><i class="fas fa-plus"></i> Make new leave request</router-link>
@@ -90,6 +97,8 @@ export default {
       isLoading: true,
       paginateData: {},
       moment: moment,
+      credit_salary: 0,
+      credit_time: 0,
     }
   },
   methods : {
@@ -98,7 +107,9 @@ export default {
       axios.get("/teacher/api/get-leave-data?page="+page).then(resp=>{
         return resp.data;
       }).then(data=>{
-        this.paginateData = data;
+        this.paginateData = data.data;
+        this.credit_salary = data.credit_without_salary;
+        this.credit_time = data.credit_time;
         this.isLoading = false;
         setTimeout(()=>{
           $('[data-toggle="popover"]').popover({

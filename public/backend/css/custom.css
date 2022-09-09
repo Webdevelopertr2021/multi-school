@@ -213,3 +213,33 @@ input.form-control{
     padding-bottom: 10px;
     text-align: center;
 }
+.teacher-img {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.teacher-img img{
+    width: 60%;
+    height: auto;
+    margin: 0 auto;
+}
+
+.student-question{
+    width: 100%;
+    height: auto;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    min-height: 50px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.16);
+    background-color: #d5c1a6;
+}
+
+.student-question .body{
+    font-size: 24px;
+    color: black;
+    font-weight: bold;
+    padding: 5px 10px;
+    line-height: 2;
+    white-space: pre-line;
+    text-align: center;
+}

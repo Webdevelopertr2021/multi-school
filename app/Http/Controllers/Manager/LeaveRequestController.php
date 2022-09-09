@@ -48,6 +48,10 @@ class LeaveRequestController extends Controller
         {
             $status = 0;
         }
+        else if($req->status == "rejected")
+        {
+            $status = 2; // Reject
+        }
         else
         {
             $status = 1;
@@ -56,14 +60,14 @@ class LeaveRequestController extends Controller
         $mainLeaveReq->manager_msg = $req->msg;
         $mainLeaveReq->save();
 
-        if($$mainLeaveReq->vacation_type == "Ordinary without salary")
+        if($mainLeaveReq->vacation_type == "Ordinary without salary")
         {
             $teacher = User::find($mainLeaveReq->teacher_id);
             $teacher->credit_without_salary = $teacher->credit_without_salary - 1;
             $teacher->save();
         }
 
-        if($$mainLeaveReq->vacation_type == "1 Hour")
+        if($mainLeaveReq->vacation_type == "1 Hour")
         {
             $teacher = User::find($mainLeaveReq->teacher_id);
             $teacher->credit_time = $teacher->credit_time - 1;
@@ -80,11 +84,11 @@ class LeaveRequestController extends Controller
             $notify->msg = "Your application for leave request ($mainLeaveReq->subject) was approved";
             $notify->save();
         }
-        else if($status == 0)
+        else if($status == 2)
         {
             $notify = new CustomNotification();
             $notify->user_id = $mainLeaveReq->teacher_id;
-            $notify->type = "application_approve";
+            $notify->type = "application_rejected";
             $notify->msg = "Your application for leave request ($mainLeaveReq->subject) was denied. Please apply again with proper explanation";
             $notify->save();
         }

@@ -20,7 +20,7 @@
 
 <body>
   <div class="loader"></div>
-  <div id="{{ auth()->user()->role }}_app">
+  <div id="{{ auth()->user()->role??"student" }}_app">
     <vue-progress-bar></vue-progress-bar>
     <div class="main-wrapper main-wrapper-1">
 

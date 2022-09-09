@@ -23,6 +23,7 @@ class RouteServiceProvider extends ServiceProvider
         "supervisor" => "/supervisor/dashboard",
         "teacher" => "/teacher/dashboard",
         "manager" => "/manager/dashboard",
+        "student" => "/student/dashboard",
     ];
 
     /**

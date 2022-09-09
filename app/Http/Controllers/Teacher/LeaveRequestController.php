@@ -20,7 +20,7 @@ class LeaveRequestController extends Controller
     {
         $this->validate($req,[
             "fromDate" => "required|after_or_equal:today",
-            "toDate" => "required|after:fromDate",
+            "toDate" => "required",
             "subject" => "required",
             "desc" => "required",
             "reason" => "required",
@@ -60,12 +60,16 @@ class LeaveRequestController extends Controller
         $superVisors = AssignedSupervisor::where('teacher_id',auth("teacher")->user()->id)
         ->with("user:id,teacher_application_permission")
         ->get(["id","supervisor_id"]);
-        $totalDay = Carbon::parse($req->fromDate)->diffInDays($req->toDate);
+
+        $fromDate = Carbon::parse($req->fromDate);
+        $toDate = Carbon::parse($req->toDate);
+
+        $totalDay = $fromDate->diffInDays($toDate);
         $teacherId = $me->id;
 
         $leave = new LeaveRequest();
         $leave->from_date = $req->fromDate;
-        $leave->to_date = $req->toDate;
+        $leave->to_date = $toDate;
         $leave->teacher_id = $teacherId;
         $leave->total_days = $totalDay;
         $leave->subject = $req->subject;
@@ -101,7 +105,11 @@ class LeaveRequestController extends Controller
         ->with("approval.superv:id,name")
         ->orderBy("id","desc")->paginate(5);
 
-        return response()->json($leaves);
+        return [
+            "data" => $leaves,
+            "credit_without_salary" => auth("teacher")->user()->credit_without_salary,
+            "credit_time" => auth("teacher")->user()->credit_time,
+        ];
 
     }
 }

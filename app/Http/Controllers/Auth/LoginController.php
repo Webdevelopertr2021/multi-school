@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Student;
 use App\Models\User;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
@@ -17,11 +18,17 @@ class LoginController extends Controller
         $this->middleware("guest:supervisor")->except("logout");
         $this->middleware("guest:teacher")->except("logout");
         $this->middleware("guest:manager")->except("logout");
+        $this->middleware("guest:student")->except("logout");
     }
 
     public function loginForm()
     {
         return view("auth.auth-login");
+    }
+
+    public function studentLoginForm()
+    {
+        return view("auth.student-login");
     }
 
     public function attemptLogin(Request $req)
@@ -31,7 +38,15 @@ class LoginController extends Controller
             "password" => "required"
         ]);
 
-        $user = User::where("email",$req->email)->orWhere("phone",$req->email)->first();
+        $user = null;
+        if($req->loginType == "student")
+        {
+            $user = Student::where("email",$req->email)->orWhere("phone",$req->email)->first();
+        }
+        else
+        {
+            $user = User::where("email",$req->email)->orWhere("phone",$req->email)->first();
+        }
 
         if($user)
         {
@@ -53,7 +68,15 @@ class LoginController extends Controller
                 ],422);
             }
 
-            $guard = $user->role=='super'?'web':$user->role;
+            $guard = null;
+            if($req->loginType == "student")
+            {
+                $guard = "student";
+            }
+            else
+            {
+                $guard = $user->role=='super'?'web':$user->role;
+            }
 
             $credentials["password"] = $req->password;
             $redirectUrl = null;
@@ -72,6 +95,10 @@ class LoginController extends Controller
             else if($guard == "manager")
             {
                 $redirectUrl = url("/manager/dashboard");
+            }
+            else if($guard == "student")
+            {
+                $redirectUrl = url("/student/dashboard");
             }
 
             if(Auth::guard($guard)->attempt($credentials,$req->remember))
@@ -104,7 +131,7 @@ class LoginController extends Controller
     public function logout(Request $req)
     {
         $this->validate($req,[
-            "role" => "required|in:super,teacher,supervisor,manager"
+            "role" => "required|in:super,teacher,supervisor,manager,student"
         ]);
 
         if($req->role == "super")
@@ -122,6 +149,10 @@ class LoginController extends Controller
         else if($req->role == "manager")
         {
             Auth::guard("manager")->logout();
+        }
+        else if($req->role == "student")
+        {
+            Auth::guard("student")->logout();
         }
 
         return redirect()->route("user-login");

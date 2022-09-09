@@ -19,7 +19,7 @@
                         <vue-moments-ago class="time" prefix="" suffix="ago" :date="not.created_at" lang="en"></vue-moments-ago>
                     </span>
                 </template>
-                <template v-else-if="not.type == 'application_reject'">
+                <template v-else-if="not.type == 'application_rejected'">
                     <span class="dropdown-item-icon bg-danger text-white"> <i class="fas fa-times-circle"></i></span> 
                     <span class="dropdown-item-desc">
                         <span class="d-block"><strong>Leave request rejected</strong></span>

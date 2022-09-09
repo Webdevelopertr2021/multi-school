@@ -14,15 +14,37 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect()->route("user-login");
+    return redirect()->route("student-login");
 });
 
 
 // User login
 Route::get("/user-login","Auth\LoginController@loginForm")->name("user-login");
+
 Route::post("/attemp-login","Auth\LoginController@attemptLogin")->name('user.login');
 
 Route::post("/user-logout","Auth\LoginController@logout")->name("user-logout");
+// End
+
+// Student
+// login
+Route::get('/student-login',"Auth\LoginController@studentLoginForm")->name("student-login");
+
+Route::group(["prefix" => "student","middleware" => "auth:student"],function(){
+
+    Route::get("/{any}","Student\StudentPagesController@index")->where("any", "^(?!api/.*$).*$");
+
+    Route::group(["prefix" => "api"],function(){
+
+        Route::get("/get-upcoming-exams","Student\ExamController@getUpcoming");
+
+        Route::get("/attend-exam","Student\ExamController@attendExam");
+
+        Route::post("/submit-answer","Student\ExamController@submitAnswer");
+
+    });
+    
+});
 // End
 
 // Storage resources

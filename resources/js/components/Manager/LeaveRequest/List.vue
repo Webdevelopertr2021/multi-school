@@ -54,6 +54,7 @@
                               </td>
                               <td>
                                 <span v-if="req.leave.approved_by_manager == 1" class="badge badge-pill badge-success">Approved</span>
+                                <span v-else-if="req.leave.approved_by_manager == 2" class="badge badge-pill badge-danger">Rejected</span>
                                 <span v-else class="badge badge-pill badge-warning">Pending</span>
                               </td>
                               <td><button class="btn btn-primary btn-sm" @click="actionModal(req,i)">Take action <i class="fas fa-arrow-right"></i></button></td>
@@ -115,8 +116,8 @@ export default {
           <div class="col-12 mb-4">
             <label class="text-left"><b>Choose action</b></label>
             <select id="actionStatus" class="form-control">
-              <option value="pending" ${data.approved_by_manager==0?'selected':''}>Pending</option>
               <option value="approved" ${data.approved_by_manager==1?'selected':''}>Approve</option>
+              <option value="rejected" ${data.approved_by_manager==0?'selected':''}>Reject</option>
             </select>
           </div>
           <div class="col-12 mb-4">
