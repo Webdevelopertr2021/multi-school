@@ -101,7 +101,7 @@ const routes = new VueRouter({
             meta : {
                 title: "My profile"
             }
-        }
+        },
     ],
     scrollBehavior(to, from, savedPos) {
         if (savedPos) {

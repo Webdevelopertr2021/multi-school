@@ -39,16 +39,6 @@
 
     <div class="col-md-7">
       <div class="card">
-        <div class="card-body">
-          <div class="d-flex justify-content-end">
-            <router-link v-if="!isLoading" :to="{name: 'admin.pay-salary', params: {userId: teacherData.id}}" class="btn btn-primary">Pay Salary <i class="fas fa-arrow-right"></i></router-link>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-7">
-      <div class="card">
         <div class="card-header">
           <h4 class="text-muted">Teacher ratings</h4>
         </div>

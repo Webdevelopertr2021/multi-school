@@ -3545,7 +3545,7 @@ __webpack_require__.r(__webpack_exports__);
       var teacherId = $(this).data("rate-btn");
 
       _self.$router.push({
-        name: 'admin.teacher-ratings',
+        name: 'manager.teacher-ratings',
         params: {
           teacherId: teacherId
         }
@@ -3569,16 +3569,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue_moments_ago__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-moments-ago */ "./node_modules/vue-moments-ago/src/main.js");
 /* harmony import */ var _Partials_Stars_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Partials/Stars.vue */ "./resources/js/components/Partials/Stars.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -66198,38 +66188,6 @@ var render = function () {
                   ]),
                 ]),
               ]),
-        ]),
-      ]),
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-md-7" }, [
-      _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-body" }, [
-          _c(
-            "div",
-            { staticClass: "d-flex justify-content-end" },
-            [
-              !_vm.isLoading
-                ? _c(
-                    "router-link",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: {
-                        to: {
-                          name: "admin.pay-salary",
-                          params: { userId: _vm.teacherData.id },
-                        },
-                      },
-                    },
-                    [
-                      _vm._v("Pay Salary "),
-                      _c("i", { staticClass: "fas fa-arrow-right" }),
-                    ]
-                  )
-                : _vm._e(),
-            ],
-            1
-          ),
         ]),
       ]),
     ]),
