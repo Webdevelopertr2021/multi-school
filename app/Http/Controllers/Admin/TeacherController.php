@@ -135,6 +135,11 @@ class TeacherController extends Controller
             $salaryData = Helper::getTeacherExtraSalary($row->id,$lastMonth->format("m"));
             return $salaryData["salary_rating"] . "$ + ". $salaryData["salary_no_leave"]."$";
         })
+        ->addColumn("total_salary",function($row){
+            $lastMonth = Carbon::now()->subMonth(1);
+            $salaryData = Helper::getTeacherExtraSalary($row->id,$lastMonth->format("m"));
+            return ($row->salary + $salaryData["salary_rating"] + $salaryData["salary_no_leave"])." $";
+        })
         ->addColumn("action",function($row){
             $html = "
             <button data-edit-teacher='$row->id' class='btn btn-sm btn-warning'><i class='fas fa-edit'></i></button>

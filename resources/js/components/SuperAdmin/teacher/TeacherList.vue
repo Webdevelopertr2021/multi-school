@@ -22,8 +22,9 @@
                                         <th>Total Students</th>
                                         <th>Rating ({{ moment().format("MMMM") }})</th>
                                         <th>Stars ({{ moment().format("MMMM") }})</th>
-                                        <th>Salary</th>
-                                        <th>Bonus Money</th>
+                                        <th>Main Salary</th>
+                                        <th>Rating Bonus</th>
+                                        <th>Total Salary</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -68,6 +69,7 @@ export default {
                 { data: 'stars' },
                 { data: 'salary' },
                 { data: 'bonus_money' },
+                { data: 'total_salary' },
                 { data: 'action', name: 'action', orderable: false, searchable: false  }
             ],
             dom: 'Bfrtip',

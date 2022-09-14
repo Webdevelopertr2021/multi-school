@@ -12242,6 +12242,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -12280,6 +12281,8 @@ __webpack_require__.r(__webpack_exports__);
         data: 'salary'
       }, {
         data: 'bonus_money'
+      }, {
+        data: 'total_salary'
       }, {
         data: 'action',
         name: 'action',
@@ -80768,9 +80771,11 @@ var render = function () {
                           ),
                         ]),
                         _vm._v(" "),
-                        _c("th", [_vm._v("Salary")]),
+                        _c("th", [_vm._v("Main Salary")]),
                         _vm._v(" "),
-                        _c("th", [_vm._v("Bonus Money")]),
+                        _c("th", [_vm._v("Rating Bonus")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Total Salary")]),
                         _vm._v(" "),
                         _c("th", [_vm._v("Actions")]),
                       ]),
