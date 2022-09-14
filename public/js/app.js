@@ -4267,6 +4267,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -4371,6 +4380,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var vue_moments_ago__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-moments-ago */ "./node_modules/vue-moments-ago/src/main.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -64698,23 +64716,27 @@ var render = function () {
                                     ]),
                                     _vm._v(" "),
                                     _c("td", [
-                                      _c(
-                                        "button",
-                                        {
-                                          staticClass: "btn btn-primary btn-sm",
-                                          on: {
-                                            click: function ($event) {
-                                              return _vm.actionModal(req, i)
+                                      req.status == "approved"
+                                        ? _c(
+                                            "button",
+                                            {
+                                              staticClass:
+                                                "btn btn-primary btn-sm",
+                                              on: {
+                                                click: function ($event) {
+                                                  return _vm.actionModal(req, i)
+                                                },
+                                              },
                                             },
-                                          },
-                                        },
-                                        [
-                                          _vm._v("Take action "),
-                                          _c("i", {
-                                            staticClass: "fas fa-arrow-right",
-                                          }),
-                                        ]
-                                      ),
+                                            [
+                                              _vm._v("Take action "),
+                                              _c("i", {
+                                                staticClass:
+                                                  "fas fa-arrow-right",
+                                              }),
+                                            ]
+                                          )
+                                        : _vm._e(),
                                     ]),
                                   ]
                                 )
@@ -67243,6 +67265,36 @@ var render = function () {
                                   ),
                                 ]
                               : _vm._e(),
+                            _vm._v(" "),
+                            not.type == "new_leave_request"
+                              ? [
+                                  _vm._m(7, true),
+                                  _vm._v(" "),
+                                  _c("td", [
+                                    _vm._m(8, true),
+                                    _vm._v(" "),
+                                    _c("p", { staticClass: "m-0" }, [
+                                      _vm._v(_vm._s(not.msg)),
+                                    ]),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "td",
+                                    [
+                                      _c("vue-moments-ago", {
+                                        staticClass: "time",
+                                        attrs: {
+                                          prefix: "",
+                                          suffix: "ago",
+                                          date: not.created_at,
+                                          lang: "en",
+                                        },
+                                      }),
+                                    ],
+                                    1
+                                  ),
+                                ]
+                              : _vm._e(),
                           ],
                           2
                         )
@@ -67332,6 +67384,24 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("p", { staticClass: "m-0" }, [
       _c("b", [_vm._v("Salary Deposited to bank")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c("span", { staticClass: "icon-40 bg-warning text-white" }, [
+        _c("i", { staticClass: "fas fa-bullhorn" }),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "m-0" }, [
+      _c("b", [_vm._v("New Leave Request")]),
     ])
   },
 ]
@@ -67500,6 +67570,31 @@ var render = function () {
                         1
                       ),
                     ]
+                  : not.type == "new_leave_request"
+                  ? [
+                      _vm._m(6, true),
+                      _vm._v(" "),
+                      _c(
+                        "span",
+                        { staticClass: "dropdown-item-desc" },
+                        [
+                          _vm._m(7, true),
+                          _vm._v(" "),
+                          _c("span", [_vm._v(_vm._s(not.msg))]),
+                          _vm._v(" "),
+                          _c("vue-moments-ago", {
+                            staticClass: "time",
+                            attrs: {
+                              prefix: "",
+                              suffix: "ago",
+                              date: not.created_at,
+                              lang: "en",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                    ]
                   : _vm._e(),
               ],
               2
@@ -67576,6 +67671,24 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "d-block" }, [
       _c("strong", [_vm._v("Salary Deposited to bank")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "span",
+      { staticClass: "dropdown-item-icon bg-warning text-white" },
+      [_c("i", { staticClass: "fas fa-bullhorn" })]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "d-block" }, [
+      _c("strong", [_vm._v("New Leave Request")]),
     ])
   },
 ]
@@ -84101,7 +84214,9 @@ var render = function () {
                 "div",
                 { staticClass: "col-md-12 mb-4" },
                 [
-                  _c("label", { attrs: { for: "" } }, [_vm._v("Leave from")]),
+                  _c("label", { attrs: { for: "" } }, [
+                    _vm._v("Leave Subject"),
+                  ]),
                   _vm._v(" "),
                   _c("input", {
                     directives: [

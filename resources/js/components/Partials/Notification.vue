@@ -36,6 +36,15 @@
                         <vue-moments-ago class="time" prefix="" suffix="ago" :date="not.created_at" lang="en"></vue-moments-ago>
                     </span>
                 </template>
+
+                <template v-else-if="not.type == 'new_leave_request'">
+                    <span class="dropdown-item-icon bg-warning text-white"> <i class="fas fa-bullhorn"></i></span> 
+                    <span class="dropdown-item-desc">
+                        <span class="d-block"><strong>New Leave Request</strong></span>
+                        <span>{{ not.msg }}</span> 
+                        <vue-moments-ago class="time" prefix="" suffix="ago" :date="not.created_at" lang="en"></vue-moments-ago>
+                    </span>
+                </template>
             </a>
 
         </div>

@@ -43,6 +43,15 @@
                                     <td><vue-moments-ago class="time" prefix="" suffix="ago" :date="not.created_at" lang="en"></vue-moments-ago></td>
                                 </template>
 
+                                <template v-if="not.type=='new_leave_request'">
+                                    <td><span class="icon-40 bg-warning text-white"> <i class="fas fa-bullhorn"></i></span> </td>
+                                    <td>
+                                        <p class="m-0"><b>New Leave Request</b></p>
+                                        <p class="m-0">{{ not.msg }}</p>
+                                    </td>
+                                    <td><vue-moments-ago class="time" prefix="" suffix="ago" :date="not.created_at" lang="en"></vue-moments-ago></td>
+                                </template>
+
                             </tr>
                         </table>
                     </div>

@@ -19,7 +19,7 @@
                         <HasError :form="form" field="toDate" />
                     </div>
                     <div class="col-md-12 mb-4">
-                        <label for="">Leave from</label>
+                        <label for="">Leave Subject</label>
                         <input type="text" class="form-control" :class="{'is-invalid':form.errors.has('subject')}" placeholder="Subject" v-model="form.subject">
                         <HasError :form="form" field="subject" />
                     </div>

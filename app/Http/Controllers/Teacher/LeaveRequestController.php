@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AssignedSupervisor;
 use App\Models\LeaveRequest;
 use App\Models\LeaveRequestApproval;
+use App\Models\Notification as CustomNotification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -62,7 +63,7 @@ class LeaveRequestController extends Controller
         ->get(["id","supervisor_id"]);
 
         $fromDate = Carbon::parse($req->fromDate);
-        $toDate = Carbon::parse($req->toDate);
+        $toDate = $fromDate->addDays($req->toDate);
 
         $totalDay = $fromDate->diffInDays($toDate);
         $teacherId = $me->id;
@@ -85,7 +86,18 @@ class LeaveRequestController extends Controller
                     "leave_requestId" => $leave->id,
                     "supervisor_id" => $superv->supervisor_id,
                     "teacher_id" => $teacherId,
+                    "created_at" => Carbon::now(),
+                    "updated_at" => Carbon::now(),
                 ]);
+                
+                CustomNotification::insert([
+                    "user_id" => $superv->supervisor_id,
+                    "type" => "new_leave_request",
+                    "msg" => $me->name." has requested leave | Type : $req->reason",
+                    "created_at" => Carbon::now(),
+                    "updated_at" => Carbon::now(),
+                ]);
+
             }
         }
 

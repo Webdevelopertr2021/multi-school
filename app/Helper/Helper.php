@@ -22,7 +22,7 @@ class Helper {
         $salaryNoLeave = 0;
         $star = 0;
 
-        if(count($ratings) > 3)
+        if(count($ratings) > 0)
         {
             $total = 0;
             $i=0;

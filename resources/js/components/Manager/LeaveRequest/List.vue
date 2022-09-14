@@ -57,7 +57,7 @@
                                 <span v-else-if="req.leave.approved_by_manager == 2" class="badge badge-pill badge-danger">Rejected</span>
                                 <span v-else class="badge badge-pill badge-warning">Pending</span>
                               </td>
-                              <td><button class="btn btn-primary btn-sm" @click="actionModal(req,i)">Take action <i class="fas fa-arrow-right"></i></button></td>
+                              <td><button v-if="req.status == 'approved'" class="btn btn-primary btn-sm" @click="actionModal(req,i)">Take action <i class="fas fa-arrow-right"></i></button></td>
                             </tr>
                           </template>
                         </tbody>
