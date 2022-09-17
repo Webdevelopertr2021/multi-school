@@ -4688,6 +4688,83 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -4705,16 +4782,14 @@ __webpack_require__.r(__webpack_exports__);
       attempt: 1,
       stopWatch: null,
       isCorrectNow: false,
-      isLast: false
+      isLast: false,
+      examDone: false,
+      solutionMode: false
     };
   },
   methods: {
     attendExam: function attendExam() {
       var _this = this;
-
-      if (this.selectedQuestionIndex == this.questions.length - 1) {
-        this.answerForm.isLast = true;
-      }
 
       axios.get("/student/api/attend-exam?examId=" + this.$route.params.examId).then(function (resp) {
         return resp.data;
@@ -4728,14 +4803,6 @@ __webpack_require__.r(__webpack_exports__);
           _this.questionSelector(0);
 
           _this.startTimer();
-
-          if (_this.answerForm.isLast) {
-            _this.isLast = true;
-          }
-
-          if (_this.isLast == true) {
-            swal.fire("Exam finished", "You have finished your exam. See your report", "success");
-          }
         } else {
           toastr.error("Failed", data.msg);
 
@@ -4758,6 +4825,7 @@ __webpack_require__.r(__webpack_exports__);
         this.answerForm.timer = this.selectedQuestion.total_time_to_ans;
         this.answerForm.tries = this.selectedQuestion.total_tries;
         this.answerForm.nowAns = this.selectedQuestion.answer;
+        swal.fire("INFO", "You've answered all the question", 'info');
       } else {
         if (this.questions[index].status == "not_submited") {
           this.selectedQuestion = this.questions[index];
@@ -4765,9 +4833,25 @@ __webpack_require__.r(__webpack_exports__);
           this.answerForm.timer = this.selectedQuestion.total_time_to_ans;
           this.answerForm.tries = this.selectedQuestion.total_tries;
           this.answerForm.nowAns = this.selectedQuestion.answer;
+
+          if (this.selectedQuestionIndex == this.questions.length - 1) {
+            this.answerForm.isLast = true;
+            this.isLast = true;
+          }
         } else {
           this.questionSelector(index + 1);
         }
+      }
+    },
+    setQuestion: function setQuestion(index) {
+      if (index > this.questions.length - 1) {
+        this.examDone = true;
+      } else {
+        this.selectedQuestion = this.questions[index];
+        this.selectedQuestionIndex = index;
+        this.answerForm.timer = this.selectedQuestion.total_time_to_ans;
+        this.answerForm.tries = this.selectedQuestion.total_tries;
+        this.answerForm.nowAns = this.selectedQuestion.answer;
       }
     },
     startTimer: function startTimer() {
@@ -4789,6 +4873,11 @@ __webpack_require__.r(__webpack_exports__);
         if (data.status == "correct") {
           toastr.success("Great!", data.msg);
           _this3.isCorrectNow = true;
+
+          if (_this3.isLast == true) {
+            _this3.examDone = true;
+            swal.fire("Exam finished", "You have completed the exam", "success");
+          }
         } else if (data.status == "incorrect") {
           _this3.answerForm.tries += 1;
           toastr.error("X", data.msg);
@@ -4800,6 +4889,15 @@ __webpack_require__.r(__webpack_exports__);
     nextQuestion: function nextQuestion() {
       this.isCorrectNow = false;
       this.questionSelector(this.selectedQuestionIndex + 1);
+    },
+    tryAgain: function tryAgain() {
+      this.solutionMode = false;
+      this.examDone = false;
+      this.questionSelector(0);
+    },
+    seeSolution: function seeSolution() {
+      this.examDone = false;
+      this.solutionMode = true;
     }
   },
   mounted: function mounted() {
@@ -68245,228 +68343,581 @@ var render = function () {
           [_c("h4", [_vm._v(_vm._s(_vm.examData.title))])]
         ),
         _vm._v(" "),
-        _c("div", { staticClass: "card-body" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-7 mb-4" }, [
-              _vm.selectedQuestion != null
-                ? _c(
-                    "form",
+        !_vm.examDone && !_vm.solutionMode
+          ? _c("div", { staticClass: "card-body" }, [
+              _vm.examData.end_time
+                ? _c("div", { staticClass: "row" }, [
+                    _c(
+                      "div",
+                      { staticClass: "col-md-12 text-right" },
+                      [
+                        _c("vac", {
+                          attrs: {
+                            "start-time": _vm.moment(),
+                            "end-time": _vm.moment(_vm.examData.end_time),
+                          },
+                          scopedSlots: _vm._u(
+                            [
+                              {
+                                key: "process",
+                                fn: function (ref) {
+                                  var timeObj = ref.timeObj
+                                  return _c(
+                                    "h6",
+                                    { staticClass: "text-warning" },
+                                    [
+                                      _vm._v(
+                                        "\n                      Exam will end in :  "
+                                      ),
+                                      timeObj.d > 0
+                                        ? _c("span", [
+                                            _vm._v(_vm._s(timeObj.d) + " days"),
+                                          ])
+                                        : _vm._e(),
+                                      _vm._v(" "),
+                                      timeObj.h > 0
+                                        ? _c("span", [
+                                            _vm._v(
+                                              _vm._s(timeObj.h) + " hours"
+                                            ),
+                                          ])
+                                        : _vm._e(),
+                                      _vm._v(" "),
+                                      timeObj.m > 0
+                                        ? _c("span", [
+                                            _vm._v(_vm._s(timeObj.m) + " min"),
+                                          ])
+                                        : _vm._e(),
+                                      _vm._v(" "),
+                                      timeObj.s > 0
+                                        ? _c("span", [
+                                            _vm._v(_vm._s(timeObj.s) + " sec"),
+                                          ])
+                                        : _vm._e(),
+                                    ]
+                                  )
+                                },
+                              },
+                            ],
+                            null,
+                            false,
+                            3087920757
+                          ),
+                        }),
+                      ],
+                      1
+                    ),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-7 mb-4" }, [
+                  _vm.selectedQuestionIndex > 0
+                    ? _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-sm btn-outline-info float-left",
+                          on: {
+                            click: function ($event) {
+                              return _vm.setQuestion(
+                                _vm.selectedQuestionIndex - 1
+                              )
+                            },
+                          },
+                        },
+                        [
+                          _c("i", { staticClass: "fas fa-arrow-left" }),
+                          _vm._v("Previous"),
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.selectedQuestionIndex <= _vm.questions.length
+                    ? _c(
+                        "button",
+                        {
+                          staticClass:
+                            "btn btn-sm btn-outline-info float-right",
+                          on: {
+                            click: function ($event) {
+                              return _vm.setQuestion(
+                                _vm.selectedQuestionIndex + 1
+                              )
+                            },
+                          },
+                        },
+                        [
+                          _vm._v("Next "),
+                          _c("i", { staticClass: "fas fa-arrow-right" }),
+                        ]
+                      )
+                    : _vm._e(),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-7 mb-4" }, [
+                  _vm.selectedQuestion != null
+                    ? _c(
+                        "form",
+                        {
+                          staticClass: "row",
+                          on: {
+                            submit: function ($event) {
+                              $event.preventDefault()
+                              return _vm.submitAnswer.apply(null, arguments)
+                            },
+                          },
+                        },
+                        [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "col-md-12 d-flex justify-content-end",
+                            },
+                            [
+                              _vm.selectedQuestion.status == "not_submited"
+                                ? [
+                                    _c(
+                                      "h6",
+                                      { staticClass: "text-warning mr-5" },
+                                      [
+                                        _vm._v(
+                                          "Attempt : " +
+                                            _vm._s(_vm.answerForm.tries)
+                                        ),
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("h6", [
+                                      _vm._v(
+                                        "Time : " +
+                                          _vm._s(_vm.answerForm.timer) +
+                                          "s"
+                                      ),
+                                    ]),
+                                  ]
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _vm.selectedQuestion.status == "submited"
+                                ? [
+                                    _c(
+                                      "h6",
+                                      { staticClass: "text-warning mr-5" },
+                                      [
+                                        _vm._v(
+                                          "Attempt : " +
+                                            _vm._s(
+                                              _vm.selectedQuestion.total_tries
+                                            )
+                                        ),
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("h6", { staticClass: "mr-5" }, [
+                                      _vm._v(
+                                        "Time taken : " +
+                                          _vm._s(
+                                            _vm.selectedQuestion
+                                              .total_time_to_ans
+                                          ) +
+                                          "s"
+                                      ),
+                                    ]),
+                                    _vm._v(" "),
+                                    (_vm.selectedQuestion.is_correct = 1)
+                                      ? _c(
+                                          "h6",
+                                          { staticClass: "text-success" },
+                                          [
+                                            _vm._v("Correct "),
+                                            _c("i", {
+                                              staticClass:
+                                                "fas fa-check-circle",
+                                            }),
+                                          ]
+                                        )
+                                      : _vm._e(),
+                                  ]
+                                : _vm._e(),
+                            ],
+                            2
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-lg-2 mb-3" }, [
+                            _c("h4", { staticClass: "text-muted" }, [
+                              _vm._v(
+                                "Question " +
+                                  _vm._s(_vm.selectedQuestionIndex + 1)
+                              ),
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "student-question mt-3" },
+                              [
+                                _c("div", { staticClass: "body" }, [
+                                  _vm._v(
+                                    _vm._s(_vm.selectedQuestion.qstn.body)
+                                  ),
+                                ]),
+                              ]
+                            ),
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "col-lg-7 d-flex align-self-end" },
+                            [
+                              _c("div", { staticClass: "w-100" }, [
+                                _c(
+                                  "div",
+                                  { staticClass: "form-group" },
+                                  [
+                                    _c("label", { attrs: { for: "" } }, [
+                                      _vm._v("Write your answer"),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.answerForm.nowAns,
+                                          expression: "answerForm.nowAns",
+                                        },
+                                      ],
+                                      staticClass: "form-control",
+                                      class: {
+                                        "is-invalid":
+                                          _vm.answerForm.errors.has("nowAns"),
+                                        "is-valid":
+                                          _vm.selectedQuestion.is_correct == 1
+                                            ? true
+                                            : false,
+                                      },
+                                      attrs: {
+                                        type: "text",
+                                        placeholder:
+                                          "Write your answer here...",
+                                        disabled:
+                                          _vm.selectedQuestion.status ==
+                                          "submited"
+                                            ? true
+                                            : false,
+                                      },
+                                      domProps: {
+                                        value: _vm.answerForm.nowAns,
+                                      },
+                                      on: {
+                                        input: function ($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.$set(
+                                            _vm.answerForm,
+                                            "nowAns",
+                                            $event.target.value
+                                          )
+                                        },
+                                      },
+                                    }),
+                                    _vm._v(" "),
+                                    _c("HasError", {
+                                      attrs: {
+                                        form: _vm.answerForm,
+                                        field: "nowAns",
+                                      },
+                                    }),
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _vm.selectedQuestion.status == "not_submited" &&
+                                !_vm.isCorrectNow
+                                  ? _c(
+                                      "div",
+                                      { staticClass: "form-group text-right" },
+                                      [
+                                        _c(
+                                          "Button",
+                                          {
+                                            staticClass: "btn btn-primary",
+                                            attrs: {
+                                              form: _vm.answerForm,
+                                              type: "submit",
+                                            },
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.selectedQuestionIndex ==
+                                                  _vm.questions.length - 1
+                                                  ? "Finish"
+                                                  : "Submit Answer"
+                                              ) + " "
+                                            ),
+                                            _c("i", {
+                                              staticClass: "fas fa-arrow-right",
+                                            }),
+                                          ]
+                                        ),
+                                      ],
+                                      1
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _vm.isCorrectNow
+                                  ? _c(
+                                      "div",
+                                      { staticClass: "form-group text-right" },
+                                      [
+                                        _c(
+                                          "button",
+                                          {
+                                            staticClass: "btn btn-warning",
+                                            attrs: { type: "button" },
+                                            on: { click: _vm.nextQuestion },
+                                          },
+                                          [
+                                            _vm._v("Next Question"),
+                                            _c("i", {
+                                              staticClass: "fas fa-arrow-right",
+                                            }),
+                                          ]
+                                        ),
+                                      ]
+                                    )
+                                  : _vm._e(),
+                              ]),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _vm.isCorrectNow
+                            ? _c("div", { staticClass: "col-md-12 mt-5" }, [
+                                _vm._m(0),
+                              ])
+                            : _vm._e(),
+                        ]
+                      )
+                    : _vm._e(),
+                ]),
+                _vm._v(" "),
+                _vm._m(1),
+              ]),
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.examDone
+          ? _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "row justify-content-center" }, [
+                _c("div", { staticClass: "col-md-6 text-center" }, [
+                  _c("h3", { staticClass: "text-success" }, [
+                    _vm._v("You have answered all the question"),
+                  ]),
+                  _vm._v(" "),
+                  _c("img", {
+                    staticClass: "congo mt-3",
+                    attrs: { src: "/image/congrats.gif", alt: "" },
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "mt-3" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-warning",
+                        on: {
+                          click: function ($event) {
+                            return _vm.seeSolution()
+                          },
+                        },
+                      },
+                      [
+                        _vm._v("See Solution "),
+                        _c("i", { staticClass: "fas fa-th" }),
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary ml-3",
+                        on: {
+                          click: function ($event) {
+                            return _vm.tryAgain()
+                          },
+                        },
+                      },
+                      [
+                        _vm._v("Try again "),
+                        _c("i", { staticClass: "fas fa-circle-notch" }),
+                      ]
+                    ),
+                  ]),
+                ]),
+              ]),
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.solutionMode
+          ? _c("div", { staticClass: "card-body" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "row" },
+                [
+                  _vm._l(_vm.questions, function (q, i) {
+                    return [
+                      q.status == "not_submited"
+                        ? _c(
+                            "div",
+                            { key: i, staticClass: "col-6 col-md-3 col-lg-2" },
+                            [
+                              _c(
+                                "div",
+                                { staticClass: "pricing pricing-highlight" },
+                                [
+                                  _c("div", { staticClass: "pricing-title" }, [
+                                    _vm._v(
+                                      "\n                      Question " +
+                                        _vm._s(i + 1) +
+                                        "\n                    "
+                                    ),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "pricing-padding" },
+                                    [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "pricing-details d-block",
+                                        },
+                                        [
+                                          _c(
+                                            "div",
+                                            { staticClass: "pricing-item" },
+                                            [
+                                              _c(
+                                                "div",
+                                                {
+                                                  staticClass:
+                                                    "student-question",
+                                                },
+                                                [
+                                                  _c(
+                                                    "div",
+                                                    { staticClass: "body" },
+                                                    [
+                                                      _vm._v(
+                                                        _vm._s(q.qstn.body)
+                                                      ),
+                                                    ]
+                                                  ),
+                                                ]
+                                              ),
+                                            ]
+                                          ),
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "pricing-price mb-0 mt-4",
+                                        },
+                                        [
+                                          _c("h6", [_vm._v("Your Answer : ")]),
+                                          _vm._v(" "),
+                                          _c(
+                                            "h2",
+                                            { staticClass: "text-danger" },
+                                            [
+                                              _vm._v(
+                                                _vm._s(q.correct_ans) + " "
+                                              ),
+                                              _c("i", {
+                                                staticClass:
+                                                  "fas fa-times-circle",
+                                                staticStyle: {
+                                                  "font-size": "25px",
+                                                },
+                                              }),
+                                            ]
+                                          ),
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("hr"),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "pricing-price mb-0 mt-4",
+                                        },
+                                        [
+                                          _c("h6", [
+                                            _vm._v("Correct Answer is"),
+                                          ]),
+                                          _vm._v(" "),
+                                          _c(
+                                            "h2",
+                                            { staticClass: "text-success" },
+                                            [
+                                              _vm._v(
+                                                _vm._s(q.correct_ans) + " "
+                                              ),
+                                              _c("i", {
+                                                staticClass:
+                                                  "fas fa-check-circle",
+                                                staticStyle: {
+                                                  "font-size": "25px",
+                                                },
+                                              }),
+                                            ]
+                                          ),
+                                        ]
+                                      ),
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _vm._m(3, true),
+                                ]
+                              ),
+                            ]
+                          )
+                        : _vm._e(),
+                    ]
+                  }),
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "row mt-5" }, [
+                _c("div", { staticClass: "col-md-12 text-center" }, [
+                  _c(
+                    "button",
                     {
-                      staticClass: "row",
+                      staticClass: "btn btn-success",
                       on: {
-                        submit: function ($event) {
-                          $event.preventDefault()
-                          return _vm.submitAnswer.apply(null, arguments)
+                        click: function ($event) {
+                          return _vm.tryAgain()
                         },
                       },
                     },
                     [
-                      _c(
-                        "div",
-                        { staticClass: "col-md-12 d-flex justify-content-end" },
-                        [
-                          _vm.selectedQuestion.status == "not_submited"
-                            ? [
-                                _c("h6", { staticClass: "text-warning mr-5" }, [
-                                  _vm._v(
-                                    "Attempt : " + _vm._s(_vm.answerForm.tries)
-                                  ),
-                                ]),
-                                _vm._v(" "),
-                                _c("h6", [
-                                  _vm._v(
-                                    "Time : " +
-                                      _vm._s(_vm.answerForm.timer) +
-                                      "s"
-                                  ),
-                                ]),
-                              ]
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.selectedQuestion.status == "submited"
-                            ? [
-                                _c("h6", { staticClass: "text-warning mr-5" }, [
-                                  _vm._v(
-                                    "Attempt : " +
-                                      _vm._s(_vm.selectedQuestion.total_tries)
-                                  ),
-                                ]),
-                                _vm._v(" "),
-                                _c("h6", { staticClass: "mr-5" }, [
-                                  _vm._v(
-                                    "Time taken : " +
-                                      _vm._s(
-                                        _vm.selectedQuestion.total_time_to_ans
-                                      ) +
-                                      "s"
-                                  ),
-                                ]),
-                                _vm._v(" "),
-                                (_vm.selectedQuestion.is_correct = 1)
-                                  ? _c("h6", { staticClass: "text-success" }, [
-                                      _vm._v("Correct "),
-                                      _c("i", {
-                                        staticClass: "fas fa-check-circle",
-                                      }),
-                                    ])
-                                  : _vm._e(),
-                              ]
-                            : _vm._e(),
-                        ],
-                        2
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-lg-2 mb-3" }, [
-                        _c("h4", { staticClass: "text-muted" }, [
-                          _vm._v(
-                            "Question " + _vm._s(_vm.selectedQuestionIndex + 1)
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "student-question mt-3" }, [
-                          _c("div", { staticClass: "body" }, [
-                            _vm._v(_vm._s(_vm.selectedQuestion.qstn.body)),
-                          ]),
-                        ]),
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "col-lg-7 d-flex align-self-end" },
-                        [
-                          _c("div", { staticClass: "w-100" }, [
-                            _c(
-                              "div",
-                              { staticClass: "form-group" },
-                              [
-                                _c("label", { attrs: { for: "" } }, [
-                                  _vm._v("Write your answer"),
-                                ]),
-                                _vm._v(" "),
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.answerForm.nowAns,
-                                      expression: "answerForm.nowAns",
-                                    },
-                                  ],
-                                  staticClass: "form-control",
-                                  class: {
-                                    "is-invalid":
-                                      _vm.answerForm.errors.has("nowAns"),
-                                    "is-valid":
-                                      _vm.selectedQuestion.is_correct == 1
-                                        ? true
-                                        : false,
-                                  },
-                                  attrs: {
-                                    type: "text",
-                                    placeholder: "Write your answer here...",
-                                    disabled:
-                                      _vm.selectedQuestion.status == "submited"
-                                        ? true
-                                        : false,
-                                  },
-                                  domProps: { value: _vm.answerForm.nowAns },
-                                  on: {
-                                    input: function ($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        _vm.answerForm,
-                                        "nowAns",
-                                        $event.target.value
-                                      )
-                                    },
-                                  },
-                                }),
-                                _vm._v(" "),
-                                _c("HasError", {
-                                  attrs: {
-                                    form: _vm.answerForm,
-                                    field: "nowAns",
-                                  },
-                                }),
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _vm.selectedQuestion.status == "not_submited" &&
-                            !_vm.isCorrectNow
-                              ? _c(
-                                  "div",
-                                  { staticClass: "form-group text-right" },
-                                  [
-                                    _c(
-                                      "Button",
-                                      {
-                                        staticClass: "btn btn-primary",
-                                        attrs: {
-                                          form: _vm.answerForm,
-                                          type: "submit",
-                                        },
-                                      },
-                                      [
-                                        _vm._v(
-                                          _vm._s(
-                                            _vm.selectedQuestionIndex ==
-                                              _vm.questions.length - 1
-                                              ? "Finish"
-                                              : "Submit Answer"
-                                          ) + " "
-                                        ),
-                                        _c("i", {
-                                          staticClass: "fas fa-arrow-right",
-                                        }),
-                                      ]
-                                    ),
-                                  ],
-                                  1
-                                )
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _vm.isCorrectNow
-                              ? _c(
-                                  "div",
-                                  { staticClass: "form-group text-right" },
-                                  [
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass: "btn btn-warning",
-                                        attrs: { type: "button" },
-                                        on: { click: _vm.nextQuestion },
-                                      },
-                                      [
-                                        _vm._v("Next Question"),
-                                        _c("i", {
-                                          staticClass: "fas fa-arrow-right",
-                                        }),
-                                      ]
-                                    ),
-                                  ]
-                                )
-                              : _vm._e(),
-                          ]),
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _vm.isCorrectNow
-                        ? _c("div", { staticClass: "col-md-12 mt-5" }, [
-                            _vm._m(0),
-                          ])
-                        : _vm._e(),
+                      _vm._v("Try Again "),
+                      _c("i", { staticClass: "fas fa-circle-notch" }),
                     ]
-                  )
-                : _vm._e(),
-            ]),
-            _vm._v(" "),
-            _vm._m(1),
-          ]),
-        ]),
+                  ),
+                ]),
+              ]),
+            ])
+          : _vm._e(),
       ]),
     ]),
   ])
@@ -68507,6 +68958,29 @@ var staticRenderFns = [
             "Keep answering. Your time and number of tries will be count for each question"
           ),
         ]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-12 text-center mb-4" }, [
+        _c("h3", { staticClass: "text-warning" }, [
+          _vm._v("Solution for the wrong answers"),
+        ]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "pricing-cta mt-0" }, [
+      _c("a", { attrs: { href: "#" } }, [
+        _vm._v("Way to solve "),
+        _c("i", { staticClass: "fas fa-arrow-right" }),
       ]),
     ])
   },

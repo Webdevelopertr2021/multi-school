@@ -5,8 +5,26 @@
             <div class="card-header d-flex justify-content-between">
                 <h4>{{ examData.title }}</h4>
             </div>
-            <div class="card-body">
+            <div class="card-body" v-if="!examDone && !solutionMode">
+              <div class="row" v-if="examData.end_time">
+                <div class="col-md-12 text-right">
+                  <vac :start-time="moment()" :end-time="moment(examData.end_time)">
+                    <h6 class="text-warning"
+                      slot="process"
+                      slot-scope="{ timeObj }">
+                        Exam will end in : &nbsp;<span v-if="timeObj.d > 0">{{ timeObj.d }} days</span>
+                         <span v-if="timeObj.h > 0">{{ timeObj.h }} hours</span>
+                         <span v-if="timeObj.m > 0">{{ timeObj.m }} min</span>
+                         <span v-if="timeObj.s > 0">{{ timeObj.s }} sec</span>
+                    </h6>
+                  </vac>
+                </div>
+              </div>
               <div class="row">
+                <div class="col-md-7 mb-4">
+                  <button @click="setQuestion(selectedQuestionIndex-1)" v-if="selectedQuestionIndex > 0" class="btn btn-sm btn-outline-info float-left"><i class="fas fa-arrow-left"></i>Previous</button>
+                  <button @click="setQuestion(selectedQuestionIndex+1)" v-if="selectedQuestionIndex <= questions.length" class="btn btn-sm btn-outline-info float-right">Next <i class="fas fa-arrow-right"></i></button>
+                </div>
                 <div class="col-md-7 mb-4">
                   <form class="row" v-if="selectedQuestion != null" @submit.prevent="submitAnswer">
                     <div class="col-md-12 d-flex justify-content-end">
@@ -55,7 +73,6 @@
                     </div>
                   </form>
                 </div>
-
                 <div class="col-md-5 mb-4">
                   <div class="teacher-img">
                     <img src="/image/teacher.png" alt="">
@@ -64,6 +81,66 @@
                     <h4>Question will appear one by one.</h4>
                     <p class="text-success">Keep answering. Your time and number of tries will be count for each question</p>
                   </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body" v-if="examDone">
+              <div class="row justify-content-center">
+                <div class="col-md-6 text-center">
+                  <h3 class="text-success">You have answered all the question</h3>
+                  <img class="congo mt-3" src="/image/congrats.gif" alt="">
+                  <div class="mt-3">
+                    <button @click="seeSolution()" class="btn btn-warning">See Solution <i class="fas fa-th"></i></button>
+                    <button @click="tryAgain()" class="btn btn-primary ml-3">Try again <i class="fas fa-circle-notch"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body" v-if="solutionMode">
+              <div class="row">
+                <div class="col-12 text-center mb-4">
+                  <h3 class="text-warning">Solution for the wrong answers</h3>
+                </div>
+              </div>
+              <div class="row">
+
+                <template v-for="(q,i) in questions">
+                  <div class="col-6 col-md-3 col-lg-2" :key="i" v-if="q.status=='not_submited'">
+                    <div class="pricing pricing-highlight">
+                      <div class="pricing-title">
+                        Question {{ i+1 }}
+                      </div>
+                      <div class="pricing-padding">
+                        <div class="pricing-details d-block">
+                          <div class="pricing-item">
+                            <div class="student-question">
+                              <div class="body">{{ q.qstn.body }}</div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="pricing-price mb-0 mt-4">
+                          <h6>Your Answer : </h6>
+                          <h2 class="text-danger">{{ q.correct_ans }} <i style="font-size: 25px;" class="fas fa-times-circle"></i></h2>
+                        </div>
+                        <hr>
+                        <div class="pricing-price mb-0 mt-4">
+                          <h6>Correct Answer is</h6>
+                          <h2 class="text-success">{{ q.correct_ans }} <i style="font-size: 25px;" class="fas fa-check-circle"></i></h2>
+                        </div>
+                        
+                      </div>
+                      <div class="pricing-cta mt-0">
+                        <a href="#">Way to solve <i class="fas fa-arrow-right"></i></a>
+                      </div>
+                    </div>
+                  </div>
+                </template>
+
+              </div>
+              <div class="row mt-5">
+                <div class="col-md-12 text-center">
+                  <button @click="tryAgain()" class="btn btn-success">Try Again <i class="fas fa-circle-notch"></i></button>
                 </div>
               </div>
             </div>
@@ -95,16 +172,13 @@ export default {
       stopWatch: null,
       isCorrectNow: false,
       isLast: false,
+      examDone: false,
+      solutionMode: false,
 
     }
   },
   methods: {
     attendExam() {
-      if(this.selectedQuestionIndex == this.questions.length-1)
-      {
-        this.answerForm.isLast = true;
-      }
-
       axios.get("/student/api/attend-exam?examId="+this.$route.params.examId).then(resp=>{
         return resp.data;
       }).then(data=>{
@@ -114,12 +188,7 @@ export default {
           this.questions = data.questions;
           this.questionSelector(0);
           this.startTimer();
-          if(this.answerForm.isLast) {
-            this.isLast = true;
-          }
-          if(this.isLast == true) {
-            swal.fire("Exam finished","You have finished your exam. See your report","success");
-          }
+          
         }
         else{
           toastr.error("Failed",data.msg);
@@ -144,6 +213,7 @@ export default {
         this.answerForm.timer = this.selectedQuestion.total_time_to_ans;
         this.answerForm.tries = this.selectedQuestion.total_tries;
         this.answerForm.nowAns = this.selectedQuestion.answer;
+        swal.fire("INFO","You've answered all the question",'info');
       }
       else
       {
@@ -154,11 +224,28 @@ export default {
           this.answerForm.timer = this.selectedQuestion.total_time_to_ans;
           this.answerForm.tries = this.selectedQuestion.total_tries;
           this.answerForm.nowAns = this.selectedQuestion.answer;
+
+          if(this.selectedQuestionIndex == this.questions.length - 1) {
+            this.answerForm.isLast = true;
+            this.isLast = true;
+          }
         }
         else
         {
           this.questionSelector(index+1);
         }
+      }
+    },
+    setQuestion(index) {
+      if(index > this.questions.length-1) {
+        this.examDone = true;
+      }
+      else {
+        this.selectedQuestion = this.questions[index];
+        this.selectedQuestionIndex = index;
+        this.answerForm.timer = this.selectedQuestion.total_time_to_ans;
+        this.answerForm.tries = this.selectedQuestion.total_tries;
+        this.answerForm.nowAns = this.selectedQuestion.answer;
       }
     },
     startTimer() {
@@ -176,6 +263,10 @@ export default {
         if(data.status == "correct") {
           toastr.success("Great!",data.msg);
           this.isCorrectNow = true;
+          if(this.isLast == true) {
+            this.examDone = true;
+            swal.fire("Exam finished","You have completed the exam","success");
+          }
         }
         else if(data.status == "incorrect") {
           this.answerForm.tries += 1;
@@ -188,6 +279,15 @@ export default {
     nextQuestion() {
       this.isCorrectNow = false;
       this.questionSelector(this.selectedQuestionIndex+1);
+    },
+    tryAgain() {
+      this.solutionMode = false;
+      this.examDone = false;
+      this.questionSelector(0);
+    },
+    seeSolution() {
+      this.examDone = false;
+      this.solutionMode = true;
     }
   },
   mounted() {

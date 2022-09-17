@@ -243,3 +243,7 @@ input.form-control{
     white-space: pre-line;
     text-align: center;
 }
+.congo {
+    width: 300px;
+    height: auto;
+}
