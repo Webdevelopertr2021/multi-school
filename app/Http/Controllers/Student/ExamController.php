@@ -69,21 +69,51 @@ class ExamController extends Controller
             if($exam->school_id == $student->school_id && $exam->class_id == $student->class_id && $exam->section_id == $student->section_id)
             {
 
-                
-                // check if exam already given or not
-                if($examAttend = ExamAttendance::where("student_id",$student->id)->where("exam_id",$exam->id)->first())
+                $examStatus = "";
+                $startTime = Carbon::parse($exam->start_time);
+                $endTime = Carbon::parse($exam->end_time);
+                $questions = [];
+                if(Carbon::now()->greaterThanOrEqualTo($startTime))
                 {
-                    $questions = QuestionAnswer::where("student_id",$student->id)->where("exam_id",$exam->id)->with("qstn")->get();
+                    // check if exam already given or not
+                    if($examAttend = ExamAttendance::where("student_id",$student->id)->where("exam_id",$exam->id)->first())
+                    {
+                        $questions = QuestionAnswer::where("student_id",$student->id)->where("exam_id",$exam->id)->with("qstn")->get();
+                    }
+                    else
+                    {
+                        $questions = $this->createExamForStudent($student->id,$exam->id);
+                    }
+
+                    // check exam status
+                    
+                    if($exam->end_time != "")
+                    {
+                        if(Carbon::now()->greaterThan($endTime))
+                        {
+                            $examStatus = "time_up";
+                        }
+                        else
+                        {
+                            $examStatus = "ok";
+                        }
+                    }
+                    else
+                    {
+                        $examStatus = "ok";
+                    }
+                    // end
                 }
                 else
                 {
-                    $questions = $this->createExamForStudent($student->id,$exam->id);
+                    $examStatus = "not_started";
                 }
 
                 return [
                     "status" => "ok",
                     "examData" => $exam,
                     "questions" => $questions,
+                    "examStatus" => $examStatus,
                 ];
             }
             else

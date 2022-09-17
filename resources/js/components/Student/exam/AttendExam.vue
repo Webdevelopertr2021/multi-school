@@ -5,10 +5,10 @@
             <div class="card-header d-flex justify-content-between">
                 <h4>{{ examData.title }}</h4>
             </div>
-            <div class="card-body" v-if="!examDone && !solutionMode">
-              <div class="row" v-if="examData.end_time">
+            <div class="card-body" v-if="!examDone && !solutionMode && examStatus=='ok'">
+              <div class="row" v-if="examData.endTime != ''">
                 <div class="col-md-12 text-right">
-                  <vac :start-time="moment()" :end-time="moment(examData.end_time)">
+                  <vac :start-time="moment().format()" :end-time="moment(examData.end_time).format()" @finish="timeUp()">
                     <h6 class="text-warning"
                       slot="process"
                       slot-scope="{ timeObj }">
@@ -144,6 +144,30 @@
                 </div>
               </div>
             </div>
+            <div class="card-body" v-if="examStatus=='time_up'">
+              <div class="row">
+                <div class="col-md-12 text-center">
+                  <h3>Exam is over</h3>
+                  <button class="btn btn-success mt-5">See your Report <i class="fas fa-file"></i></button>
+                </div>
+              </div>
+            </div>
+            <div class="card-body" v-if="examStatus == 'not_started'">
+              <div class="row justify-content-center">
+                <div class="col-md-6 text-center pb-5 pt-5">
+                  <vac :start-time="moment().format()" :end-time="moment(examData.start_time).format()" @finish="startExam()">
+                    <h3
+                      slot="process"
+                      slot-scope="{ timeObj }">
+                        Exam Starts in : &nbsp;<span v-if="timeObj.d > 0">{{ timeObj.d }} days</span>
+                         <span v-if="timeObj.h > 0">{{ timeObj.h }} hours</span>
+                         <span v-if="timeObj.m > 0">{{ timeObj.m }} min</span>
+                         <span v-if="timeObj.s > 0">{{ timeObj.s }} sec</span>
+                    </h3>
+                  </vac>
+                </div>
+              </div>
+            </div>
         </div>
     </div>
   </div>
@@ -174,7 +198,7 @@ export default {
       isLast: false,
       examDone: false,
       solutionMode: false,
-
+      examStatus: "",
     }
   },
   methods: {
@@ -185,9 +209,12 @@ export default {
         console.log(data);
         if(data.status == "ok") {
           this.examData = data.examData;
-          this.questions = data.questions;
-          this.questionSelector(0);
-          this.startTimer();
+          this.examStatus = data.examStatus;
+          if(data.examStatus == "ok") {
+            this.questions = data.questions;
+            this.questionSelector(0);
+            this.startTimer();
+          }
           
         }
         else{
@@ -261,6 +288,7 @@ export default {
       }).then(data=>{
         console.log(data);
         if(data.status == "correct") {
+          this.questions[this.selectedQuestionIndex].status = 'submited';
           toastr.success("Great!",data.msg);
           this.isCorrectNow = true;
           if(this.isLast == true) {
@@ -285,9 +313,15 @@ export default {
       this.examDone = false;
       this.questionSelector(0);
     },
+    timeUp() {
+      this.examStatus = "time_up";
+    },
     seeSolution() {
       this.examDone = false;
       this.solutionMode = true;
+    },
+    startExam() {
+      this.attendExam();
     }
   },
   mounted() {

@@ -76,7 +76,8 @@
                         </div>
 
                         <div class="col-md-12 mb-4">
-                            <Button type="submit" class="btn btn-success" :form="form">Update</Button>
+                            <Button type="submit" class="btn btn-success" :form="form">Send</Button>
+                            <button type="button" class="btn btn-primary" :form="form">Copy</button>
                         </div>
 
                     </form>

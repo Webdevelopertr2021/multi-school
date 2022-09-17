@@ -4765,6 +4765,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -4784,7 +4808,8 @@ __webpack_require__.r(__webpack_exports__);
       isCorrectNow: false,
       isLast: false,
       examDone: false,
-      solutionMode: false
+      solutionMode: false,
+      examStatus: ""
     };
   },
   methods: {
@@ -4798,11 +4823,15 @@ __webpack_require__.r(__webpack_exports__);
 
         if (data.status == "ok") {
           _this.examData = data.examData;
-          _this.questions = data.questions;
+          _this.examStatus = data.examStatus;
 
-          _this.questionSelector(0);
+          if (data.examStatus == "ok") {
+            _this.questions = data.questions;
 
-          _this.startTimer();
+            _this.questionSelector(0);
+
+            _this.startTimer();
+          }
         } else {
           toastr.error("Failed", data.msg);
 
@@ -4871,6 +4900,7 @@ __webpack_require__.r(__webpack_exports__);
         console.log(data);
 
         if (data.status == "correct") {
+          _this3.questions[_this3.selectedQuestionIndex].status = 'submited';
           toastr.success("Great!", data.msg);
           _this3.isCorrectNow = true;
 
@@ -4895,9 +4925,15 @@ __webpack_require__.r(__webpack_exports__);
       this.examDone = false;
       this.questionSelector(0);
     },
+    timeUp: function timeUp() {
+      this.examStatus = "time_up";
+    },
     seeSolution: function seeSolution() {
       this.examDone = false;
       this.solutionMode = true;
+    },
+    startExam: function startExam() {
+      this.attendExam();
     }
   },
   mounted: function mounted() {
@@ -7300,6 +7336,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -8077,7 +8114,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       qForm: new Form({
         examId: this.$route.params.examId,
         body: "",
-        marks: "",
+        marks: 4,
         correctAns: "",
         ansFile: null
       }),
@@ -68343,9 +68380,9 @@ var render = function () {
           [_c("h4", [_vm._v(_vm._s(_vm.examData.title))])]
         ),
         _vm._v(" "),
-        !_vm.examDone && !_vm.solutionMode
+        !_vm.examDone && !_vm.solutionMode && _vm.examStatus == "ok"
           ? _c("div", { staticClass: "card-body" }, [
-              _vm.examData.end_time
+              _vm.examData.endTime != ""
                 ? _c("div", { staticClass: "row" }, [
                     _c(
                       "div",
@@ -68353,8 +68390,15 @@ var render = function () {
                       [
                         _c("vac", {
                           attrs: {
-                            "start-time": _vm.moment(),
-                            "end-time": _vm.moment(_vm.examData.end_time),
+                            "start-time": _vm.moment().format(),
+                            "end-time": _vm
+                              .moment(_vm.examData.end_time)
+                              .format(),
+                          },
+                          on: {
+                            finish: function ($event) {
+                              return _vm.timeUp()
+                            },
                           },
                           scopedSlots: _vm._u(
                             [
@@ -68918,6 +68962,78 @@ var render = function () {
               ]),
             ])
           : _vm._e(),
+        _vm._v(" "),
+        _vm.examStatus == "time_up"
+          ? _c("div", { staticClass: "card-body" }, [_vm._m(4)])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.examStatus == "not_started"
+          ? _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "row justify-content-center" }, [
+                _c(
+                  "div",
+                  { staticClass: "col-md-6 text-center pb-5 pt-5" },
+                  [
+                    _c("vac", {
+                      attrs: {
+                        "start-time": _vm.moment().format(),
+                        "end-time": _vm
+                          .moment(_vm.examData.start_time)
+                          .format(),
+                      },
+                      on: {
+                        finish: function ($event) {
+                          return _vm.startExam()
+                        },
+                      },
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "process",
+                            fn: function (ref) {
+                              var timeObj = ref.timeObj
+                              return _c("h3", {}, [
+                                _vm._v(
+                                  "\n                      Exam Starts in :  "
+                                ),
+                                timeObj.d > 0
+                                  ? _c("span", [
+                                      _vm._v(_vm._s(timeObj.d) + " days"),
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                timeObj.h > 0
+                                  ? _c("span", [
+                                      _vm._v(_vm._s(timeObj.h) + " hours"),
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                timeObj.m > 0
+                                  ? _c("span", [
+                                      _vm._v(_vm._s(timeObj.m) + " min"),
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                timeObj.s > 0
+                                  ? _c("span", [
+                                      _vm._v(_vm._s(timeObj.s) + " sec"),
+                                    ])
+                                  : _vm._e(),
+                              ])
+                            },
+                          },
+                        ],
+                        null,
+                        false,
+                        1342004548
+                      ),
+                    }),
+                  ],
+                  1
+                ),
+              ]),
+            ])
+          : _vm._e(),
       ]),
     ]),
   ])
@@ -68981,6 +69097,21 @@ var staticRenderFns = [
       _c("a", { attrs: { href: "#" } }, [
         _vm._v("Way to solve "),
         _c("i", { staticClass: "fas fa-arrow-right" }),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12 text-center" }, [
+        _c("h3", [_vm._v("Exam is over")]),
+        _vm._v(" "),
+        _c("button", { staticClass: "btn btn-success mt-5" }, [
+          _vm._v("See your Report "),
+          _c("i", { staticClass: "fas fa-file" }),
+        ]),
       ]),
     ])
   },
@@ -73165,7 +73296,16 @@ var render = function () {
                       staticClass: "btn btn-success",
                       attrs: { type: "submit", form: _vm.form },
                     },
-                    [_vm._v("Update")]
+                    [_vm._v("Send")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button", form: _vm.form },
+                    },
+                    [_vm._v("Copy")]
                   ),
                 ],
                 1

@@ -116,7 +116,7 @@ export default {
       qForm : new Form({
         examId: this.$route.params.examId,
         body: "",
-        marks: "",
+        marks: 4,
         correctAns: "",
         ansFile: null,
       }),
