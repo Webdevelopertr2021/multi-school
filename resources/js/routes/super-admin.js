@@ -43,6 +43,7 @@ import Questions from "../components/SuperAdmin/exam/Questions.vue";
 import EditExam from "../components/SuperAdmin/exam/EditExam.vue";
 import EditQuestion from "../components/SuperAdmin/exam/EditQuestion.vue";
 import ExamCategory from "../components/SuperAdmin/exam/ExamCategory.vue";
+import ExamReport from "../components/SuperAdmin/exam/ExamReport.vue";
 // End
 
 // Exams
@@ -376,6 +377,14 @@ const routes = new VueRouter({
                 title: "Exam Category"
             }
         },
+        {
+            path: prefix + "exam/:examId/reports",
+            name: "admin.exam-report",
+            component: ExamReport,
+            meta : {
+                title : "Exam Report"
+            }
+        }
     ],
     scrollBehavior(to, from, savedPos) {
         if (savedPos) {

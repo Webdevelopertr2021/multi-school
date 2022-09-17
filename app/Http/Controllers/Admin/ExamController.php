@@ -4,9 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Exam;
+use App\Models\ExamAttendance;
 use App\Models\Question;
+use App\Models\QuestionAnswer;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Yajra\DataTables\DataTables;
 
 class ExamController extends Controller
 {
@@ -83,9 +87,11 @@ class ExamController extends Controller
         if($exam = Exam::with("school:id,name")->with("classes:id,name")
         ->with("section:id,name")->find($req->examId))
         {
+            $participent = ExamAttendance::where("exam_id",$exam->id)->count();
             return [
                 "status" => "ok",
-                "exam" => $exam
+                "exam" => $exam,
+                "participent" => $participent,
             ];
         }
         else
@@ -156,6 +162,80 @@ class ExamController extends Controller
             return [
                 "status" => "fail"
             ];
+        }
+    }
+
+    public function getReport(Request $req)
+    {
+        if($exam = Exam::find($req->examId))
+        {
+            $students = ExamAttendance::where("exam_id",$exam->id)->with("students:id,name")->get();
+            
+            return Datatables::of($students)
+            ->addColumn("name",function($row) {
+                return $row->students->name;
+            })
+            ->addColumn("total_question",function($row){
+                return Question::where("exam_id",$row->exam_id)->count();
+            })
+            ->addColumn("correct",function($row){
+                $ans = QuestionAnswer::where("exam_id",$row->exam_id)
+                ->where("student_id",$row->student_id)->where("is_correct",1)->count();
+                return $ans;
+            })
+            ->addColumn("full_mark",function($row){
+                $qs = Question::where("exam_id",$row->exam_id)->get(["id","marks"]);
+                $mark = 0;
+                foreach($qs as $q)
+                {
+                    $mark += $q->marks;
+                }
+                return $mark;
+            })
+            ->addColumn("obtain_mark",function($row){
+                $ans = QuestionAnswer::where("exam_id",$row->exam_id)
+                ->where("student_id",$row->student_id)->where("is_correct",1)
+                ->with('qstn:id,marks')
+                ->get();
+                $mark = 0;
+                foreach($ans as $an)
+                {
+                    $mark += $an->qstn->marks;
+                }
+                return $mark;
+            })
+            ->addColumn("attend_time",function($row){
+                if($row->attendance_time != "")
+                {
+                    return Carbon::parse($row->attendance_time)->format("d M y - h:i A");
+                }
+                else
+                {
+                    return "";
+                }
+                
+            })
+            ->addColumn("submission_time",function($row){
+                if($row->finish_time != "")
+                {
+                    return Carbon::parse($row->finish_time)->format("d M y - h:i A");
+                }
+                else
+                {
+                    return "";
+                }
+                
+            })
+            ->addColumn("action",function($row){
+                $html = '<button class="btn btn-sm btn-primary">See Details</button>';
+                return $html;
+            })
+            ->rawColumns(["action"])
+            ->make(true);
+        }
+        else
+        {
+            abort(404);
         }
     }
 

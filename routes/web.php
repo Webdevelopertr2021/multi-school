@@ -230,6 +230,8 @@ Route::group(["prefix"=>"admin","middleware"=>"auth"],function(){
 
         Route::post("/delete-exam-cat","Admin\ExamCategoryController@delete");
 
+        Route::get("/get-exam-report","Admin\ExamController@getReport");
+
         // End
 
 

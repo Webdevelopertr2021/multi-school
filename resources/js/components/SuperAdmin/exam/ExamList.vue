@@ -45,6 +45,7 @@
                                                 <router-link :to="{name: 'admin.exam-questions', params: {examId: exam.id}}" class="btn btn-sm btn-secondary" title="Add question"><i class="fas fa-plus"></i></router-link>
                                                 <router-link :to="{name: 'admin.edit-exam', params: { examId: exam.id }}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></router-link>
                                                 <button @click="deleteExam(exam.id,i)" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                                <router-link :to="{name: 'admin.exam-report', params: { examId: exam.id }}" class="btn btn-sm btn-outline-primary">Reports</router-link>
                                             </td>
                                         </tr>
                                     </tbody>

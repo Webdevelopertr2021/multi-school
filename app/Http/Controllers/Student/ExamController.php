@@ -22,7 +22,7 @@ class ExamController extends Controller
         $student = auth("student")->user();
 
         $exams = Exam::where("school_id",$student->school_id)->where("class_id",$student->class_id)->where("section_id",$student->section_id)
-        ->where("end_time",">=",Carbon::now())->with("question:id,exam_id,marks")->withCount("question")->get();
+        ->where("end_time",">=",Carbon::now())->with("question:id,exam_id,marks")->where("status","published")->withCount("question")->get();
 
         foreach($exams as $exam)
         {
@@ -198,8 +198,15 @@ class ExamController extends Controller
             $resp["status"] = "incorrect";
             $resp["msg"] = "Your answer was wrong. Try again";
         }
-
         $answer->save();
+        
+        if($req->isLast == true)
+        {
+            $exam = ExamAttendance::where("exam_id",$answer->exam_id)->where("student_id",$answer->student_id)->first();
+            $exam->is_finished = 1;
+            $exam->finish_time = Carbon::now();
+        }
+
         return response()->json($resp);
 
     }

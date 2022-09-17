@@ -187,7 +187,7 @@ export default {
       answerForm: new Form({
         answerId: "",
         nowAns: "",
-        tries: 0,
+        tries: 1,
         timer: 0,
         isLast: false,
       }),
