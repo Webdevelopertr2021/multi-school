@@ -15,7 +15,7 @@
               data-feather="users"></i><span>Exams</span></a>
           <ul class="dropdown-menu">
             <li><router-link :to="{name: 'student.upcoming-exam'}" class="nav-link">Upcoming Exams</router-link></li>
-            <li><a class="nav-link" href="widget-data.html">Exam Reports</a></li>
+            <li><router-link :to="{name: 'student.exam-report'}" class="nav-link" href="widget-data.html">Exam Reports</router-link></li>
           </ul>
         </li>
         

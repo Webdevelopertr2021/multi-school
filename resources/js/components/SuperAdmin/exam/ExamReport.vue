@@ -98,7 +98,7 @@ export default {
       ajax: '/admin/api/get-exam-report?examId='+_self.$route.params.examId,
       lengthChange : true,
       columns: [
-        {data: "id"},
+        {data: "student_id"},
         { data: "name" },
         { data: 'total_question' },
         { data: 'correct' },
@@ -141,6 +141,17 @@ export default {
     })
     $('#datatable').removeClass("dataTable");
     $('#datatable').css("width" , "100%");
+
+    $(document).on("click","button[data-result]",function(){
+      let studentId = $(this).data("student");
+      _self.$router.push({
+        name: "admin.result-view",
+        params: {
+          examId: _self.$route.params.examId,
+          studentId: studentId
+        }
+      })
+    })
   }
 }
 </script>

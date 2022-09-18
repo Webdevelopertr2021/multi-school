@@ -247,3 +247,12 @@ input.form-control{
     width: 300px;
     height: auto;
 }
+
+.deg{
+    -ms-writing-mode: tb-rl;
+    writing-mode: vertical-rl;
+    transform: rotate(227deg);
+    white-space: nowrap;
+    font-weight: bold;
+    font-size: 16px;
+}

@@ -172,6 +172,9 @@ class ExamController extends Controller
             $students = ExamAttendance::where("exam_id",$exam->id)->with("students:id,name")->get();
             
             return Datatables::of($students)
+            ->addColumn("student_id",function($row){
+                return $row->students->id;
+            })
             ->addColumn("name",function($row) {
                 return $row->students->name;
             })
@@ -227,10 +230,94 @@ class ExamController extends Controller
                 
             })
             ->addColumn("action",function($row){
-                $html = '<button class="btn btn-sm btn-primary">See Details</button>';
+                $html = '<button data-result data-student="'.$row->student_id.'" data-exam="'.$row->exam_id.'" class="btn btn-sm btn-primary">See Details</button>';
                 return $html;
             })
             ->rawColumns(["action"])
+            ->make(true);
+        }
+        else
+        {
+            abort(404);
+        }
+    }
+
+    public function getResult(Request $req)
+    {
+        if($exam = ExamAttendance::where("exam_id",$req->exam)->where("student_id",$req->student)->with(["students","exam"])->first())
+        {
+            $totalMark = 0;
+            $qs = QuestionAnswer::where("exam_id",$req->exam)->where("student_id",$req->student)
+            ->where("is_correct",1)->with("qstn:id,marks")->get();
+            foreach($qs as $q)
+            {
+                $totalMark += $q->qstn->marks;
+            }
+
+            return [
+                "status" => "ok",
+                "exam" => $exam,
+                "totalMark" => $totalMark,
+            ];
+        }
+        else
+        {
+            return [
+                "status" => "fail"
+            ];
+        }
+    }
+
+    public function getResultData(Request $req)
+    {
+        if($exam = ExamAttendance::where("exam_id",$req->examId)->where("student_id",$req->student)->first())
+        {
+
+            $questions = QuestionAnswer::where('exam_id',$req->examId)
+            ->where("student_id",$req->student)->with("qstn:id,marks")->get();
+            foreach($questions as $i=>$q)
+            {
+                $q->index = $i+1;
+            }
+
+            return Datatables::of($questions)
+            ->addColumn("question",function($row){
+                return "<span class='deg'>Question $row->index</span>";
+            })
+            ->addColumn("answer",function($row){
+                return "<b>$row->answer</b>";
+            })
+            ->addColumn("status",function($row){
+                if($row->is_correct == 1) {
+                    return "<span class='text-success'>Correct <i class='fas fa-check-circle'></i></span>";
+                }
+                else {
+                    return "<span class='text-danger'>Wrong <i class='fas fa-times-circle'></i></span>";
+                }
+            })
+            ->addColumn("correct",function($row){
+                return "<b>$row->correct_ans</b>";
+            })
+            ->addColumn("mark",function($row){
+                if($row->is_correct == 1) {
+                    return $row->qstn->marks;
+                }
+                else {
+                    return 0;
+                }
+            })
+            ->addColumn("total_time",function($row){
+                return $row->total_time_to_ans. " seconds";
+            })
+            ->addColumn("is_submit",function($row){
+                if($row->status == 'submited') {
+                    return "<span class='badge badge-success badge-pill'>Submited</span>";
+                }
+                else {
+                    return "<span class='badge badge-danger badge-pill'>Not Submited</span>";
+                }
+            })
+            ->rawColumns(["question","answer","status","correct","is_submit"])
             ->make(true);
         }
         else

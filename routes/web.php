@@ -42,6 +42,12 @@ Route::group(["prefix" => "student","middleware" => "auth:student"],function(){
 
         Route::post("/submit-answer","Student\ExamController@submitAnswer");
 
+        Route::get("/get-my-exams","Student\ExamController@getMyExam");
+
+        Route::get("/get-result","Student\ExamController@getResult");
+
+        Route::get("/get-exam-result-datatable","Student\ExamController@getResultData");
+
     });
     
 });
@@ -231,6 +237,10 @@ Route::group(["prefix"=>"admin","middleware"=>"auth"],function(){
         Route::post("/delete-exam-cat","Admin\ExamCategoryController@delete");
 
         Route::get("/get-exam-report","Admin\ExamController@getReport");
+
+        Route::get("/get-result","Admin\ExamController@getResult");
+
+        Route::get("/get-exam-result-datatable","Admin\ExamController@getResultData");
 
         // End
 

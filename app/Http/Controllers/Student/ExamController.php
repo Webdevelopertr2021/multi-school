@@ -9,6 +9,7 @@ use App\Models\Question;
 use App\Models\QuestionAnswer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class ExamController extends Controller
 {
@@ -210,5 +211,121 @@ class ExamController extends Controller
         return response()->json($resp);
 
     }
+
+    public function getMyExam()
+    {
+        $studentId = auth("student")->user()->id;
+
+        $exams = ExamAttendance::where("student_id",$studentId)->orderBy("id","desc")
+        ->with("exam:id,title,start_time")->withCount('question')
+        ->get();
+
+        foreach($exams as $exam)
+        {
+            $totalMarks = (integer) Question::where("exam_id",$exam->exam_id)->sum("marks");
+            $exam->total_mark = $totalMarks;
+
+            $correctAns = QuestionAnswer::where("exam_id",$exam->exam_id)->where("student_id",$studentId)->where("is_correct",1)
+            ->with("qstn:id,marks")->get();
+            $myMarks = 0;
+            foreach($correctAns as $ans)
+            {
+                $myMarks+= $ans->qstn->marks;
+            }
+            $exam->my_marks = $myMarks;
+            $exam->correct_ans = count($correctAns);
+            $exam->wrong_ans = count(QuestionAnswer::where("exam_id",$exam->exam_id)->where("student_id",$studentId)->where("is_correct",0)->get(["id"]));
+        }
+
+        return $exams;
+    }
+
+    public function getResult(Request $req)
+    {
+        $studentId = auth("student")->user()->id;
+        
+        if($exam = ExamAttendance::where("exam_id",$req->exam)->where("student_id",$studentId)->with(["students","exam"])->first())
+        {
+            $totalMark = 0;
+            $qs = QuestionAnswer::where("exam_id",$req->exam)->where("student_id",$studentId)
+            ->where("is_correct",1)->with("qstn:id,marks")->get();
+            foreach($qs as $q)
+            {
+                $totalMark += $q->qstn->marks;
+            }
+
+            return [
+                "status" => "ok",
+                "exam" => $exam,
+                "totalMark" => $totalMark,
+            ];
+        }
+        else
+        {
+            return [
+                "status" => "fail"
+            ];
+        }
+    }
     
+
+    public function getResultData(Request $req)
+    {
+        $studentId = auth("student")->user()->id;
+
+        if($exam = ExamAttendance::where("exam_id",$req->examId)->where("student_id",$studentId)->first())
+        {
+
+            $questions = QuestionAnswer::where('exam_id',$req->examId)
+            ->where("student_id",$studentId)->with("qstn:id,marks")->get();
+            foreach($questions as $i=>$q)
+            {
+                $q->index = $i+1;
+            }
+
+            return Datatables::of($questions)
+            ->addColumn("question",function($row){
+                return "<span class='deg'>Question $row->index</span>";
+            })
+            ->addColumn("answer",function($row){
+                return "<b>$row->answer</b>";
+            })
+            ->addColumn("status",function($row){
+                if($row->is_correct == 1) {
+                    return "<span class='text-success'>Correct <i class='fas fa-check-circle'></i></span>";
+                }
+                else {
+                    return "<span class='text-danger'>Wrong <i class='fas fa-times-circle'></i></span>";
+                }
+            })
+            ->addColumn("correct",function($row){
+                return "<b>$row->correct_ans</b>";
+            })
+            ->addColumn("mark",function($row){
+                if($row->is_correct == 1) {
+                    return $row->qstn->marks;
+                }
+                else {
+                    return 0;
+                }
+            })
+            ->addColumn("total_time",function($row){
+                return $row->total_time_to_ans. " seconds";
+            })
+            ->addColumn("is_submit",function($row){
+                if($row->status == 'submited') {
+                    return "<span class='badge badge-success badge-pill'>Submited</span>";
+                }
+                else {
+                    return "<span class='badge badge-danger badge-pill'>Not Submited</span>";
+                }
+            })
+            ->rawColumns(["question","answer","status","correct","is_submit"])
+            ->make(true);
+        }
+        else
+        {
+            abort(404);
+        }
+    }
 }

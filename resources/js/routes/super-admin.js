@@ -44,6 +44,7 @@ import EditExam from "../components/SuperAdmin/exam/EditExam.vue";
 import EditQuestion from "../components/SuperAdmin/exam/EditQuestion.vue";
 import ExamCategory from "../components/SuperAdmin/exam/ExamCategory.vue";
 import ExamReport from "../components/SuperAdmin/exam/ExamReport.vue";
+import ResultDetails from "../components/SuperAdmin/exam/ResultDetails.vue";
 // End
 
 // Exams
@@ -383,6 +384,14 @@ const routes = new VueRouter({
             component: ExamReport,
             meta : {
                 title : "Exam Report"
+            }
+        },
+        {
+            path: prefix + "exam/:examId/student/:studentId/result-view",
+            name: "admin.result-view",
+            component: ResultDetails,
+            meta: {
+                title : "Student Complete result log"
             }
         }
     ],

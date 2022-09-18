@@ -7,6 +7,8 @@ Vue.use(VueRouter);
 import Dashboard from "../components/Student/dashboard/Dashboard.vue";
 import UpcomingExam from "../components/Student/exam/UpcomingExam.vue";
 import AttendExam from "../components/Student/exam/AttendExam.vue";
+import ExamReport from "../components/Student/exam/ExamReport.vue";
+import ResultDetails from "../components/Student/exam/ResultDetails.vue";
 // End
 
 const prefix = "/student/"
@@ -38,7 +40,24 @@ const routes = new VueRouter({
             meta: {
                 title: "Exam",
             }
+        },
+        {
+            path: prefix + "my-exams",
+            name: "student.exam-report",
+            component: ExamReport,
+            meta: {
+                title : "Exam Report"
+            }
+        },
+        {
+            path: prefix + "exam/:examId/result-view",
+            name: "student.result-view",
+            component: ResultDetails,
+            meta: {
+                title : "Student Complete result log"
+            }
         }
+
     ],
     scrollBehavior(to, from, savedPos) {
         if (savedPos) {
