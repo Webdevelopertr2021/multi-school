@@ -4634,6 +4634,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -69732,6 +69735,22 @@ var render = function () {
                     ]),
                   ]),
                 ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "col-md-12 mt-4" },
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { to: { name: "student.my-profile" } },
+                      },
+                      [_vm._v("Edit Profile")]
+                    ),
+                  ],
+                  1
+                ),
               ]),
         ]),
       ]),

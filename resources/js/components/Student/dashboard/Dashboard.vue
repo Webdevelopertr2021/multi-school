@@ -39,6 +39,9 @@
                       <li>Section : <strong>{{ profile.section.name }}</strong></li>
                     </ul>
                   </div>
+                  <div class="col-md-12 mt-4">
+                    <router-link :to="{name: 'student.my-profile'}" class="btn btn-primary">Edit Profile</router-link>
+                  </div>
                 </div>
             </div>
         </div>
