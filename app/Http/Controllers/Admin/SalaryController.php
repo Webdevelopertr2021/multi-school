@@ -26,7 +26,7 @@ class SalaryController extends Controller
 
             $salaryData["base_salary"] = $user->salary;
 
-            $lastMonth = Carbon::now()->subMonth(1);
+            $lastMonth = Carbon::now();
 
             $payment = Payments::where("teacher_id",$user->id)->whereMonth("paid_month",$lastMonth)->first();
 

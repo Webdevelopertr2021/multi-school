@@ -131,12 +131,12 @@ class TeacherController extends Controller
         })
         ->addColumn("bonus_money",function($row){
 
-            $lastMonth = Carbon::now()->subMonth(1);
+            $lastMonth = Carbon::now();
             $salaryData = Helper::getTeacherExtraSalary($row->id,$lastMonth->format("m"));
-            return $salaryData["salary_rating"] . "$ + ". $salaryData["salary_no_leave"]."$";
+            return "<span class='c-hand' title='Rating Bonus'>".$salaryData["salary_rating"]."</span>" . "$ + <span class='c-hand' title='No leave'>".$salaryData["salary_no_leave"]."</span>$";
         })
         ->addColumn("total_salary",function($row){
-            $lastMonth = Carbon::now()->subMonth(1);
+            $lastMonth = Carbon::now();
             $salaryData = Helper::getTeacherExtraSalary($row->id,$lastMonth->format("m"));
             return ($row->salary + $salaryData["salary_rating"] + $salaryData["salary_no_leave"])." $";
         })
@@ -153,7 +153,7 @@ class TeacherController extends Controller
             $students = Student::where("class_id",$row->class_id)->where("section_id",$row->section_id)->count();
             return "<a href='/admin/teacher/$row->id/studetn-list'><u>$students</u></a>";
         })
-        ->rawColumns(["ratings","supervisors","action","total_students","stars"])
+        ->rawColumns(["ratings","supervisors","action","total_students","stars","bonus_money"])
         ->make(true);
 
     }

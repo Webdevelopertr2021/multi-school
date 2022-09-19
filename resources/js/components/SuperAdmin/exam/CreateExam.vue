@@ -30,7 +30,7 @@
 
 
 
-                        <div class="col-md-12 mb-4">
+                        <!-- <div class="col-md-12 mb-4">
                             <label for="">Start Time</label>
                             <input type="datetime-local" :class="{'is-invalid' : form.errors.has('start_time')}" 
                                 class="form-control" placeholder="Exam name" v-model="form.start_time">
@@ -42,7 +42,8 @@
                             <input type="datetime-local" :class="{'is-invalid' : form.errors.has('end_time')}" 
                                 class="form-control" placeholder="Exam name" v-model="form.end_time">
                             <HasError :form="form" field="end_time" />
-                        </div>
+                        </div> -->
+
                         <div class="col-md-12 mb-4">
                             <label for="">Select School</label>
                             <multiselect :class="{'is-invalid': form.errors.has('schoolId')}" v-model="selectedSchool" :options="schools" 

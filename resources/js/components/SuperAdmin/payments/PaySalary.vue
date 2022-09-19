@@ -107,7 +107,7 @@ export default {
         amount: "",
         note: "",
         photo: null,
-        month : moment().subtract(1,'month').format('MM'),
+        month : moment().format('MM'),
       }),
       moment: moment,
       salaryData: {},

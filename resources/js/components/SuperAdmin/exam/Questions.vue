@@ -43,7 +43,7 @@
 
             <div class="col-md-4 mb-4">
               <label for="">Mark</label>
-              <input type="number" class="form-control" :class="{'is-invalid' : qForm.errors.has('marks')}" placeholder="Marks" v-model="qForm.marks">
+              <input type="number" class="form-control" :class="{'is-invalid' : qForm.errors.has('marks')}" placeholder="Marks" v-model="marks">
               <HasError :form="qForm" field="marks" />
             </div>
 
@@ -116,10 +116,11 @@ export default {
       qForm : new Form({
         examId: this.$route.params.examId,
         body: "",
-        marks: 4,
+        marks: 0,
         correctAns: "",
         ansFile: null,
       }),
+      marks: 4,
       examData: {},
       isLoading: true,
       addQuestionMode: false,
@@ -151,6 +152,7 @@ export default {
       })
     },
     async addQuestion() {
+      this.qForm.marks = this.marks;
       await this.qForm.post("/admin/api/store-question").then(resp=>{
         return resp.data;
       }).then(data=>{

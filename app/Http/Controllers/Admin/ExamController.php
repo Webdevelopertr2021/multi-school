@@ -23,7 +23,6 @@ class ExamController extends Controller
     {
         $this->validate($req,[
             "name" => "required",
-            "start_time" => "required",
             "schoolId" => "required",
             "classId" => "required",
             "sectionId" => "required",

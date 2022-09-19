@@ -14,17 +14,16 @@
                                     <tr class="text-center">
                                         <th>ID</th>
                                         <th>Name</th>
-                                        <th>Phone</th>
                                         <th>Supervisors</th>
                                         <th>School</th>
                                         <th>Class</th>
                                         <th>Section</th>
                                         <th>Total Students</th>
-                                        <th>Rating ({{ moment().format("MMMM") }})</th>
-                                        <th>Stars ({{ moment().format("MMMM") }})</th>
+                                        <th>Rating ({{ moment().format("MMM") }})</th>
+                                        <th>Stars ({{ moment().format("MMM") }})</th>
                                         <th>Main Salary</th>
-                                        <th>Rating Bonus</th>
-                                        <th>Total Salary</th>
+                                        <th>Bonus({{ moment().format("MMM") }})<br><small>(Rating + No leave)</small></th>
+                                        <th>Total Salary ({{ moment().format("MMM") }})</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -59,7 +58,6 @@ export default {
             columns: [
                 {data: "id"},
                 { data: "name" },
-                { data: "phone" },
                 { data: "supervisors" },
                 { data: "school" },
                 { data: "class" },

@@ -7370,6 +7370,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -8572,10 +8573,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       qForm: new Form({
         examId: this.$route.params.examId,
         body: "",
-        marks: 4,
+        marks: 0,
         correctAns: "",
         ansFile: null
       }),
+      marks: 4,
       examData: {},
       isLoading: true,
       addQuestionMode: false,
@@ -8615,7 +8617,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
+                _this2.qForm.marks = _this2.marks;
+                _context.next = 3;
                 return _this2.qForm.post("/admin/api/store-question").then(function (resp) {
                   return resp.data;
                 }).then(function (data) {
@@ -8632,7 +8635,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   console.error(err.response.data);
                 });
 
-              case 2:
+              case 3:
               case "end":
                 return _context.stop();
             }
@@ -9119,7 +9122,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         amount: "",
         note: "",
         photo: null,
-        month: moment().subtract(1, 'month').format('MM')
+        month: moment().format('MM')
       }),
       moment: moment,
       salaryData: {},
@@ -12979,7 +12982,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -12998,8 +13000,6 @@ __webpack_require__.r(__webpack_exports__);
         data: "id"
       }, {
         data: "name"
-      }, {
-        data: "phone"
       }, {
         data: "supervisors"
       }, {
@@ -73832,78 +73832,6 @@ var render = function () {
                 "div",
                 { staticClass: "col-md-12 mb-4" },
                 [
-                  _c("label", { attrs: { for: "" } }, [_vm._v("Start Time")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.form.start_time,
-                        expression: "form.start_time",
-                      },
-                    ],
-                    staticClass: "form-control",
-                    class: { "is-invalid": _vm.form.errors.has("start_time") },
-                    attrs: { type: "datetime-local", placeholder: "Exam name" },
-                    domProps: { value: _vm.form.start_time },
-                    on: {
-                      input: function ($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.form, "start_time", $event.target.value)
-                      },
-                    },
-                  }),
-                  _vm._v(" "),
-                  _c("HasError", {
-                    attrs: { form: _vm.form, field: "start_time" },
-                  }),
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "col-md-12 mb-4" },
-                [
-                  _c("label", { attrs: { for: "" } }, [_vm._v("End Time")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.form.end_time,
-                        expression: "form.end_time",
-                      },
-                    ],
-                    staticClass: "form-control",
-                    class: { "is-invalid": _vm.form.errors.has("end_time") },
-                    attrs: { type: "datetime-local", placeholder: "Exam name" },
-                    domProps: { value: _vm.form.end_time },
-                    on: {
-                      input: function ($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.form, "end_time", $event.target.value)
-                      },
-                    },
-                  }),
-                  _vm._v(" "),
-                  _c("HasError", {
-                    attrs: { form: _vm.form, field: "end_time" },
-                  }),
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "col-md-12 mb-4" },
-                [
                   _c("label", { attrs: { for: "" } }, [
                     _vm._v("Select School"),
                   ]),
@@ -75711,20 +75639,20 @@ var render = function () {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.qForm.marks,
-                            expression: "qForm.marks",
+                            value: _vm.marks,
+                            expression: "marks",
                           },
                         ],
                         staticClass: "form-control",
                         class: { "is-invalid": _vm.qForm.errors.has("marks") },
                         attrs: { type: "number", placeholder: "Marks" },
-                        domProps: { value: _vm.qForm.marks },
+                        domProps: { value: _vm.marks },
                         on: {
                           input: function ($event) {
                             if ($event.target.composing) {
                               return
                             }
-                            _vm.$set(_vm.qForm, "marks", $event.target.value)
+                            _vm.marks = $event.target.value
                           },
                         },
                       }),
@@ -82830,8 +82758,6 @@ var render = function () {
                         _vm._v(" "),
                         _c("th", [_vm._v("Name")]),
                         _vm._v(" "),
-                        _c("th", [_vm._v("Phone")]),
-                        _vm._v(" "),
                         _c("th", [_vm._v("Supervisors")]),
                         _vm._v(" "),
                         _c("th", [_vm._v("School")]),
@@ -82845,24 +82771,34 @@ var render = function () {
                         _c("th", [
                           _vm._v(
                             "Rating (" +
-                              _vm._s(_vm.moment().format("MMMM")) +
+                              _vm._s(_vm.moment().format("MMM")) +
                               ")"
                           ),
                         ]),
                         _vm._v(" "),
                         _c("th", [
                           _vm._v(
-                            "Stars (" +
-                              _vm._s(_vm.moment().format("MMMM")) +
-                              ")"
+                            "Stars (" + _vm._s(_vm.moment().format("MMM")) + ")"
                           ),
                         ]),
                         _vm._v(" "),
                         _c("th", [_vm._v("Main Salary")]),
                         _vm._v(" "),
-                        _c("th", [_vm._v("Rating Bonus")]),
+                        _c("th", [
+                          _vm._v(
+                            "Bonus(" + _vm._s(_vm.moment().format("MMM")) + ")"
+                          ),
+                          _c("br"),
+                          _c("small", [_vm._v("(Rating + No leave)")]),
+                        ]),
                         _vm._v(" "),
-                        _c("th", [_vm._v("Total Salary")]),
+                        _c("th", [
+                          _vm._v(
+                            "Total Salary (" +
+                              _vm._s(_vm.moment().format("MMM")) +
+                              ")"
+                          ),
+                        ]),
                         _vm._v(" "),
                         _c("th", [_vm._v("Actions")]),
                       ]),
