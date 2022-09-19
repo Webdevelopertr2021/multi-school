@@ -4584,6 +4584,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -4599,7 +4601,65 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      isLoading: true,
+      profile: {}
+    };
+  },
+  methods: {
+    getDashboardData: function getDashboardData() {
+      var _this = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get("/student/api/get-dashboard-data").then(function (resp) {
+        return resp.data;
+      }).then(function (data) {
+        _this.profile = data.profile;
+        _this.isLoading = false;
+      })["catch"](function (err) {
+        console.error(err.response.data);
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.getDashboardData();
+  }
+});
 
 /***/ }),
 
@@ -69529,28 +69589,165 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "col-md-4" }, [
+      _c("div", { staticClass: "card" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _vm.isLoading
+            ? _c("div", { staticClass: "row" }, [
+                _c(
+                  "div",
+                  { staticClass: "col-md-12 text-center" },
+                  [
+                    _c("skeleton", {
+                      staticClass: "user-thumb-100",
+                      attrs: { width: "100px", height: "100px" },
+                    }),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c("skeleton", {
+                      staticClass: "mt-2",
+                      attrs: { width: "200px", height: "20px" },
+                    }),
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-12 mt-5" }, [
+                  _c("ul", [
+                    _c(
+                      "li",
+                      [
+                        _c("skeleton", {
+                          attrs: { width: "300px", height: "20px" },
+                        }),
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "li",
+                      [
+                        _c("skeleton", {
+                          attrs: { width: "300px", height: "20px" },
+                        }),
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "li",
+                      [
+                        _c("skeleton", {
+                          attrs: { width: "300px", height: "20px" },
+                        }),
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "li",
+                      [
+                        _c("skeleton", {
+                          attrs: { width: "300px", height: "20px" },
+                        }),
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "li",
+                      [
+                        _c("skeleton", {
+                          attrs: { width: "300px", height: "20px" },
+                        }),
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "li",
+                      [
+                        _c("skeleton", {
+                          attrs: { width: "300px", height: "20px" },
+                        }),
+                      ],
+                      1
+                    ),
+                  ]),
+                ]),
+              ])
+            : _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-12 text-center" }, [
+                  _vm.profile.photo_url != null
+                    ? _c("img", {
+                        staticClass: "user-thumb-100",
+                        attrs: { src: _vm.profile.photo_url, alt: "" },
+                      })
+                    : _c("img", {
+                        staticClass: "user-thumb-100",
+                        attrs: {
+                          src: "/image/portrait-placeholder.png",
+                          alt: "",
+                        },
+                      }),
+                  _vm._v(" "),
+                  _c("h5", { staticClass: "mt-3" }, [
+                    _vm._v(_vm._s(_vm.profile.name)),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-12 mt-5" }, [
+                  _c("ul", [
+                    _c("li", [
+                      _vm._v("Phone : "),
+                      _c("strong", [_vm._v(_vm._s(_vm.profile.phone))]),
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("Email : "),
+                      _c("strong", [_vm._v(_vm._s(_vm.profile.email))]),
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("Address : "),
+                      _c("strong", [_vm._v(_vm._s(_vm.profile.address))]),
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("School : "),
+                      _c("strong", [_vm._v(_vm._s(_vm.profile.school.name))]),
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("Class : "),
+                      _c("strong", [_vm._v(_vm._s(_vm.profile.class.name))]),
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("Section : "),
+                      _c("strong", [_vm._v(_vm._s(_vm.profile.section.name))]),
+                    ]),
+                  ]),
+                ]),
+              ]),
+        ]),
+      ]),
+    ]),
+  ])
 }
 var staticRenderFns = [
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("div", { staticClass: "card" }, [
-          _c(
-            "div",
-            { staticClass: "card-header d-flex justify-content-between" },
-            [_c("h4")]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _vm._v("\n              Dashboard\n          "),
-          ]),
-        ]),
-      ]),
-    ])
+    return _c(
+      "div",
+      { staticClass: "card-header d-flex justify-content-between" },
+      [_c("h4", [_vm._v("Dashboard")])]
+    )
   },
 ]
 render._withStripped = true

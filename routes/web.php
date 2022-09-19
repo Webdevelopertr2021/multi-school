@@ -53,6 +53,8 @@ Route::group(["prefix" => "student","middleware" => "auth:student"],function(){
 
         Route::post('/update-my-profile',"Student\DashboardController@updateMyProfile");
 
+        Route::get("/get-dashboard-data","Student\DashboardController@getDashboardData");
+
     });
     
 });

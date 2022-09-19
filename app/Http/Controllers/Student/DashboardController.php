@@ -75,4 +75,13 @@ class DashboardController extends Controller
             "msg" => "Profile was updated"
         ];
     }
+
+    public function getDashboardData(Request $req)
+    {
+        $profile = Student::with(["school","class","section"])->find(auth("student")->user()->id);
+        
+        return [
+            "profile" => $profile,
+        ];
+    }
 }

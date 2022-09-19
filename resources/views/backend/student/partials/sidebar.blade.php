@@ -1,8 +1,10 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
       <div class="sidebar-brand">
-        <a href="index.html"> <img alt="image" src="{{ asset("backend/img/logo.png") }}" class="header-logo" />
-        </a>
+        <router-link :to="{name: 'student.dashboard'}" > 
+          <img alt="image" src="{{ asset("backend/img/logo.png") }}" class="header-logo" />
+          Student
+        </router-link>
       </div>
       <ul class="sidebar-menu">
         <li class="menu-header">Main</li>
