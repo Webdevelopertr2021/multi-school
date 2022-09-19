@@ -72,12 +72,12 @@
                                 <option value="published">Publish</option>
                                 <option value="unpublished">Unpublish</option>
                             </select>
-                            <HasError  :form="form" field="sectionId"/>
+                            <HasError  :form="form" field="status"/>
                         </div>
 
                         <div class="col-md-12 mb-4">
                             <Button type="submit" class="btn btn-success" :form="form">Send</Button>
-                            <button type="button" class="btn btn-primary" :form="form">Copy</button>
+                            <button @click="copyExam()" type="button" class="btn btn-primary" :form="form">Copy</button>
                         </div>
 
                     </form>
@@ -229,6 +229,42 @@ export default {
                 console.error(err.response.data);
             })
             
+        },
+        copyExam() {
+            
+            if(this.selectedSchool != null)
+            {
+                this.form.schoolId = this.selectedSchool.id;
+            }
+            if(this.selectedClass != null)
+            {
+                this.form.classId = this.selectedClass.id;
+            }
+            if(this.selectedSection != null)
+            {
+                this.form.sectionId = this.selectedSection.id;
+            }
+
+            swal.fire("Info","Please wait | Copy in progress","info");
+            swal.showLoading();
+            this.form.post("/admin/api/copy-exam").then(resp=>{
+                return resp.data;
+            }).then(data=>{
+                if(data.status == "ok") {
+                    swal.close();
+                    swal.fire("Success","Exam copied successfully","success").then(()=>{
+                        this.$router.push({
+                            name: 'admin.exam-questions',
+                            params: {
+                                examId: data.examId
+                            }
+                        })
+                    });
+                }
+            }).catch(err=>{
+                swal.close();
+                console.error(err.response.data);
+            })
         }
     },
     mounted() {

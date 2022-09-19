@@ -7738,6 +7738,42 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (err) {
         console.error(err.response.data);
       });
+    },
+    copyExam: function copyExam() {
+      var _this6 = this;
+
+      if (this.selectedSchool != null) {
+        this.form.schoolId = this.selectedSchool.id;
+      }
+
+      if (this.selectedClass != null) {
+        this.form.classId = this.selectedClass.id;
+      }
+
+      if (this.selectedSection != null) {
+        this.form.sectionId = this.selectedSection.id;
+      }
+
+      swal.fire("Info", "Please wait | Copy in progress", "info");
+      swal.showLoading();
+      this.form.post("/admin/api/copy-exam").then(function (resp) {
+        return resp.data;
+      }).then(function (data) {
+        if (data.status == "ok") {
+          swal.close();
+          swal.fire("Success", "Exam copied successfully", "success").then(function () {
+            _this6.$router.push({
+              name: 'admin.exam-questions',
+              params: {
+                examId: data.examId
+              }
+            });
+          });
+        }
+      })["catch"](function (err) {
+        swal.close();
+        console.error(err.response.data);
+      });
     }
   },
   mounted: function mounted() {
@@ -74383,7 +74419,7 @@ var render = function () {
                   ),
                   _vm._v(" "),
                   _c("HasError", {
-                    attrs: { form: _vm.form, field: "sectionId" },
+                    attrs: { form: _vm.form, field: "status" },
                   }),
                 ],
                 1
@@ -74407,6 +74443,11 @@ var render = function () {
                     {
                       staticClass: "btn btn-primary",
                       attrs: { type: "button", form: _vm.form },
+                      on: {
+                        click: function ($event) {
+                          return _vm.copyExam()
+                        },
+                      },
                     },
                     [_vm._v("Copy")]
                   ),

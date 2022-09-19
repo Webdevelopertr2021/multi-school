@@ -214,6 +214,8 @@ Route::group(["prefix"=>"admin","middleware"=>"auth"],function(){
 
         Route::post("/update-exam","Admin\ExamController@update");
 
+        Route::post("/copy-exam","Admin\ExamController@copy");
+
         Route::post("/delete-exam","Admin\ExamController@deleteExam");
 
         Route::get("/get-exam-list","Admin\ExamController@getExamList");

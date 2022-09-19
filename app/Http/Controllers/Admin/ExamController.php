@@ -324,5 +324,50 @@ class ExamController extends Controller
             abort(404);
         }
     }
+    
+    public function copy(Request $req)
+    {
+        $this->validate($req,[
+            "examId" => "required",
+            "name" => "required",
+            "start_time" => "required",
+            "schoolId" => "required",
+            "classId" => "required",
+            "sectionId" => "required",
+            "category" => "required",
+            "formla" => "required",
+        ]);
 
+        $oldExam = Exam::find($req->examId);
+
+        $exam = new Exam();
+        $exam->title = $req->name;
+        $exam->start_time = $req->start_time;
+        $exam->end_time = $req->end_time;
+        $exam->school_id = $req->schoolId;
+        $exam->class_id = $req->classId;
+        $exam->section_id = $req->sectionId;
+        $exam->category_id = $req->category;
+        $exam->user_id = auth()->user()->id;
+        $exam->created_by = auth()->user()->name;
+        $exam->formla = $req->formla;
+        $exam->status = $req->status;
+        $exam->save();
+
+        // Copy Questions
+        $oldQuestions = Question::where("exam_id",$oldExam->id)->get();
+        foreach($oldQuestions as $question)
+        {
+            $newQuestion = $question->replicate();
+            $newQuestion->exam_id = $exam->id;
+            $newQuestion->save();
+        }
+        // End
+
+        return [
+            "status" => "ok",
+            "msg" => "Exam Copied successfully",
+            "examId" => $exam->id,
+        ];
+    }
 }
