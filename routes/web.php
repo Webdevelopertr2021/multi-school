@@ -48,6 +48,11 @@ Route::group(["prefix" => "student","middleware" => "auth:student"],function(){
 
         Route::get("/get-exam-result-datatable","Student\ExamController@getResultData");
 
+        // Profile
+        Route::get('/get-my-profile-data',"Student\DashboardController@myProfile");
+
+        Route::post('/update-my-profile',"Student\DashboardController@updateMyProfile");
+
     });
     
 });

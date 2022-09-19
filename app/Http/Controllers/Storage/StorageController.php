@@ -32,7 +32,7 @@ class StorageController extends Controller
 
     public function getStudentPhoto($filename)
     {
-        if(Auth::check() || Auth::guard("supervisor")->check() || Auth::guard("teacher")->check())
+        if(Auth::check() || Auth::guard("supervisor")->check() || Auth::guard("teacher")->check() || Auth::guard("student")->check())
         {
             $path = "student/photos/$filename";
             if(Storage::exists($path))

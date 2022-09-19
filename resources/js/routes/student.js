@@ -9,6 +9,7 @@ import UpcomingExam from "../components/Student/exam/UpcomingExam.vue";
 import AttendExam from "../components/Student/exam/AttendExam.vue";
 import ExamReport from "../components/Student/exam/ExamReport.vue";
 import ResultDetails from "../components/Student/exam/ResultDetails.vue";
+import MyProfile from "../components/Student/dashboard/MyProfile.vue";
 // End
 
 const prefix = "/student/"
@@ -56,8 +57,15 @@ const routes = new VueRouter({
             meta: {
                 title : "Student Complete result log"
             }
+        },
+        {
+            path: prefix + "my-profile",
+            name: "student.my-profile",
+            component: MyProfile,
+            meta : {
+                title: "My profile"
+            }
         }
-
     ],
     scrollBehavior(to, from, savedPos) {
         if (savedPos) {
