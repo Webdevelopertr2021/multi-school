@@ -14,3 +14,6 @@ Dashboard
 @section('content')
     <router-view :key="$route.fullPath"></router-view>
 @endsection
+
+
+Code from Easin -------
